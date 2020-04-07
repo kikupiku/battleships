@@ -15,12 +15,20 @@ test('ship has length', () => {
 });
 
 test('ship has coordinates', () => {
-  expect(testShip.coordinates).toStrictEqual([22, 32, 42]);
+  expect(testShip.coordinates).toStrictEqual([
+    { coordinate: 22, hit: false },
+    { coordinate: 32, hit: false },
+    { coordinate: 42, hit: false },
+  ]);
 });
 
 test('ship has coordinates vertically', () => {
   testShip = ship(3, 22, 'vertical');
-  expect(testShip.coordinates).toStrictEqual([22, 23, 24]);
+  expect(testShip.coordinates).toStrictEqual([
+    { coordinate: 22, hit: false },
+    { coordinate: 23, hit: false },
+    { coordinate: 24, hit: false },
+  ]);
 });
 
 test('ship can be hit', () => {
@@ -29,14 +37,45 @@ test('ship can be hit', () => {
 
 test('ship will update coordinates when hit', () => {
   testShip.hit(22);
-  expect(testShip.coordinates).toStrictEqual(['hit', 32, 42]);
+  expect(testShip.coordinates).toStrictEqual([
+    { coordinate: 22, hit: true },
+    { coordinate: 32, hit: false },
+    { coordinate: 42, hit: false },
+  ]);
+});
+
+test('ship will update coordinates when hit twice', () => {
+  testShip.hit(22);
+  testShip.hit(42);
+  expect(testShip.coordinates).toStrictEqual([
+    { coordinate: 22, hit: true },
+    { coordinate: 32, hit: false },
+    { coordinate: 42, hit: true },
+  ]);
 });
 
 test('ship can be missed', () => {
-  expect(testShip.hit(55).toBe(false));
+  expect(testShip.hit(55)).toBe(false);
 });
 
 test('missed ship does not update coordinates', () => {
   testShip.hit(55);
-  expect(testShip.coordinates).toStrictEqual([22, 32, 42]);
+  expect(testShip.coordinates).toStrictEqual([
+    { coordinate: 22, hit: false },
+    { coordinate: 32, hit: false },
+    { coordinate: 42, hit: false },
+  ]);
+});
+
+test('ship can be sunk', () => {
+  testShip.hit(22);
+  testShip.hit(32);
+  testShip.hit(42);
+  expect(testShip.isSunk()).toBe(true);
+});
+
+test('ship does not get sunk if not all elements hit', () => {
+  testShip.hit(22);
+  testShip.hit(32);
+  expect(testShip.isSunk()).toBe(false);
 });
