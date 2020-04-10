@@ -31,24 +31,24 @@ xtest('gameboard cannot place ship outside gameboard', () => {
   // expect(board.spaces[20].hasShipPart).toBe(true);
 });
 
-test.only('gameboard cannot place two ships in same space', () => {
+test('gameboard cannot place two ships in same space', () => {
   let board = gameboard();
   board.placeShip(3, 0, 'horizontal');
   board.placeShip(3, 10, 'horizontal');
   expect(board.spaces[30].hasShipPart).toBe(false);
 });
 
-test.only('gameboard cannot place two ships in same space 2', () => {
+test('gameboard cannot place two ships in same space 2', () => {
   let board = gameboard();
   board.placeShip(3, 0, 'horizontal');
   board.placeShip(3, 0, 'horizontal');
   expect(board.ships.length).toBe(1);
 });
 
-test.only('gameboard cannot place two ships in same space 2', () => {
+test('gameboard cannot place two ships in same space 2', () => {
   let board = gameboard();
   board.placeShip(3, 0, 'horizontal');
-  let secondShip = board.placeShip(3, 10, 'horizontal');
+  board.placeShip(4, 20, 'horizontal');
   expect(board.ships.length).toBe(1);
 });
 
