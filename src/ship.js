@@ -1,6 +1,6 @@
-const ship = (num, startingCoord, direction) => {
+const ship = (length, startingCoord, direction) => {
   let coordinates = [{ coordinate: startingCoord, hit: false }];
-  for (let i = 1; i < num; i++) {
+  for (let i = 1; i < length; i++) {
     if (direction === 'horizontal') {
       coordinates.push({
         coordinate: coordinates[coordinates.length - 1].coordinate + 10,
@@ -28,7 +28,7 @@ const ship = (num, startingCoord, direction) => {
   };
 
   return {
-    shipLength: num,
+    shipLength: length,
     isSunk,
     coordinates,
     hit,
