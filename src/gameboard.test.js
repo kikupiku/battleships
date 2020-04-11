@@ -24,11 +24,25 @@ test('ship function can place a ship on the board', () => {
   expect(board.spaces[20].hasShipPart).toBe(true);
 });
 
-xtest('gameboard cannot place ship outside gameboard', () => {
-  // let board = gameboard();
-  // board.placeShip(3, 0, 'horizontal');
-  // board.placeShip(2, 1, 'hirizontal');
-  // expect(board.spaces[20].hasShipPart).toBe(true);
+test('gameboard cannot place horizontal ship outside gameboard', () => {
+  let board = gameboard();
+  board.placeShip(3, 0, 'horizontal');
+  board.placeShip(4, 80, 'horizontal');
+  expect(board.ships.length).toBe(1);
+});
+
+test.only('gameboard cannot place vertical ship outside gameboard in first column', () => {
+  let board = gameboard();
+  board.placeShip(3, 0, 'vertical');
+  board.placeShip(4, 8, 'vertical');
+  expect(board.ships.length).toBe(1);
+});
+
+test.only('gameboard cannot place vertical ship outside gameboard in not first column', () => {
+  let board = gameboard();
+  board.placeShip(3, 0, 'vertical');
+  board.placeShip(4, 49, 'vertical');
+  expect(board.ships.length).toBe(1);
 });
 
 test('gameboard cannot place two ships in same space', () => {
