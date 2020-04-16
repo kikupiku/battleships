@@ -1,36 +1,79 @@
+$enemy-color: rgb(116,60,60);
+$my-color: rgb(49,132,153);
+
 body {
   box-sizing: border-box;
 }
 
-.my-board,
-.enemy-board {
-  display: flex;
-  flex-direction: column-reverse;
-  flex-wrap: wrap;
+.container {
+  width: 812px;
+  margin: 0 auto;
+
+  .my-board,
+  .enemy-board {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+  }
+
+  .my-board {
+    height: 35.7vh;
+    width: 35.9vh;
+    border: 2px solid $my-color;
+    min-height: 260px;
+    min-width: 260px;
+
+    .my-space {
+      height: 3.5vh;
+      width: 3.5vh;
+      border-right: 0.5px solid $my-color;
+      border-bottom: 0.5px solid $my-color;
+      min-height: 25.5px;
+      min-width: 25.5px;
+    }
+  }
+
+  .enemy-board-wrapper {
+    display: flex;
+    width: 100%;
+
+    .shrinker {
+      width: 35.9vh;
+      flex-shrink: 2;
+    }
+
+    .enemy-board {
+      height: 55vh;
+      width: 55vh;
+      border: 2px solid $enemy-color;
+      min-height: 400px;
+      min-width: 400px;
+
+      .enemy-space {
+        height: 5.42vh;
+        width: 5.42vh;
+        border-right: 0.5px solid $enemy-color;
+        border-bottom: 0.5px solid $enemy-color;
+        min-height: 39.5px;
+        min-width: 39.5px;
+        &:hover {
+          background: rgba($enemy-color, 0.2);
+        }
+      }
+    }
+  }
 }
 
-.my-board {
-  height: 305px;
-  width: 305px;
-  border: 2px solid black;
-}
+@media all and (max-width: 1024px) {
+  .container {
+    width: 80vw;
+  }
 
-.my-space {
-  height: 30px;
-  width: 30px;
-  border-right: 0.5px solid grey;
-  border-bottom: 0.5px solid grey;
-}
+  .shrinker {
+    flex-shrink: 4;
+  }
 
-.enemy-board {
-  height: 505px;
-  width: 505px;
-  border: 2px solid black;
-}
-
-.enemy-space {
-  height: 50px;
-  width: 50px;
-  border-right: 0.5px solid grey;
-  border-bottom: 0.5px solid grey;
+  .enemy-board {
+    flex-shrink: 0;
+  }
 }
