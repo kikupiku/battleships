@@ -25,6 +25,21 @@ const gameboard = () => {
     }
   };
 
+  let receiveAttack = coord => {
+    spaces.forEach(space => {
+      if (space.coordinate === coord) {
+        space.hit = true;
+        if (space.hasShipPart) {
+          ships.forEach(ship => {
+            ship.hit(coord);
+          });
+        }
+      }
+    });
+  };
+
+  const checkIfAllSunk = () => ships.every(ship => ship.isSunk());
+
   const checkPlacementValidity = (length, startingCoord, direction) => {
     let shipPartChecker = 0;
     for (i = 0; i < length; i++) {
@@ -49,6 +64,8 @@ const gameboard = () => {
     spaces,
     placeShip,
     ships,
+    receiveAttack,
+    checkIfAllSunk,
   };
 };
 
