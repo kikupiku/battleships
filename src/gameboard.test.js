@@ -105,3 +105,8 @@ test('gameboard can check if all its ships are sunk, with multiple ships', () =>
   board.receiveAttack(7);
   expect(board.checkIfAllSunk()).toBe(true);
 });
+
+test('will not raise an error if a vertical ship is placed at coord 99', () => {
+  board.placeShip(4, 99, 'vertical');
+  expect(board.ships.length).toBe(0);
+});

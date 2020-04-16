@@ -2,7 +2,6 @@ const gameboard = require('./gameboard.js');
 
 const player = () => {
   let randomCoord;
-  let thisPlayersBoard = gameboard();
 
   // let gotcha = false;
   let attack = (enemyBoard, coord) => {
@@ -18,11 +17,14 @@ const player = () => {
     attack(randomCoord);
   };
 
-  let autoPlaceShips = () => {
+  let autoPlaceShips = (board) => {
     const directions = ['horizontal', 'vertical'];
-    while (checkPlacementValidity !== true) {
-      thisPlayersBoard.placeShip(4, Math.floor(Math.random() * 100), directions[Math.floor(Math.random()) + 1]);
-    }
+    const lengths = [2, 3, 3, 4, 5];
+    lengths.forEach((length, i) => {
+      while (board.ships.length <= i) {
+        board.placeShip(length, Math.floor(Math.random() * 100), directions[Math.floor(Math.random()) + 1]);
+      }
+    });
   };
 
   // let triangulate = () => {
@@ -36,6 +38,7 @@ const player = () => {
   return {
     attack,
     randomPlay,
+    autoPlaceShips,
   };
 };
 

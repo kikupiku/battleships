@@ -47,7 +47,7 @@ const gameboard = () => {
         if (spaces[startingCoord + (i * 10)].hasShipPart == false) {         //checking for occupancy
           shipPartChecker += 1;
         }
-      } else if (direction === 'vertical') {
+      } else if (direction === 'vertical' && (startingCoord + i) < 100) {
         if (spaces[startingCoord + (i)].hasShipPart == false &&               //check board occupancy
             ((startingCoord < 10 && (startingCoord + length - 1) < 10) ||     //check 1st column if outside of board
             (startingCoord > 9 && startingCoord.toString()[0] ===             //check if other columns outside board
