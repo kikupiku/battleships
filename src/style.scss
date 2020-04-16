@@ -1,5 +1,36 @@
-.test {
-  height: 20px;
-  width: 20px;
-  border: 1px solid red;
+body {
+  box-sizing: border-box;
+}
+
+.my-board,
+.enemy-board {
+  display: flex;
+  flex-direction: column-reverse;
+  flex-wrap: wrap;
+}
+
+.my-board {
+  height: 305px;
+  width: 305px;
+  border: 2px solid black;
+}
+
+.my-space {
+  height: 30px;
+  width: 30px;
+  border-right: 0.5px solid grey;
+  border-bottom: 0.5px solid grey;
+}
+
+.enemy-board {
+  height: 505px;
+  width: 505px;
+  border: 2px solid black;
+}
+
+.enemy-space {
+  height: 50px;
+  width: 50px;
+  border-right: 0.5px solid grey;
+  border-bottom: 0.5px solid grey;
 }
