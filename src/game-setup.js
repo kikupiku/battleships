@@ -8,13 +8,16 @@ const gameSetup = () => {
   let humanBoard = gameboard();
   computer.autoPlaceShips(computerBoard);
 
-    let placeShips = () => {
-
-    };
-
-
+  let placeShips = () => {
+    const myBoard = document.getElementById('my-board');
+    myBoard.addEventListener('click', () => {
+      console.log('click!');
+    });
   };
 
-  //1x 4spaces, 2x 3spaces, 3x 2spaces, 4x 1space
+  return {
+    placeShips,
+  };
+};
 
-}
+module.exports = gameSetup;
