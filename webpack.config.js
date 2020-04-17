@@ -7,6 +7,9 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   watch: true,
+  optimization: {
+    minimize: false,
+  },
   module: {
     rules: [
       {
@@ -18,6 +21,12 @@ module.exports = {
           'css-loader',
           // Compiles Sass to CSS
           'sass-loader',
+        ],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader',
         ],
       },
     ],
