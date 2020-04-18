@@ -16,23 +16,37 @@ const gameSetup = () => {
     myBoard.addEventListener('mouseover', (e) => {
       for (let i = 0; i < 100; i++) {
         if (mySpaces[i] === e.target) {
-          let img = document.getElementsByClassName(shipTypes[1])[0];
+          let img = document.getElementsByClassName('ship')[0];
           if (img) {
             img.parentElement.removeChild(img);
           }
 
-          addShipOfType(shipTypes[1], e.target);
-          console.log('this ', e.target);
+          addShipOfType(shipTypes[0], e.target);
         }
       }
     });
   };
 
+  let suffix = '';
   const addShipOfType = (shipType, targetElement) => {
+    targetElement.addEventListener('wheel', (event) => {
+      if (event.wheelDelta === -120) {
+        suffix = '';
+        if (img) {
+          img.parentElement.removeChild(img);
+        }
+        console.log('horizontal');
+      } else if (event.wheelDelta === 120) {
+        suffix = 'vert';
+        if (img) {
+          img.parentElement.removeChild(img);
+        }
+      }
+    });
+    console.log(suffix);
     let img = document.createElement('div');
-    img.setAttribute('class', shipType);
+    img.setAttribute('class', `ship ${shipType}${suffix}`);
     targetElement.appendChild(img);
-    return img;
   };
 
   return {

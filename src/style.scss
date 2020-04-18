@@ -83,6 +83,53 @@ img {
         width: ($my-space-dimension * 2);
         min-width: (25.5px *2);
       }
+
+      .carriervert,
+      .battleshipvert,
+      .destroyervert,
+      .submarinevert,
+      .patrolboatvert {
+        position: absolute;
+        min-width: 25.5px;
+        width: $my-space-dimension;
+        z-index: 100 !important;
+        overflow: visible;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        bottom: 1px;
+      }
+
+      .carriervert {
+        background-image: url('./assets/carriervert.png');
+        height: ($my-space-dimension * 5);
+        min-height: (25.5px * 5);
+      }
+
+      .battleshipvert {
+        background-image: url('./assets/battleshipvert.png');
+        height: ($my-space-dimension * 4);
+        min-height: (25.5px * 4);
+      }
+
+      .destroyervert,
+      .submarinevert {
+        height: ($my-space-dimension * 3);
+        min-height: (25.5px * 3);
+      }
+
+      .destroyervert {
+        background-image: url('./assets/destroyervert.png');
+      }
+
+      .submarinevert {
+        background-image: url('./assets/submarinevert.png');
+      }
+
+      .patrolboatvert {
+        background-image: url('./assets/patrolboatvert.png');
+        height: ($my-space-dimension * 2);
+        min-height: (25.5px * 2);
+      }
     }
   }
 
