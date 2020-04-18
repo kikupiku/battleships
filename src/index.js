@@ -8,13 +8,11 @@ import battleship from './assets/battleship.png';
 import destroyer from './assets/destroyer.png';
 import submarine from './assets/submarine.png';
 import patrolboat from './assets/patrolboat.png';
-import carriervert from './assets/carriervert.png';
-import battleshipvert from './assets/battleshipvert.png';
-import destroyervert from './assets/destroyervert.png';
-import submarinevert from './assets/submarinevert.png';
-import patrolboatvert from './assets/patrolboatvert.png';
 
 let setup = gameSetup();
 setup.placeShips();
 
 // TODO: figure out whether the spaces array is better coupled with html divs or javascript ones
+// get file loader for each picture
+// remove css verts
+//

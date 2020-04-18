@@ -38,41 +38,46 @@ const gameSetup = () => {
       if (event.wheelDelta < 0) {
         suffix = '';
         if (img) {
-          img.setAttribute('class', `ship ${shipTypes[0]}${suffix}`);
+          img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
         }
       } else if (event.wheelDelta > 0) {
         suffix = 'vert';
         if (img) {
-          img.setAttribute('class', `ship ${shipTypes[0]}${suffix}`);
+          img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
         }
       }
     });
     let img = document.createElement('div');
-    img.setAttribute('class', `ship ${shipTypes[0]}${suffix}`);
+    img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
     targetElement.appendChild(img);
     let direction = (suffix === 'vert') ? 'vertical' : 'horizontal';
-    placeShip(targetElement, shipTypes[0], startingCoord, direction);
+    placeShip(targetElement, shipTypes[0], suffix, startingCoord, direction);
   };
 
-  const placeShip = (targetElement, shipType, startingCoord, direction) => {
+  let placedShipsNum = humanBoard.ships.length;
+  const placeShip = (targetElement, shipType, suffix, startingCoord, direction) => {
     targetElement.addEventListener('click', () => {
-      let classNameCheck = targetElement.className.length;
-      console.log('number', classNameCheck);
-      if (shipType === 'carrier' && classNameCheck <= 8) {
+      if (shipType === 'carrier') {
         humanBoard.placeShip(5, startingCoord, direction);
-      } else if (shipType === 'battleship' && classNameCheck < 8) {
+        console.log('hopefully placed ship', humanBoard.ships);
+      } else if (shipType === 'battleship') {
         humanBoard.placeShip(4, startingCoord, direction);
-      } else if (shipType === 'destroyer' && classNameCheck < 8) {
+      } else if (shipType === 'destroyer') {
         humanBoard.placeShip(3, startingCoord, direction);
-      } else if (shipType === 'submarine' && classNameCheck < 8) {
+      } else if (shipType === 'submarine') {
         humanBoard.placeShip(3, startingCoord, direction);
-      } else if (shipType === 'patrolboat' && classNameCheck < 8) {
+      } else if (shipType === 'patrolboat') {
         humanBoard.placeShip(2, startingCoord, direction);
       }
 
-      console.log('target: ', targetElement);
-      targetElement.setAttribute('class', `my-space ${shipType}`);
-      shipTypes = shipTypes.splice(0, 1);
+      if (humanBoard.ships.length > placedShipsNum) {
+        let shipImage = document.createElement('div');
+        shipImage.setAttribute('class', `${shipType}${suffix}`);
+        targetElement.appendChild(shipImage);
+        shipTypes.splice(0, 1);
+        placedShipsNum += 1;
+      }
+      console.log('shipTypes: ', shipTypes);
     });
   };
 
