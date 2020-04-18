@@ -38,99 +38,99 @@ img {
       min-height: 25.5px;
       min-width: 25.5px;
       position: relative;
+    }
 
-      .carrier,
-      .battleship,
-      .destroyer,
-      .submarine,
-      .patrolboat {
-        position: absolute;
-        min-height: 25.5px;
-        height: $my-space-dimension;
-        z-index: 100 !important;
-        overflow: visible;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-      }
+    .carrier,
+    .battleship,
+    .destroyer,
+    .submarine,
+    .patrolboat {
+      position: absolute !important;
+      min-height: 25.5px;
+      height: $my-space-dimension;
+      z-index: 100 !important;
+      overflow: visible;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
 
-      .carrier {
-        background-image: url('./assets/carrier.png');
-        width: ($my-space-dimension * 5);
-        min-width: (25.5px *5);
-      }
+    .carrier {
+      background-image: url('./assets/carrier.png');
+      width: ($my-space-dimension * 5);
+      min-width: (25.5px *5);
+    }
 
-      .battleship {
-        background-image: url('./assets/battleship.png');
-        width: ($my-space-dimension * 4);
-        min-width: (25.5px *4);
-      }
+    .battleship {
+      background-image: url('./assets/battleship.png');
+      width: ($my-space-dimension * 4);
+      min-width: (25.5px *4);
+    }
 
-      .destroyer,
-      .submarine {
-        width: ($my-space-dimension * 3);
-        min-width: (25.5px *3);
-      }
+    .destroyer,
+    .submarine {
+      width: ($my-space-dimension * 3);
+      min-width: (25.5px *3);
+    }
 
-      .destroyer {
-        background-image: url('./assets/destroyer.png');
-      }
+    .destroyer {
+      background-image: url('./assets/destroyer.png');
+    }
 
-      .submarine {
-        background-image: url('./assets/submarine.png');
-      }
+    .submarine {
+      background-image: url('./assets/submarine.png');
+    }
 
-      .patrolboat {
-        background-image: url('./assets/patrolboat.png');
-        width: ($my-space-dimension * 2);
-        min-width: (25.5px *2);
-      }
+    .patrolboat {
+      background-image: url('./assets/patrolboat.png');
+      width: ($my-space-dimension * 2);
+      min-width: (25.5px *2);
+    }
 
-      .carriervert,
-      .battleshipvert,
-      .destroyervert,
-      .submarinevert,
-      .patrolboatvert {
-        position: absolute;
-        min-width: 25.5px;
-        width: $my-space-dimension;
-        z-index: 100 !important;
-        overflow: visible;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        bottom: 1px;
-      }
+    .carriervert,
+    .battleshipvert,
+    .destroyervert,
+    .submarinevert,
+    .patrolboatvert {
+      position: absolute;
+      min-width: 25.5px;
+      width: $my-space-dimension;
+      z-index: 100 !important;
+      overflow: visible;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      bottom: 1px;
+    }
 
-      .carriervert {
-        background-image: url('./assets/carriervert.png');
-        height: ($my-space-dimension * 5);
-        min-height: (25.5px * 5);
-      }
+    .carriervert {
+      background-image: url('./assets/carriervert.png');
+      height: ($my-space-dimension * 5);
+      min-height: (25.5px * 5);
+    }
 
-      .battleshipvert {
-        background-image: url('./assets/battleshipvert.png');
-        height: ($my-space-dimension * 4);
-        min-height: (25.5px * 4);
-      }
+    .battleshipvert {
+      background-image: url('./assets/battleshipvert.png');
+      height: ($my-space-dimension * 4);
+      min-height: (25.5px * 4);
+    }
 
-      .destroyervert,
-      .submarinevert {
-        height: ($my-space-dimension * 3);
-        min-height: (25.5px * 3);
-      }
+    .destroyervert,
+    .submarinevert {
+      height: ($my-space-dimension * 3);
+      min-height: (25.5px * 3);
+    }
 
-      .destroyervert {
-        background-image: url('./assets/destroyervert.png');
-      }
+    .destroyervert {
+      background-image: url('./assets/destroyervert.png');
+    }
 
-      .submarinevert {
-        background-image: url('./assets/submarinevert.png');
-      }
+    .submarinevert {
+      background-image: url('./assets/submarinevert.png');
+    }
 
-      .patrolboatvert {
-        background-image: url('./assets/patrolboatvert.png');
-        height: ($my-space-dimension * 2);
-        min-height: (25.5px * 2);
-      }
+    .patrolboatvert {
+      background-image: url('./assets/patrolboatvert.png');
+      height: ($my-space-dimension * 2);
+      min-height: (25.5px * 2);
     }
   }
 

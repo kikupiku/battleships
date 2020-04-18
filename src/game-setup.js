@@ -7,6 +7,7 @@ const gameSetup = () => {
   let human = player();
   let computerBoard = gameboard();
   let humanBoard = gameboard();
+  let shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
   computer.autoPlaceShips(computerBoard);
 
   let placeShips = () => {
@@ -33,7 +34,6 @@ const gameSetup = () => {
 
   let suffix = '';
   const hoverShipOfType = (targetElement, startingCoord) => {
-    const shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
     targetElement.addEventListener('wheel', (event) => {
       if (event.wheelDelta < 0) {
         suffix = '';
@@ -52,23 +52,27 @@ const gameSetup = () => {
     targetElement.appendChild(img);
     let direction = (suffix === 'vert') ? 'vertical' : 'horizontal';
     placeShip(targetElement, shipTypes[0], startingCoord, direction);
-    shipTypes.splice(0, 1);
   };
 
   const placeShip = (targetElement, shipType, startingCoord, direction) => {
     targetElement.addEventListener('click', () => {
-      if (shipType === 'carrier') {
+      let classNameCheck = targetElement.className.length;
+      console.log('number', classNameCheck);
+      if (shipType === 'carrier' && classNameCheck <= 8) {
         humanBoard.placeShip(5, startingCoord, direction);
-      } else if (shipType === 'battleship') {
+      } else if (shipType === 'battleship' && classNameCheck < 8) {
         humanBoard.placeShip(4, startingCoord, direction);
-      } else if (shipType === 'destroyer') {
+      } else if (shipType === 'destroyer' && classNameCheck < 8) {
         humanBoard.placeShip(3, startingCoord, direction);
-      } else if (shipType === 'submarine') {
+      } else if (shipType === 'submarine' && classNameCheck < 8) {
         humanBoard.placeShip(3, startingCoord, direction);
-      } else if (shipType === 'patrolboat') {
+      } else if (shipType === 'patrolboat' && classNameCheck < 8) {
         humanBoard.placeShip(2, startingCoord, direction);
       }
 
+      console.log('target: ', targetElement);
+      targetElement.setAttribute('class', `my-space ${shipType}`);
+      shipTypes = shipTypes.splice(0, 1);
     });
   };
 
