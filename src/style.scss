@@ -28,6 +28,7 @@ img {
     border: 2px solid $my-color;
     min-height: 260px;
     min-width: 260px;
+    position: relative;
 
     .my-space {
       height: $my-space-dimension;
@@ -149,6 +150,23 @@ img {
       border: 2px solid $enemy-color;
       min-height: 400px;
       min-width: 400px;
+
+      .game-status-container {
+        background: white;
+        height: 54.48vh;
+        width: 55vh;
+        position: absolute;
+        z-index: 100;
+        min-height: 400px;
+        min-width: 400px;
+      }
+
+      .game-status {
+        width: 80%;
+        margin: 50px auto;
+        text-align: center;
+        font-family: sans-serif;
+      }
 
       .enemy-space {
         height: 5.38vh;

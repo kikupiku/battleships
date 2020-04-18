@@ -9,6 +9,7 @@ const gameboard = () => {
 
   let placeShip = (length, startingCoord, direction) => {
     let shipPartChecker = checkPlacementValidity(length, startingCoord, direction);
+    console.log(shipPartChecker, length);
     if (shipPartChecker === length) {
       ships.push(ship(length, startingCoord, direction));
       spaces.forEach((space, i) => {
@@ -42,6 +43,7 @@ const gameboard = () => {
 
   const checkPlacementValidity = (length, startingCoord, direction) => {
     let shipPartChecker = 0;
+    console.log('length: ', length, startingCoord, direction);
     for (i = 0; i < length; i++) {
       if (direction === 'horizontal' && (startingCoord + (i * 10)) < 100) {    //check if outside board
         if (spaces[startingCoord + (i * 10)].hasShipPart == false) {         //checking for occupancy
