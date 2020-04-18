@@ -352,6 +352,7 @@ const gameSetup = () => {
   let human = player();
   let computerBoard = gameboard();
   let humanBoard = gameboard();
+  let shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
   computer.autoPlaceShips(computerBoard);
 
   let placeShips = () => {
@@ -378,7 +379,6 @@ const gameSetup = () => {
 
   let suffix = '';
   const hoverShipOfType = (targetElement, startingCoord) => {
-    const shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
     targetElement.addEventListener('wheel', (event) => {
       if (event.wheelDelta < 0) {
         suffix = '';
@@ -397,23 +397,27 @@ const gameSetup = () => {
     targetElement.appendChild(img);
     let direction = (suffix === 'vert') ? 'vertical' : 'horizontal';
     placeShip(targetElement, shipTypes[0], startingCoord, direction);
-    shipTypes.splice(0, 1);
   };
 
   const placeShip = (targetElement, shipType, startingCoord, direction) => {
     targetElement.addEventListener('click', () => {
-      if (shipType === 'carrier') {
+      let classNameCheck = targetElement.className.length;
+      console.log('number', classNameCheck);
+      if (shipType === 'carrier' && classNameCheck <= 8) {
         humanBoard.placeShip(5, startingCoord, direction);
-      } else if (shipType === 'battleship') {
+      } else if (shipType === 'battleship' && classNameCheck < 8) {
         humanBoard.placeShip(4, startingCoord, direction);
-      } else if (shipType === 'destroyer') {
+      } else if (shipType === 'destroyer' && classNameCheck < 8) {
         humanBoard.placeShip(3, startingCoord, direction);
-      } else if (shipType === 'submarine') {
+      } else if (shipType === 'submarine' && classNameCheck < 8) {
         humanBoard.placeShip(3, startingCoord, direction);
-      } else if (shipType === 'patrolboat') {
+      } else if (shipType === 'patrolboat' && classNameCheck < 8) {
         humanBoard.placeShip(2, startingCoord, direction);
       }
 
+      console.log('target: ', targetElement);
+      targetElement.setAttribute('class', `my-space ${shipType}`);
+      shipTypes = shipTypes.splice(0, 1);
     });
   };
 
@@ -803,7 +807,7 @@ var ___CSS_LOADER_URL_REPLACEMENT_7___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_
 var ___CSS_LOADER_URL_REPLACEMENT_8___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_8___);
 var ___CSS_LOADER_URL_REPLACEMENT_9___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_9___);
 // Module
-exports.push([module.i, "body{box-sizing:border-box}img{border:1px solid white}.container{width:850px;margin:0 auto}.container .my-board,.container .enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.container .my-board{height:35.7vh;width:35.9vh;border:2px solid #318499;min-height:260px;min-width:260px;position:relative}.container .my-board .my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #318499;border-bottom:0.5px solid #318499;min-height:25.5px;min-width:25.5px;position:relative}.container .my-board .my-space .carrier,.container .my-board .my-space .battleship,.container .my-board .my-space .destroyer,.container .my-board .my-space .submarine,.container .my-board .my-space .patrolboat{position:absolute;min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.container .my-board .my-space .carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");width:17.5vh;min-width:127.5px}.container .my-board .my-space .battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");width:14vh;min-width:102px}.container .my-board .my-space .destroyer,.container .my-board .my-space .submarine{width:10.5vh;min-width:76.5px}.container .my-board .my-space .destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ")}.container .my-board .my-space .submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ")}.container .my-board .my-space .patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");width:7vh;min-width:51px}.container .my-board .my-space .carriervert,.container .my-board .my-space .battleshipvert,.container .my-board .my-space .destroyervert,.container .my-board .my-space .submarinevert,.container .my-board .my-space .patrolboatvert{position:absolute;min-width:25.5px;width:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;bottom:1px}.container .my-board .my-space .carriervert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ");height:17.5vh;min-height:127.5px}.container .my-board .my-space .battleshipvert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");height:14vh;min-height:102px}.container .my-board .my-space .destroyervert,.container .my-board .my-space .submarinevert{height:10.5vh;min-height:76.5px}.container .my-board .my-space .destroyervert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.container .my-board .my-space .submarinevert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}.container .my-board .my-space .patrolboatvert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ");height:7vh;min-height:51px}.container .enemy-board-wrapper{display:flex;width:100%}.container .enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.container .enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .game-status-container{background:white;height:54.48vh;width:55vh;position:absolute;z-index:100;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .game-status{width:80%;margin:50px auto;text-align:center;font-family:sans-serif}.container .enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px}.container .enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}\n", ""]);
+exports.push([module.i, "body{box-sizing:border-box}img{border:1px solid white}.container{width:850px;margin:0 auto}.container .my-board,.container .enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.container .my-board{height:35.7vh;width:35.9vh;border:2px solid #318499;min-height:260px;min-width:260px;position:relative}.container .my-board .my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #318499;border-bottom:0.5px solid #318499;min-height:25.5px;min-width:25.5px;position:relative}.container .my-board .carrier,.container .my-board .battleship,.container .my-board .destroyer,.container .my-board .submarine,.container .my-board .patrolboat{position:absolute !important;min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.container .my-board .carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");width:17.5vh;min-width:127.5px}.container .my-board .battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");width:14vh;min-width:102px}.container .my-board .destroyer,.container .my-board .submarine{width:10.5vh;min-width:76.5px}.container .my-board .destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ")}.container .my-board .submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ")}.container .my-board .patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");width:7vh;min-width:51px}.container .my-board .carriervert,.container .my-board .battleshipvert,.container .my-board .destroyervert,.container .my-board .submarinevert,.container .my-board .patrolboatvert{position:absolute;min-width:25.5px;width:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;bottom:1px}.container .my-board .carriervert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ");height:17.5vh;min-height:127.5px}.container .my-board .battleshipvert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");height:14vh;min-height:102px}.container .my-board .destroyervert,.container .my-board .submarinevert{height:10.5vh;min-height:76.5px}.container .my-board .destroyervert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.container .my-board .submarinevert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}.container .my-board .patrolboatvert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ");height:7vh;min-height:51px}.container .enemy-board-wrapper{display:flex;width:100%}.container .enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.container .enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .game-status-container{background:white;height:54.48vh;width:55vh;position:absolute;z-index:100;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .game-status{width:80%;margin:50px auto;text-align:center;font-family:sans-serif}.container .enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px}.container .enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}\n", ""]);
 // Exports
 module.exports = exports;
 
