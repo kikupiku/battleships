@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -96,7 +96,7 @@ __webpack_require__.r(__webpack_exports__);
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const ship = __webpack_require__(6);
+const ship = __webpack_require__(11);
 
 const gameboard = () => {
   let spaces = [];
@@ -107,6 +107,7 @@ const gameboard = () => {
 
   let placeShip = (length, startingCoord, direction) => {
     let shipPartChecker = checkPlacementValidity(length, startingCoord, direction);
+    console.log(shipPartChecker, length);
     if (shipPartChecker === length) {
       ships.push(ship(length, startingCoord, direction));
       spaces.forEach((space, i) => {
@@ -140,6 +141,7 @@ const gameboard = () => {
 
   const checkPlacementValidity = (length, startingCoord, direction) => {
     let shipPartChecker = 0;
+    console.log('length: ', length, startingCoord, direction);
     for (i = 0; i < length; i++) {
       if (direction === 'horizontal' && (startingCoord + (i * 10)) < 100) {    //check if outside board
         if (spaces[startingCoord + (i * 10)].hasShipPart == false) {         //checking for occupancy
@@ -204,6 +206,46 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 /* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "2acdd83cade3b04a2776bcb790ee93db.png");
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "f802917b8b9d607acba1980533b39fd2.png");
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "d952654103828e4f370caf4ab0b42bc7.png");
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "e515d4facdde3b7fd128a60a0a1635a5.png");
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "a542e9695d6d2a0fd2a3557c8a147d68.png");
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports) {
 
 const ship = (length, startingCoord, direction) => {
@@ -247,7 +289,7 @@ module.exports = ship;
 
 
 /***/ }),
-/* 7 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const gameboard = __webpack_require__(1);
@@ -298,15 +340,14 @@ module.exports = player;
 
 
 /***/ }),
-/* 8 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const player = __webpack_require__(7);
+const player = __webpack_require__(12);
 const gameboard = __webpack_require__(1);
 const destroyer = __webpack_require__(0);
 
 const gameSetup = () => {
-  const shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
   let computer = player();
   let human = player();
   let computerBoard = gameboard();
@@ -314,42 +355,66 @@ const gameSetup = () => {
   computer.autoPlaceShips(computerBoard);
 
   let placeShips = () => {
+    const status = document.getElementById('game-status');
+    status.innerHTML = 'Welcome to the game of Battleship! </br> </br> Let\'s start by putting ships on your board. </br> </br> Scroll up and down to change ship position </br> </br> Click to place.';
     const myBoard = document.getElementById('my-board');
     const mySpaces = document.getElementsByClassName('my-space');
     myBoard.addEventListener('mouseover', (e) => {
+      console.log(humanBoard);
       for (let i = 0; i < 100; i++) {
         if (mySpaces[i] === e.target) {
+          let coord = i;
+          console.log('coord: ', i);
           let img = document.getElementsByClassName('ship')[0];
           if (img) {
             img.parentElement.removeChild(img);
           }
 
-          addShipOfType(shipTypes[0], e.target);
+          hoverShipOfType(e.target, coord);
         }
       }
     });
   };
 
   let suffix = '';
-  const addShipOfType = (shipType, targetElement) => {
+  const hoverShipOfType = (targetElement, startingCoord) => {
+    const shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
     targetElement.addEventListener('wheel', (event) => {
-      if (event.wheelDelta === -120) {
+      if (event.wheelDelta < 0) {
         suffix = '';
         if (img) {
-          img.parentElement.removeChild(img);
+          img.setAttribute('class', `ship ${shipTypes[0]}${suffix}`);
         }
-        console.log('horizontal');
-      } else if (event.wheelDelta === 120) {
+      } else if (event.wheelDelta > 0) {
         suffix = 'vert';
         if (img) {
-          img.parentElement.removeChild(img);
+          img.setAttribute('class', `ship ${shipTypes[0]}${suffix}`);
         }
       }
     });
-    console.log(suffix);
     let img = document.createElement('div');
-    img.setAttribute('class', `ship ${shipType}${suffix}`);
+    img.setAttribute('class', `ship ${shipTypes[0]}${suffix}`);
     targetElement.appendChild(img);
+    let direction = (suffix === 'vert') ? 'vertical' : 'horizontal';
+    placeShip(targetElement, shipTypes[0], startingCoord, direction);
+    shipTypes.splice(0, 1);
+  };
+
+  const placeShip = (targetElement, shipType, startingCoord, direction) => {
+    targetElement.addEventListener('click', () => {
+      if (shipType === 'carrier') {
+        humanBoard.placeShip(5, startingCoord, direction);
+      } else if (shipType === 'battleship') {
+        humanBoard.placeShip(4, startingCoord, direction);
+      } else if (shipType === 'destroyer') {
+        humanBoard.placeShip(3, startingCoord, direction);
+      } else if (shipType === 'submarine') {
+        humanBoard.placeShip(3, startingCoord, direction);
+      } else if (shipType === 'patrolboat') {
+        humanBoard.placeShip(2, startingCoord, direction);
+      }
+
+    });
   };
 
   return {
@@ -361,31 +426,31 @@ module.exports = gameSetup;
 
 
 /***/ }),
-/* 9 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_gameboard_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
+/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11);
 /* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ship_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7);
+/* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(12);
 /* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_player_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8);
+/* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
 /* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_game_setup_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _assets_carrier_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2);
 /* harmony import */ var _assets_battleship_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3);
 /* harmony import */ var _assets_destroyer_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(0);
 /* harmony import */ var _assets_submarine_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4);
 /* harmony import */ var _assets_patrolboat_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(5);
-/* harmony import */ var _assets_carriervert_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(15);
-/* harmony import */ var _assets_battleshipvert_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(16);
-/* harmony import */ var _assets_destroyervert_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(17);
-/* harmony import */ var _assets_submarinevert_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(18);
-/* harmony import */ var _assets_patrolboatvert_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(19);
+/* harmony import */ var _assets_carriervert_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(6);
+/* harmony import */ var _assets_battleshipvert_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7);
+/* harmony import */ var _assets_destroyervert_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(8);
+/* harmony import */ var _assets_submarinevert_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(9);
+/* harmony import */ var _assets_patrolboatvert_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(10);
 
 
 
@@ -409,11 +474,11 @@ setup.placeShips();
 
 
 /***/ }),
-/* 10 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var api = __webpack_require__(11);
-            var content = __webpack_require__(12);
+var api = __webpack_require__(16);
+            var content = __webpack_require__(17);
 
             content = content.__esModule ? content.default : content;
 
@@ -435,7 +500,7 @@ var exported = content.locals ? content.locals : {};
 module.exports = exported;
 
 /***/ }),
-/* 11 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -710,22 +775,22 @@ module.exports = function (list, options) {
 };
 
 /***/ }),
-/* 12 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(13);
-var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__(14);
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(18);
+var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__(19);
 var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(2);
 var ___CSS_LOADER_URL_IMPORT_1___ = __webpack_require__(3);
 var ___CSS_LOADER_URL_IMPORT_2___ = __webpack_require__(0);
 var ___CSS_LOADER_URL_IMPORT_3___ = __webpack_require__(4);
 var ___CSS_LOADER_URL_IMPORT_4___ = __webpack_require__(5);
-var ___CSS_LOADER_URL_IMPORT_5___ = __webpack_require__(15);
-var ___CSS_LOADER_URL_IMPORT_6___ = __webpack_require__(16);
-var ___CSS_LOADER_URL_IMPORT_7___ = __webpack_require__(17);
-var ___CSS_LOADER_URL_IMPORT_8___ = __webpack_require__(18);
-var ___CSS_LOADER_URL_IMPORT_9___ = __webpack_require__(19);
+var ___CSS_LOADER_URL_IMPORT_5___ = __webpack_require__(6);
+var ___CSS_LOADER_URL_IMPORT_6___ = __webpack_require__(7);
+var ___CSS_LOADER_URL_IMPORT_7___ = __webpack_require__(8);
+var ___CSS_LOADER_URL_IMPORT_8___ = __webpack_require__(9);
+var ___CSS_LOADER_URL_IMPORT_9___ = __webpack_require__(10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_1___);
@@ -738,13 +803,13 @@ var ___CSS_LOADER_URL_REPLACEMENT_7___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_
 var ___CSS_LOADER_URL_REPLACEMENT_8___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_8___);
 var ___CSS_LOADER_URL_REPLACEMENT_9___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_9___);
 // Module
-exports.push([module.i, "body{box-sizing:border-box}img{border:1px solid white}.container{width:850px;margin:0 auto}.container .my-board,.container .enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.container .my-board{height:35.7vh;width:35.9vh;border:2px solid #318499;min-height:260px;min-width:260px}.container .my-board .my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #318499;border-bottom:0.5px solid #318499;min-height:25.5px;min-width:25.5px;position:relative}.container .my-board .my-space .carrier,.container .my-board .my-space .battleship,.container .my-board .my-space .destroyer,.container .my-board .my-space .submarine,.container .my-board .my-space .patrolboat{position:absolute;min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.container .my-board .my-space .carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");width:17.5vh;min-width:127.5px}.container .my-board .my-space .battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");width:14vh;min-width:102px}.container .my-board .my-space .destroyer,.container .my-board .my-space .submarine{width:10.5vh;min-width:76.5px}.container .my-board .my-space .destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ")}.container .my-board .my-space .submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ")}.container .my-board .my-space .patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");width:7vh;min-width:51px}.container .my-board .my-space .carriervert,.container .my-board .my-space .battleshipvert,.container .my-board .my-space .destroyervert,.container .my-board .my-space .submarinevert,.container .my-board .my-space .patrolboatvert{position:absolute;min-width:25.5px;width:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;bottom:1px}.container .my-board .my-space .carriervert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ");height:17.5vh;min-height:127.5px}.container .my-board .my-space .battleshipvert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");height:14vh;min-height:102px}.container .my-board .my-space .destroyervert,.container .my-board .my-space .submarinevert{height:10.5vh;min-height:76.5px}.container .my-board .my-space .destroyervert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.container .my-board .my-space .submarinevert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}.container .my-board .my-space .patrolboatvert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ");height:7vh;min-height:51px}.container .enemy-board-wrapper{display:flex;width:100%}.container .enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.container .enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px}.container .enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}\n", ""]);
+exports.push([module.i, "body{box-sizing:border-box}img{border:1px solid white}.container{width:850px;margin:0 auto}.container .my-board,.container .enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.container .my-board{height:35.7vh;width:35.9vh;border:2px solid #318499;min-height:260px;min-width:260px;position:relative}.container .my-board .my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #318499;border-bottom:0.5px solid #318499;min-height:25.5px;min-width:25.5px;position:relative}.container .my-board .my-space .carrier,.container .my-board .my-space .battleship,.container .my-board .my-space .destroyer,.container .my-board .my-space .submarine,.container .my-board .my-space .patrolboat{position:absolute;min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.container .my-board .my-space .carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");width:17.5vh;min-width:127.5px}.container .my-board .my-space .battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");width:14vh;min-width:102px}.container .my-board .my-space .destroyer,.container .my-board .my-space .submarine{width:10.5vh;min-width:76.5px}.container .my-board .my-space .destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ")}.container .my-board .my-space .submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ")}.container .my-board .my-space .patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");width:7vh;min-width:51px}.container .my-board .my-space .carriervert,.container .my-board .my-space .battleshipvert,.container .my-board .my-space .destroyervert,.container .my-board .my-space .submarinevert,.container .my-board .my-space .patrolboatvert{position:absolute;min-width:25.5px;width:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;bottom:1px}.container .my-board .my-space .carriervert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ");height:17.5vh;min-height:127.5px}.container .my-board .my-space .battleshipvert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");height:14vh;min-height:102px}.container .my-board .my-space .destroyervert,.container .my-board .my-space .submarinevert{height:10.5vh;min-height:76.5px}.container .my-board .my-space .destroyervert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.container .my-board .my-space .submarinevert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}.container .my-board .my-space .patrolboatvert{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ");height:7vh;min-height:51px}.container .enemy-board-wrapper{display:flex;width:100%}.container .enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.container .enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .game-status-container{background:white;height:54.48vh;width:55vh;position:absolute;z-index:100;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .game-status{width:80%;margin:50px auto;text-align:center;font-family:sans-serif}.container .enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px}.container .enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}\n", ""]);
 // Exports
 module.exports = exports;
 
 
 /***/ }),
-/* 13 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -844,7 +909,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 14 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -882,46 +947,6 @@ module.exports = function (url, options) {
 
   return url;
 };
-
-/***/ }),
-/* 15 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "2acdd83cade3b04a2776bcb790ee93db.png");
-
-/***/ }),
-/* 16 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "f802917b8b9d607acba1980533b39fd2.png");
-
-/***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "d952654103828e4f370caf4ab0b42bc7.png");
-
-/***/ }),
-/* 18 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "e515d4facdde3b7fd128a60a0a1635a5.png");
-
-/***/ }),
-/* 19 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "a542e9695d6d2a0fd2a3557c8a147d68.png");
 
 /***/ })
 /******/ ]);
