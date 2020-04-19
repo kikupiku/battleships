@@ -324,6 +324,8 @@ const gameSetup = () => {
     for (i = 0; i < mySpaces.length; i++) {
       mySpaces[i].addEventListener('click', placeShip);
     }
+
+    myBoard.addEventListener('wheel', changeDirection);
   };
 
   const placeShip = (e) => {
@@ -349,6 +351,16 @@ const gameSetup = () => {
       shipImage.setAttribute('class', `${shipType} ${suffix}`);
       e.target.appendChild(shipImage);
       shipTypes.splice(0, 1);
+    }
+  };
+
+  const changeDirection = (event) => {
+    if (event.wheelDelta < 0) {
+      suffix = '';
+      direction = 'horizontal';
+    } else if (event.wheelDelta > 0) {
+      suffix = 'vert';
+      direction = 'vertical';
     }
   };
 
