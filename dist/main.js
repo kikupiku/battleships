@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -96,7 +96,7 @@ __webpack_require__.r(__webpack_exports__);
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const ship = __webpack_require__(11);
+const ship = __webpack_require__(6);
 
 const gameboard = () => {
   let spaces = [];
@@ -205,12 +205,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "f565c4b5f2c3ded13332ae4b8f7aa018.png");
 
 /***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */
+/* 6 */
 /***/ (function(module, exports) {
 
 const ship = (length, startingCoord, direction) => {
@@ -254,7 +249,7 @@ module.exports = ship;
 
 
 /***/ }),
-/* 12 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const gameboard = __webpack_require__(1);
@@ -305,95 +300,56 @@ module.exports = player;
 
 
 /***/ }),
-/* 13 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const player = __webpack_require__(12);
+const player = __webpack_require__(7);
 const gameboard = __webpack_require__(1);
 const destroyer = __webpack_require__(0);
 
 const gameSetup = () => {
+  const myBoard = document.getElementById('my-board');
+  const mySpaces = Array.from(document.getElementsByClassName('my-space'));
   let computer = player();
   let human = player();
   let computerBoard = gameboard();
   let humanBoard = gameboard();
   let shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
-  computer.autoPlaceShips(computerBoard);
-
-  let placeShips = () => {
-    const status = document.getElementById('game-status');
-    status.innerHTML = 'Welcome to the game of Battleship! </br> </br> Let\'s start by putting ships on your board. </br> </br> Scroll up and down to change ship position </br> </br> Click to place.';
-    const myBoard = document.getElementById('my-board');
-    const mySpaces = document.getElementsByClassName('my-space');
-    myBoard.addEventListener('mouseover', (e) => {
-      for (let i = 0; i < 100; i++) {
-        if (mySpaces[i] === e.target) {
-          let coord = i;
-          console.log('coord: ', i);
-          let img = document.getElementsByClassName('ship')[0];
-          if (img) {
-            img.parentElement.removeChild(img);
-          }
-
-          handleHover(e.target, coord);
-        }
-      }
-    });
-  };
 
   let suffix = '';
-  let direction = '';
-  const handleHover = (targetElement, startingCoord) => {
-    console.log(humanBoard.spaces[0]);
-    targetElement.addEventListener('wheel', (event) => {
-      if (event.wheelDelta < 0) {
-        suffix = '';
-        direction = 'horizontal';
-        if (img) {
-          img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
-        }
-      } else if (event.wheelDelta > 0) {
-        suffix = 'vert';
-        direction = 'vertical';
-        if (img) {
-          img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
-        }
-      }
-    });
-    let img = document.createElement('div');
-    img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
-    targetElement.appendChild(img);
-    placeShip(targetElement, shipTypes[0], suffix, startingCoord, direction);
+  let direction = 'horizontal';
+  computer.autoPlaceShips(computerBoard);
+
+  const placeShips = () => {
+    for (i = 0; i < mySpaces.length; i++) {
+      mySpaces[i].addEventListener('click', placeShip);
+    }
   };
 
-  let placedShipsNum = humanBoard.ships.length;
-  const placeShip = (targetElement, shipType, suffix, startingCoord, direction) => {
-    targetElement.addEventListener('click', () => {
-      if (shipType === 'carrier') {
-        console.log('dir inside: ', direction);
-        humanBoard.placeShip(5, startingCoord, direction);
-      } else if (shipType === 'battleship') {
-        humanBoard.placeShip(4, startingCoord, direction);
-      } else if (shipType === 'destroyer') {
-        humanBoard.placeShip(3, startingCoord, direction);
-      } else if (shipType === 'submarine') {
-        humanBoard.placeShip(3, startingCoord, direction);
-      } else if (shipType === 'patrolboat') {
-        humanBoard.placeShip(2, startingCoord, direction);
-      }
+  const placeShip = (e) => {
+    let spaceIndex = mySpaces.indexOf(e.target);
+    let shipType = shipTypes[0];
+    let placedShipsNum = humanBoard.ships.length;
 
-      if (humanBoard.ships.length > placedShipsNum) {
-        targetElement.innerHTML = '';
-        let shipImage = document.createElement('div');
-        console.log('direction: ', direction, suffix);
-        shipImage.setAttribute('class', `${shipType} ${suffix}`);
-        targetElement.appendChild(shipImage);
-        shipTypes.splice(0, 1);
-        placedShipsNum += 1;
-      }
+    if (shipType === 'carrier') {
+      humanBoard.placeShip(5, spaceIndex, direction);
+    } else if (shipType === 'battleship') {
+      humanBoard.placeShip(4, spaceIndex, direction);
+    } else if (shipType === 'destroyer') {
+      humanBoard.placeShip(3, spaceIndex, direction);
+    } else if (shipType === 'submarine') {
+      humanBoard.placeShip(3, spaceIndex, direction);
+    } else if (shipType === 'patrolboat') {
+      humanBoard.placeShip(2, spaceIndex, direction);
+    }
 
-      console.log('shipTypes: ', shipTypes);
-    });
+    if (humanBoard.ships.length > placedShipsNum) {
+      console.log('placing ship');
+      let shipImage = document.createElement('div');
+      shipImage.setAttribute('class', `${shipType} ${suffix}`);
+      e.target.appendChild(shipImage);
+      shipTypes.splice(0, 1);
+    }
   };
 
   return {
@@ -405,20 +361,20 @@ module.exports = gameSetup;
 
 
 /***/ }),
-/* 14 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_gameboard_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11);
+/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
 /* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ship_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(12);
+/* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7);
 /* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_player_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
+/* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8);
 /* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_game_setup_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _assets_carrier_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2);
 /* harmony import */ var _assets_battleship_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3);
@@ -443,11 +399,11 @@ setup.placeShips();
 
 
 /***/ }),
-/* 15 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var api = __webpack_require__(16);
-            var content = __webpack_require__(17);
+var api = __webpack_require__(11);
+            var content = __webpack_require__(12);
 
             content = content.__esModule ? content.default : content;
 
@@ -469,7 +425,7 @@ var exported = content.locals ? content.locals : {};
 module.exports = exported;
 
 /***/ }),
-/* 16 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -744,12 +700,12 @@ module.exports = function (list, options) {
 };
 
 /***/ }),
-/* 17 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(18);
-var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__(19);
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(13);
+var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__(14);
 var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(2);
 var ___CSS_LOADER_URL_IMPORT_1___ = __webpack_require__(3);
 var ___CSS_LOADER_URL_IMPORT_2___ = __webpack_require__(0);
@@ -768,7 +724,7 @@ module.exports = exports;
 
 
 /***/ }),
-/* 18 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -868,7 +824,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 19 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
