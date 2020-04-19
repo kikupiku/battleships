@@ -281,7 +281,7 @@ const player = () => {
     const lengths = [2, 3, 3, 4, 5];
     lengths.forEach((length, i) => {
       while (board.ships.length <= i) {
-        board.placeShip(length, Math.floor(Math.random() * 100), directions[Math.floor(Math.random()) + 1]);
+        board.placeShip(length, Math.floor(Math.random() * 100), directions[Math.round(Math.random())]);
       }
     });
   };
@@ -326,7 +326,6 @@ const gameSetup = () => {
     const myBoard = document.getElementById('my-board');
     const mySpaces = document.getElementsByClassName('my-space');
     myBoard.addEventListener('mouseover', (e) => {
-      console.log(humanBoard);
       for (let i = 0; i < 100; i++) {
         if (mySpaces[i] === e.target) {
           let coord = i;
@@ -336,22 +335,26 @@ const gameSetup = () => {
             img.parentElement.removeChild(img);
           }
 
-          hoverShipOfType(e.target, coord);
+          handleHover(e.target, coord);
         }
       }
     });
   };
 
   let suffix = '';
-  const hoverShipOfType = (targetElement, startingCoord) => {
+  let direction = '';
+  const handleHover = (targetElement, startingCoord) => {
+    console.log(humanBoard.spaces[0]);
     targetElement.addEventListener('wheel', (event) => {
       if (event.wheelDelta < 0) {
         suffix = '';
+        direction = 'horizontal';
         if (img) {
           img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
         }
       } else if (event.wheelDelta > 0) {
         suffix = 'vert';
+        direction = 'vertical';
         if (img) {
           img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
         }
@@ -360,7 +363,6 @@ const gameSetup = () => {
     let img = document.createElement('div');
     img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
     targetElement.appendChild(img);
-    let direction = (suffix === 'vert') ? 'vertical' : 'horizontal';
     placeShip(targetElement, shipTypes[0], suffix, startingCoord, direction);
   };
 
@@ -368,8 +370,8 @@ const gameSetup = () => {
   const placeShip = (targetElement, shipType, suffix, startingCoord, direction) => {
     targetElement.addEventListener('click', () => {
       if (shipType === 'carrier') {
+        console.log('dir inside: ', direction);
         humanBoard.placeShip(5, startingCoord, direction);
-        console.log('hopefully placed ship', humanBoard.ships);
       } else if (shipType === 'battleship') {
         humanBoard.placeShip(4, startingCoord, direction);
       } else if (shipType === 'destroyer') {
@@ -381,12 +383,15 @@ const gameSetup = () => {
       }
 
       if (humanBoard.ships.length > placedShipsNum) {
+        targetElement.innerHTML = '';
         let shipImage = document.createElement('div');
-        shipImage.setAttribute('class', `${shipType}${suffix}`);
+        console.log('direction: ', direction, suffix);
+        shipImage.setAttribute('class', `${shipType} ${suffix}`);
         targetElement.appendChild(shipImage);
         shipTypes.splice(0, 1);
         placedShipsNum += 1;
       }
+
       console.log('shipTypes: ', shipTypes);
     });
   };
@@ -434,10 +439,7 @@ __webpack_require__.r(__webpack_exports__);
 let setup = _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default()();
 setup.placeShips();
 
-// TODO: figure out whether the spaces array is better coupled with html divs or javascript ones
-// get file loader for each picture
-// remove css verts
-//
+// check why all computer ships are vertical
 
 
 /***/ }),
@@ -760,7 +762,7 @@ var ___CSS_LOADER_URL_REPLACEMENT_2___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_
 var ___CSS_LOADER_URL_REPLACEMENT_3___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_3___);
 var ___CSS_LOADER_URL_REPLACEMENT_4___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_4___);
 // Module
-exports.push([module.i, "body{box-sizing:border-box}img{border:1px solid white}.container{width:850px;margin:0 auto}.container .my-board,.container .enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.container .my-board{height:35.7vh;width:35.9vh;border:2px solid #318499;min-height:260px;min-width:260px;position:relative}.container .my-board .my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #318499;border-bottom:0.5px solid #318499;min-height:25.5px;min-width:25.5px;position:relative}.container .my-board .carrier,.container .my-board .battleship,.container .my-board .destroyer,.container .my-board .submarine,.container .my-board .patrolboat{min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.container .my-board .carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");width:17.5vh;min-width:127.5px}.container .my-board .battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");width:14vh;min-width:102px}.container .my-board .destroyer,.container .my-board .submarine{width:10.5vh;min-width:76.5px}.container .my-board .destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ")}.container .my-board .submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ")}.container .my-board .patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");width:7vh;min-width:51px}.container .my-board .vert{z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;transform:translate(10%, 35%) rotate(-90deg);transform-origin:left}.container .enemy-board-wrapper{display:flex;width:100%}.container .enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.container .enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .game-status-container{background:white;height:54.48vh;width:55vh;position:absolute;z-index:100;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .game-status{width:80%;margin:50px auto;text-align:center;font-family:sans-serif}.container .enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px}.container .enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}\n", ""]);
+exports.push([module.i, "body{box-sizing:border-box}img{border:1px solid white}.container{width:850px;margin:0 auto}.container .my-board,.container .enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.container .my-board{height:35.7vh;width:35.9vh;border:2px solid #318499;min-height:260px;min-width:260px;position:relative}.container .my-board .my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #318499;border-bottom:0.5px solid #318499;min-height:25.5px;min-width:25.5px;position:relative}.container .my-board .carrier,.container .my-board .battleship,.container .my-board .destroyer,.container .my-board .submarine,.container .my-board .patrolboat{min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.container .my-board .carrier:active,.container .my-board .battleship:active,.container .my-board .destroyer:active,.container .my-board .submarine:active,.container .my-board .patrolboat:active{background:grey}.container .my-board .carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");width:17.5vh;min-width:127.5px}.container .my-board .battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");width:14vh;min-width:102px}.container .my-board .destroyer,.container .my-board .submarine{width:10.5vh;min-width:76.5px}.container .my-board .destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ")}.container .my-board .submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ")}.container .my-board .patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");width:7vh;min-width:51px}.container .my-board .vert{z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;transform:translate(10%, 35%) rotate(-90deg);transform-origin:left}.container .enemy-board-wrapper{display:flex;width:100%}.container .enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.container .enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .game-status-container{background:white;height:54.48vh;width:55vh;position:absolute;z-index:100;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .game-status{width:80%;margin:50px auto;text-align:center;font-family:sans-serif}.container .enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px}.container .enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}\n", ""]);
 // Exports
 module.exports = exports;
 
