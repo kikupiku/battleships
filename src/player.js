@@ -12,11 +12,6 @@ const player = () => {
     }
   };
 
-  let randomPlay = () => {
-    randomCoord = Math.floor(Math.random() * 100);
-    attack(randomCoord);
-  };
-
   let autoPlaceShips = (board) => {
     const directions = ['horizontal', 'vertical'];
     const lengths = [2, 3, 3, 4, 5];
@@ -37,7 +32,6 @@ const player = () => {
 
   return {
     attack,
-    randomPlay,
     autoPlaceShips,
   };
 };

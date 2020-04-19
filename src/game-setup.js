@@ -1,6 +1,6 @@
 const player = require('./player.js');
 const gameboard = require('./gameboard.js');
-const game = require('./game.js');
+const beginGame = require('./game.js');
 
 const gameSetup = () => {
   const myBoard = document.getElementById('my-board');
@@ -25,7 +25,6 @@ const gameSetup = () => {
   };
 
   const hover = (e) => {
-    console.log(e.currentTarget);
     let oldImg = document.getElementsByClassName('ship')[0];
     if (oldImg) {
       if (oldImg.parentElement !== e.currentTarget) {
@@ -72,7 +71,7 @@ const gameSetup = () => {
     }
 
     if (shipTypes.length === 0) {
-      beginGame(computer, board, computerBoard, humanBoard);
+      beginGame(computer, human, computerBoard, humanBoard);
     }
   };
 
