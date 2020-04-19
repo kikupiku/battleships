@@ -159,12 +159,22 @@ img {
   }
 }
 
-.fire,
-.water {
+.my {
+  height: $my-space-dimension;
+  width: $my-space-dimension;
+  min-height: 25.5px;
+  min-width: 25.5px;
+}
+
+.enemy {
   height: $enemy-space-dimension;
   width: $enemy-space-dimension;
   min-height: 39.5px;
   min-width: 39.5px;
+}
+
+.fire,
+.water {
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
