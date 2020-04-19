@@ -313,6 +313,7 @@ const gameSetup = () => {
   let suffix = '';
   let direction = 'horizontal';
   computer.autoPlaceShips(computerBoard);
+  console.log(computerBoard.spaces);
 
   const placeShips = () => {
     for (i = 0; i < mySpaces.length; i++) {
@@ -416,6 +417,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_destroyer_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(0);
 /* harmony import */ var _assets_submarine_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4);
 /* harmony import */ var _assets_patrolboat_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(5);
+/* harmony import */ var _assets_fire_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(16);
+/* harmony import */ var _assets_water_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(17);
+
+
 
 
 
@@ -746,14 +751,18 @@ var ___CSS_LOADER_URL_IMPORT_1___ = __webpack_require__(3);
 var ___CSS_LOADER_URL_IMPORT_2___ = __webpack_require__(0);
 var ___CSS_LOADER_URL_IMPORT_3___ = __webpack_require__(4);
 var ___CSS_LOADER_URL_IMPORT_4___ = __webpack_require__(5);
+var ___CSS_LOADER_URL_IMPORT_5___ = __webpack_require__(16);
+var ___CSS_LOADER_URL_IMPORT_6___ = __webpack_require__(17);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_1___);
 var ___CSS_LOADER_URL_REPLACEMENT_2___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_2___);
 var ___CSS_LOADER_URL_REPLACEMENT_3___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_3___);
 var ___CSS_LOADER_URL_REPLACEMENT_4___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_4___);
+var ___CSS_LOADER_URL_REPLACEMENT_5___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_5___);
+var ___CSS_LOADER_URL_REPLACEMENT_6___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_6___);
 // Module
-exports.push([module.i, "body{box-sizing:border-box}img{border:1px solid white}.container{width:850px;margin:0 auto}.container .my-board,.container .enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.container .my-board{height:35.7vh;width:35.9vh;border:2px solid #318499;min-height:260px;min-width:260px;position:relative}.container .my-board .my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #318499;border-bottom:0.5px solid #318499;min-height:25.5px;min-width:25.5px;position:relative}.container .my-board .carrier,.container .my-board .battleship,.container .my-board .destroyer,.container .my-board .submarine,.container .my-board .patrolboat{min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.container .my-board .carrier:active,.container .my-board .battleship:active,.container .my-board .destroyer:active,.container .my-board .submarine:active,.container .my-board .patrolboat:active{background:grey}.container .my-board .carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");width:17.5vh;min-width:127.5px}.container .my-board .battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");width:14vh;min-width:102px}.container .my-board .destroyer,.container .my-board .submarine{width:10.5vh;min-width:76.5px}.container .my-board .destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ")}.container .my-board .submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ")}.container .my-board .patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");width:7vh;min-width:51px}.container .my-board .vert{z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;transform:translate(10%, 35%) rotate(-90deg);transform-origin:left}.container .enemy-board-wrapper{display:flex;width:100%}.container .enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.container .enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .setup-instruction-container{background:white;height:54.48vh;width:55vh;position:absolute;z-index:100;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .setup-instruction{width:80%;margin:50px auto;text-align:center;font-family:sans-serif}.container .enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px}.container .enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}\n", ""]);
+exports.push([module.i, "body{box-sizing:border-box}img{border:1px solid white}.container{width:850px;margin:0 auto}.container #status{width:600px;font-family:sans-serif;text-align:center;font-size:36px;border:1px solid red;margin:10px auto 20px auto}.container .my-board,.container .enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.container .my-board{height:35.7vh;width:35.9vh;border:2px solid #318499;min-height:260px;min-width:260px;position:relative}.container .my-board .my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #318499;border-bottom:0.5px solid #318499;min-height:25.5px;min-width:25.5px;position:relative}.container .my-board .carrier,.container .my-board .battleship,.container .my-board .destroyer,.container .my-board .submarine,.container .my-board .patrolboat{min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.container .my-board .carrier:active,.container .my-board .battleship:active,.container .my-board .destroyer:active,.container .my-board .submarine:active,.container .my-board .patrolboat:active{background:grey}.container .my-board .carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");width:17.5vh;min-width:127.5px}.container .my-board .battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");width:14vh;min-width:102px}.container .my-board .destroyer,.container .my-board .submarine{width:10.5vh;min-width:76.5px}.container .my-board .destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ")}.container .my-board .submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ")}.container .my-board .patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");width:7vh;min-width:51px}.container .my-board .vert{z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;transform:translate(10%, 35%) rotate(-90deg);transform-origin:left}.container .enemy-board-wrapper{display:flex;width:100%}.container .enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.container .enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .setup-instruction-container{background:white;height:54.48vh;width:55vh;position:absolute;z-index:100;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .setup-instruction{width:80%;margin:50px auto;text-align:center;font-family:sans-serif}.container .enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px}.container .enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}.fire,.water{height:5.38vh;width:5.38vh;min-height:39.5px;min-width:39.5px;background-size:100% 100%;background-repeat:no-repeat}.fire{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ")}.water{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ")}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -908,7 +917,9 @@ const gameboard = __webpack_require__(1);
 const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
   const setupInstruction = document.getElementById('setup-instruction');
+  const status = document.getElementById('status');
 
+  status.textContent = 'OK, let\'s start! It\'s your turn to attack';
   setupInstruction.style.display = 'none';
 
   const humanPlay = () => {
@@ -923,6 +934,14 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const placeAttack = (e) => {
     let enemySpaceIndex = enemySpaces.indexOf(e.currentTarget);
     humanPlayer.attack(computerBoard, enemySpaceIndex);
+    let resultOfAttack = document.createElement('div');
+    if (computerBoard.spaces[enemySpaceIndex].hasShipPart) {
+      resultOfAttack.setAttribute('class', 'fire');
+    } else {
+      resultOfAttack.setAttribute('class', 'water');
+    }
+
+    e.currentTarget.appendChild(resultOfAttack);
     console.log('you hit ', enemySpaceIndex);
     computerPlay();
   };
@@ -937,7 +956,7 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   };
 
   const win = player => {
-
+    console.log(`${player} wins!`);
   };
 
   humanPlay();
@@ -945,6 +964,22 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
 
 module.exports = beginGame;
 
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "1be19b25ea4bc9bd255e6b5c64745ba7.png");
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "6c667d2c922ab392f8bf874db196dac1.png");
 
 /***/ })
 /******/ ]);

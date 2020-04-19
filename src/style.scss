@@ -2,6 +2,7 @@ $enemy-color: rgb(116,60,60);
 $my-color: rgb(49,132,153);
 $left-col-width: 35.9vh;
 $my-space-dimension: 3.5vh;
+$enemy-space-dimension: 5.38vh;
 
 body {
   box-sizing: border-box;
@@ -14,6 +15,15 @@ img {
 .container {
   width: 850px;
   margin: 0 auto;
+
+  #status {
+    width: 600px;
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 36px;
+    border: 1px solid red;
+    margin: 10px auto 20px auto;
+  }
 
   .my-board,
   .enemy-board {
@@ -135,8 +145,8 @@ img {
       }
 
       .enemy-space {
-        height: 5.38vh;
-        width: 5.38vh;
+        height: $enemy-space-dimension;
+        width: $enemy-space-dimension;
         border-right: 0.5px solid $enemy-color;
         border-bottom: 0.5px solid $enemy-color;
         min-height: 39.5px;
@@ -147,6 +157,24 @@ img {
       }
     }
   }
+}
+
+.fire,
+.water {
+  height: $enemy-space-dimension;
+  width: $enemy-space-dimension;
+  min-height: 39.5px;
+  min-width: 39.5px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.fire {
+  background-image: url('./assets/fire.png');
+}
+
+.water {
+  background-image: url('./assets/water.png');
 }
 
 @media all and (max-width: 1024px) {

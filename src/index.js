@@ -8,6 +8,8 @@ import battleship from './assets/battleship.png';
 import destroyer from './assets/destroyer.png';
 import submarine from './assets/submarine.png';
 import patrolboat from './assets/patrolboat.png';
+import fire from './assets/fire.png';
+import water from './assets/water.png';
 
 let setup = gameSetup();
 setup.placeShips();

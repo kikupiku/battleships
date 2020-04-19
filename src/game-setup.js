@@ -14,6 +14,7 @@ const gameSetup = () => {
   let suffix = '';
   let direction = 'horizontal';
   computer.autoPlaceShips(computerBoard);
+  console.log(computerBoard.spaces);
 
   const placeShips = () => {
     for (i = 0; i < mySpaces.length; i++) {
