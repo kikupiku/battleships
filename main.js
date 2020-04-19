@@ -386,6 +386,9 @@ const gameSetup = () => {
       suffix = 'vert';
       direction = 'vertical';
     }
+
+    let img = document.getElementsByClassName('ship')[0];
+    img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
   };
 
   return {
