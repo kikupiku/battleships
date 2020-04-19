@@ -17,14 +17,38 @@ const gameSetup = () => {
 
   const placeShips = () => {
     for (i = 0; i < mySpaces.length; i++) {
+      mySpaces[i].addEventListener('mouseover', hover);
       mySpaces[i].addEventListener('click', placeShip);
     }
 
     myBoard.addEventListener('wheel', changeDirection);
   };
 
+  const hover = (e) => {
+    console.log(e.currentTarget);
+    let oldImg = document.getElementsByClassName('ship')[0];
+    if (oldImg) {
+      if (oldImg.parentElement !== e.currentTarget) {
+        removeOldShip(oldImg);
+        addNewShip(e);
+      }
+    } else {
+      addNewShip(e);
+    }
+  };
+
+  const removeOldShip = (oldImg) => {
+    oldImg.parentElement.removeChild(oldImg);
+  };
+
+  const addNewShip = (event) => {
+    let img = document.createElement('div');
+    img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
+    event.currentTarget.appendChild(img);
+  };
+
   const placeShip = (e) => {
-    let spaceIndex = mySpaces.indexOf(e.target);
+    let spaceIndex = mySpaces.indexOf(e.currentTarget);
     let shipType = shipTypes[0];
     let placedShipsNum = humanBoard.ships.length;
 
@@ -44,7 +68,7 @@ const gameSetup = () => {
       console.log('placing ship');
       let shipImage = document.createElement('div');
       shipImage.setAttribute('class', `${shipType} ${suffix}`);
-      e.target.appendChild(shipImage);
+      e.currentTarget.appendChild(shipImage);
       shipTypes.splice(0, 1);
     }
   };
