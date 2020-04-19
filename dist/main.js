@@ -305,7 +305,7 @@ module.exports = player;
 
 const player = __webpack_require__(7);
 const gameboard = __webpack_require__(1);
-const destroyer = __webpack_require__(0);
+const game = __webpack_require__(15);
 
 const gameSetup = () => {
   const myBoard = document.getElementById('my-board');
@@ -370,11 +370,14 @@ const gameSetup = () => {
     }
 
     if (humanBoard.ships.length > placedShipsNum) {
-      console.log('placing ship');
       let shipImage = document.createElement('div');
       shipImage.setAttribute('class', `${shipType} ${suffix}`);
       e.currentTarget.appendChild(shipImage);
       shipTypes.splice(0, 1);
+    }
+
+    if (shipTypes.length === 0) {
+      beginGame(computer, board, computerBoard, humanBoard);
     }
   };
 
@@ -901,6 +904,33 @@ module.exports = function (url, options) {
 
   return url;
 };
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const player = __webpack_require__(7);
+const gameboard = __webpack_require__(1);
+
+const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
+  const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
+
+  const humanPlay = () => {
+    enemySpaces.forEach((enemySpace, i) => {
+      enemySpace.addEventListener('click', placeAttack);
+    });
+  };
+
+  const placeAttack = (e) => {
+    let enemySpaceIndex = enemySpaces.indexOf(e.currentTarget);
+    player.attack(computerBoard, enemySpaceIndex);
+  };
+
+  const computerPlay = () => {
+
+  };
+};
+
 
 /***/ })
 /******/ ]);

@@ -1,6 +1,6 @@
 const player = require('./player.js');
 const gameboard = require('./gameboard.js');
-const destroyer = require('./assets/destroyer.png');
+const game = require('./game.js');
 
 const gameSetup = () => {
   const myBoard = document.getElementById('my-board');
@@ -65,11 +65,14 @@ const gameSetup = () => {
     }
 
     if (humanBoard.ships.length > placedShipsNum) {
-      console.log('placing ship');
       let shipImage = document.createElement('div');
       shipImage.setAttribute('class', `${shipType} ${suffix}`);
       e.currentTarget.appendChild(shipImage);
       shipTypes.splice(0, 1);
+    }
+
+    if (shipTypes.length === 0) {
+      beginGame(computer, board, computerBoard, humanBoard);
     }
   };
 
