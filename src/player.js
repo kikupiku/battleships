@@ -22,7 +22,7 @@ const player = () => {
     const lengths = [2, 3, 3, 4, 5];
     lengths.forEach((length, i) => {
       while (board.ships.length <= i) {
-        board.placeShip(length, Math.floor(Math.random() * 100), directions[Math.floor(Math.random()) + 1]);
+        board.placeShip(length, Math.floor(Math.random() * 100), directions[Math.round(Math.random())]);
       }
     });
   };

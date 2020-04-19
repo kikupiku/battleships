@@ -52,6 +52,10 @@ img {
       overflow: visible;
       background-repeat: no-repeat;
       background-size: 100% 100%;
+
+      &:active {
+        background: grey;
+      }
     }
 
     .carrier {

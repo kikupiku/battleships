@@ -12,7 +12,4 @@ import patrolboat from './assets/patrolboat.png';
 let setup = gameSetup();
 setup.placeShips();
 
-// TODO: figure out whether the spaces array is better coupled with html divs or javascript ones
-// get file loader for each picture
-// remove css verts
-//
+// check why all computer ships are vertical

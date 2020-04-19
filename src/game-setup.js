@@ -16,7 +16,6 @@ const gameSetup = () => {
     const myBoard = document.getElementById('my-board');
     const mySpaces = document.getElementsByClassName('my-space');
     myBoard.addEventListener('mouseover', (e) => {
-      console.log(humanBoard);
       for (let i = 0; i < 100; i++) {
         if (mySpaces[i] === e.target) {
           let coord = i;
@@ -26,22 +25,26 @@ const gameSetup = () => {
             img.parentElement.removeChild(img);
           }
 
-          hoverShipOfType(e.target, coord);
+          handleHover(e.target, coord);
         }
       }
     });
   };
 
   let suffix = '';
-  const hoverShipOfType = (targetElement, startingCoord) => {
+  let direction = '';
+  const handleHover = (targetElement, startingCoord) => {
+    console.log(humanBoard.spaces[0]);
     targetElement.addEventListener('wheel', (event) => {
       if (event.wheelDelta < 0) {
         suffix = '';
+        direction = 'horizontal';
         if (img) {
           img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
         }
       } else if (event.wheelDelta > 0) {
         suffix = 'vert';
+        direction = 'vertical';
         if (img) {
           img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
         }
@@ -50,7 +53,6 @@ const gameSetup = () => {
     let img = document.createElement('div');
     img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
     targetElement.appendChild(img);
-    let direction = (suffix === 'vert') ? 'vertical' : 'horizontal';
     placeShip(targetElement, shipTypes[0], suffix, startingCoord, direction);
   };
 
@@ -58,8 +60,8 @@ const gameSetup = () => {
   const placeShip = (targetElement, shipType, suffix, startingCoord, direction) => {
     targetElement.addEventListener('click', () => {
       if (shipType === 'carrier') {
+        console.log('dir inside: ', direction);
         humanBoard.placeShip(5, startingCoord, direction);
-        console.log('hopefully placed ship', humanBoard.ships);
       } else if (shipType === 'battleship') {
         humanBoard.placeShip(4, startingCoord, direction);
       } else if (shipType === 'destroyer') {
@@ -71,12 +73,15 @@ const gameSetup = () => {
       }
 
       if (humanBoard.ships.length > placedShipsNum) {
+        targetElement.innerHTML = '';
         let shipImage = document.createElement('div');
-        shipImage.setAttribute('class', `${shipType}${suffix}`);
+        console.log('direction: ', direction, suffix);
+        shipImage.setAttribute('class', `${shipType} ${suffix}`);
         targetElement.appendChild(shipImage);
         shipTypes.splice(0, 1);
         placedShipsNum += 1;
       }
+
       console.log('shipTypes: ', shipTypes);
     });
   };
