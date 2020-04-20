@@ -11,6 +11,7 @@ import patrolboat from './assets/patrolboat.png';
 import fire from './assets/fire.png';
 import water from './assets/water.png';
 import fail from './assets/fail.png';
+import smoke from './assets/smoke.png';
 
 let setup = gameSetup();
 setup.placeShips();

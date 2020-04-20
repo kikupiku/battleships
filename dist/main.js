@@ -417,25 +417,52 @@ module.exports = gameSetup;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
-/* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_gameboard_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
-/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ship_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
-/* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_player_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(10);
-/* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_game_setup_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _assets_carrier_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2);
-/* harmony import */ var _assets_battleship_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3);
-/* harmony import */ var _assets_destroyer_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4);
-/* harmony import */ var _assets_submarine_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5);
-/* harmony import */ var _assets_patrolboat_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6);
-/* harmony import */ var _assets_fire_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7);
-/* harmony import */ var _assets_water_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(8);
-/* harmony import */ var _assets_fail_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(20);
+
+// EXTERNAL MODULE: ./src/style.scss
+var style = __webpack_require__(12);
+
+// EXTERNAL MODULE: ./src/gameboard.js
+var gameboard = __webpack_require__(0);
+
+// EXTERNAL MODULE: ./src/ship.js
+var ship = __webpack_require__(9);
+
+// EXTERNAL MODULE: ./src/player.js
+var player = __webpack_require__(1);
+
+// EXTERNAL MODULE: ./src/game-setup.js
+var game_setup = __webpack_require__(10);
+var game_setup_default = /*#__PURE__*/__webpack_require__.n(game_setup);
+
+// EXTERNAL MODULE: ./src/assets/carrier.png
+var carrier = __webpack_require__(2);
+
+// EXTERNAL MODULE: ./src/assets/battleship.png
+var battleship = __webpack_require__(3);
+
+// EXTERNAL MODULE: ./src/assets/destroyer.png
+var destroyer = __webpack_require__(4);
+
+// EXTERNAL MODULE: ./src/assets/submarine.png
+var submarine = __webpack_require__(5);
+
+// EXTERNAL MODULE: ./src/assets/patrolboat.png
+var patrolboat = __webpack_require__(6);
+
+// EXTERNAL MODULE: ./src/assets/fire.png
+var fire = __webpack_require__(7);
+
+// EXTERNAL MODULE: ./src/assets/water.png
+var water = __webpack_require__(8);
+
+// EXTERNAL MODULE: ./src/assets/fail.png
+var fail = __webpack_require__(20);
+
+// CONCATENATED MODULE: ./src/assets/smoke.png
+/* harmony default export */ var smoke = (__webpack_require__.p + "b6c73f6206ade62eeb5d8be8a9d53290.png");
+// CONCATENATED MODULE: ./src/index.js
 
 
 
@@ -450,7 +477,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let setup = _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default()();
+
+let setup = game_setup_default()();
 setup.placeShips();
 
 // TODO: add visuals for when I sunk enemy's ship and which shipType
@@ -955,12 +983,15 @@ __webpack_require__.r(__webpack_exports__);
 
 const player = __webpack_require__(1);
 const gameboard = __webpack_require__(0);
+const ship = __webpack_require__(9);
 
 const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const mySpaces = Array.from(document.getElementsByClassName('my-space'));
   const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
   const setupInstruction = document.getElementById('setup-instruction');
   const status = document.getElementById('status');
+  let indexOfHitShip;
+  let shipSunk;
   let endGame;
   let coordsForRandom = [];
   for (i = 0; i < 100; i++) {
@@ -969,7 +1000,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
 
   status.textContent = 'OK, you start. Attack!';
   setupInstruction.style.display = 'none';
-  console.log('my ships are: ', humanBoard.spaces);
 
   const humanPlay = () => {
     enemySpaces.forEach((enemySpace) => {
@@ -982,9 +1012,34 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     humanPlayer.attack(computerBoard, enemySpaceIndex);
     showAttack(computerBoard, 'enemy', enemySpaceIndex, e.currentTarget);
     enemySpaces[enemySpaceIndex].removeEventListener('click', placeAttack);
-    status.textContent = 'computer is confused...';
+
+    computerBoard.ships.forEach((ship) => {
+      for (let i = 0; i < ship.coordinates.length; i++) {
+        if (ship.coordinates[i].coordinate === enemySpaceIndex) {
+          if (ship.isSunk()) {
+            console.log('ship sunk!');
+          }
+        }
+      }
+
+    });
+
+    // for (let i = 0; i < computerBoard.ships.length; i++) {
+    //   computerBoard.ships[i].coordinates.forEach((ship) => {
+    //
+    //     if (ship.coordinates.coordinate === enemySpaceIndex) {
+    //       if (ship.isSunk) {
+    //         console.log('ship sunk!');
+    //         ship.coordinates.forEach((coordinate) => {
+    //           mySpaces[coordinate.coordinate].childNodes[0].setAttribute('class', 'fail');
+    //         });
+    //
+    //       }
+    //     }
+    //   });
+    // }
+
     endGame = computerBoard.checkIfAllSunk();
-    console.log('all computer sunk, true or not: ', endGame);
     console.log(computerBoard.ships);
     if (endGame) {
       win('human', 'Congrats! ');
@@ -1014,7 +1069,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
       mySpaces[randomPick].removeEventListener('click', placeAttack);
       showAttack(humanBoard, 'my', randomPick, mySpaces[randomPick]);
       endGame = humanBoard.checkIfAllSunk();
-      console.log('all human sunk, true or not: ', endGame);
       if (endGame) {
         win('computer', '');
       } else {

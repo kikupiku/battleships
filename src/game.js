@@ -1,11 +1,14 @@
 const player = require('./player.js');
 const gameboard = require('./gameboard.js');
+const ship = require('./ship.js');
 
 const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const mySpaces = Array.from(document.getElementsByClassName('my-space'));
   const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
   const setupInstruction = document.getElementById('setup-instruction');
   const status = document.getElementById('status');
+  let indexOfHitShip;
+  let shipSunk;
   let endGame;
   let coordsForRandom = [];
   for (i = 0; i < 100; i++) {
@@ -14,7 +17,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
 
   status.textContent = 'OK, you start. Attack!';
   setupInstruction.style.display = 'none';
-  console.log('my ships are: ', humanBoard.spaces);
 
   const humanPlay = () => {
     enemySpaces.forEach((enemySpace) => {
@@ -27,9 +29,34 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     humanPlayer.attack(computerBoard, enemySpaceIndex);
     showAttack(computerBoard, 'enemy', enemySpaceIndex, e.currentTarget);
     enemySpaces[enemySpaceIndex].removeEventListener('click', placeAttack);
-    status.textContent = 'computer is confused...';
+
+    computerBoard.ships.forEach((ship) => {
+      for (let i = 0; i < ship.coordinates.length; i++) {
+        if (ship.coordinates[i].coordinate === enemySpaceIndex) {
+          if (ship.isSunk()) {
+            console.log('ship sunk!');
+          }
+        }
+      }
+
+    });
+
+    // for (let i = 0; i < computerBoard.ships.length; i++) {
+    //   computerBoard.ships[i].coordinates.forEach((ship) => {
+    //
+    //     if (ship.coordinates.coordinate === enemySpaceIndex) {
+    //       if (ship.isSunk) {
+    //         console.log('ship sunk!');
+    //         ship.coordinates.forEach((coordinate) => {
+    //           mySpaces[coordinate.coordinate].childNodes[0].setAttribute('class', 'fail');
+    //         });
+    //
+    //       }
+    //     }
+    //   });
+    // }
+
     endGame = computerBoard.checkIfAllSunk();
-    console.log('all computer sunk, true or not: ', endGame);
     console.log(computerBoard.ships);
     if (endGame) {
       win('human', 'Congrats! ');
@@ -59,7 +86,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
       mySpaces[randomPick].removeEventListener('click', placeAttack);
       showAttack(humanBoard, 'my', randomPick, mySpaces[randomPick]);
       endGame = humanBoard.checkIfAllSunk();
-      console.log('all human sunk, true or not: ', endGame);
       if (endGame) {
         win('computer', '');
       } else {
