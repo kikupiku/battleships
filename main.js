@@ -417,52 +417,26 @@ module.exports = gameSetup;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-
-// EXTERNAL MODULE: ./src/style.scss
-var style = __webpack_require__(12);
-
-// EXTERNAL MODULE: ./src/gameboard.js
-var gameboard = __webpack_require__(0);
-
-// EXTERNAL MODULE: ./src/ship.js
-var ship = __webpack_require__(9);
-
-// EXTERNAL MODULE: ./src/player.js
-var player = __webpack_require__(1);
-
-// EXTERNAL MODULE: ./src/game-setup.js
-var game_setup = __webpack_require__(10);
-var game_setup_default = /*#__PURE__*/__webpack_require__.n(game_setup);
-
-// EXTERNAL MODULE: ./src/assets/carrier.png
-var carrier = __webpack_require__(2);
-
-// EXTERNAL MODULE: ./src/assets/battleship.png
-var battleship = __webpack_require__(3);
-
-// EXTERNAL MODULE: ./src/assets/destroyer.png
-var destroyer = __webpack_require__(4);
-
-// EXTERNAL MODULE: ./src/assets/submarine.png
-var submarine = __webpack_require__(5);
-
-// EXTERNAL MODULE: ./src/assets/patrolboat.png
-var patrolboat = __webpack_require__(6);
-
-// EXTERNAL MODULE: ./src/assets/fire.png
-var fire = __webpack_require__(7);
-
-// EXTERNAL MODULE: ./src/assets/water.png
-var water = __webpack_require__(8);
-
-// EXTERNAL MODULE: ./src/assets/fail.png
-var fail = __webpack_require__(20);
-
-// CONCATENATED MODULE: ./src/assets/smoke.png
-/* harmony default export */ var smoke = (__webpack_require__.p + "b6c73f6206ade62eeb5d8be8a9d53290.png");
-// CONCATENATED MODULE: ./src/index.js
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
+/* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_gameboard_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
+/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ship_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
+/* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_player_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(10);
+/* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_game_setup_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _assets_carrier_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2);
+/* harmony import */ var _assets_battleship_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3);
+/* harmony import */ var _assets_destroyer_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4);
+/* harmony import */ var _assets_submarine_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5);
+/* harmony import */ var _assets_patrolboat_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6);
+/* harmony import */ var _assets_fire_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7);
+/* harmony import */ var _assets_water_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(8);
+/* harmony import */ var _assets_fail_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(20);
+/* harmony import */ var _assets_smoke_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(21);
 
 
 
@@ -478,7 +452,7 @@ var fail = __webpack_require__(20);
 
 
 
-let setup = game_setup_default()();
+let setup = _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default()();
 setup.placeShips();
 
 // TODO: add visuals for when I sunk enemy's ship and which shipType
@@ -803,7 +777,8 @@ var ___CSS_LOADER_URL_IMPORT_5___ = __webpack_require__(5);
 var ___CSS_LOADER_URL_IMPORT_6___ = __webpack_require__(6);
 var ___CSS_LOADER_URL_IMPORT_7___ = __webpack_require__(7);
 var ___CSS_LOADER_URL_IMPORT_8___ = __webpack_require__(8);
-var ___CSS_LOADER_URL_IMPORT_9___ = __webpack_require__(20);
+var ___CSS_LOADER_URL_IMPORT_9___ = __webpack_require__(21);
+var ___CSS_LOADER_URL_IMPORT_10___ = __webpack_require__(20);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_1___);
@@ -815,8 +790,9 @@ var ___CSS_LOADER_URL_REPLACEMENT_6___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_
 var ___CSS_LOADER_URL_REPLACEMENT_7___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_7___);
 var ___CSS_LOADER_URL_REPLACEMENT_8___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_8___);
 var ___CSS_LOADER_URL_REPLACEMENT_9___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_9___);
+var ___CSS_LOADER_URL_REPLACEMENT_10___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_10___);
 // Module
-exports.push([module.i, "@font-face{font-family:'army';src:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");font-style:normal}@font-face{font-family:'typewriter';src:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");font-style:normal}body{box-sizing:border-box;background-image:url(\"https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg\");background-repeat:no-repeat;background-size:cover}img{border:1px solid white}.container{width:850px;margin:0 auto}.container #status{width:600px;font-family:'army', sans-serif;text-align:center;font-size:36px;margin:10px auto 20px auto;color:lightgrey}.container .my-board,.container .enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.container .my-board{height:35.7vh;width:35.9vh;border:2px solid #286ba2;min-height:260px;min-width:260px;position:relative;background:#acceea}.container .my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #286ba2;border-bottom:0.5px solid #286ba2;min-height:25.5px;min-width:25.5px;position:relative}.container .carrier,.container .battleship,.container .destroyer,.container .submarine,.container .patrolboat{min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.container .carrier:active,.container .battleship:active,.container .destroyer:active,.container .submarine:active,.container .patrolboat:active{background:grey}.container .carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");width:17.5vh;min-width:127.5px}.container .battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");width:14vh;min-width:102px}.container .destroyer,.container .submarine{width:10.5vh;min-width:76.5px}.container .destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ")}.container .submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ")}.container .patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");width:7vh;min-width:51px}.container .vert{z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;transform:translate(10%, 35%) rotate(-90deg);transform-origin:left}.container .enemy-board-wrapper{display:flex;width:100%}.container .enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.container .enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px;background:white;position:relative}.container .enemy-board-wrapper .enemy-board .setup-instruction-container{border:2px solid black;background:#595453;height:54.48vh;width:55vh;position:absolute;left:-2px;top:-2px;z-index:100;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .setup-instruction{width:80%;margin:10px auto;text-align:left}.container .enemy-board-wrapper .enemy-board h1{font-family:'army', sans-serif;text-align:center;font-size:3vh}.container .enemy-board-wrapper .enemy-board .info{margin:8px 0}.container .enemy-board-wrapper .enemy-board .info,.container .enemy-board-wrapper .enemy-board .ship-name{font-family:'typewriter';font-size:2.3vh;font-weight:bold}.container .enemy-board-wrapper .enemy-board .boats{width:300px;margin:0 auto;background:grey;position:relative;border-radius:5px;border:2px solid rgba(89,84,83,0.74)}.container .enemy-board-wrapper .enemy-board .ship-name,.container .enemy-board-wrapper .enemy-board .type{display:inline-block;margin:0;position:relative}.container .enemy-board-wrapper .enemy-board .ship-name{bottom:10px;font-size:20px}.container .enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px;position:relative}.container .enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}.my{height:3.5vh;width:3.5vh;min-height:25.5px;min-width:25.5px}.enemy{height:5.38vh;width:5.38vh;min-height:39.5px;min-width:39.5px}.fire,.water{background-size:100% 100%;background-repeat:no-repeat;position:absolute;top:0;left:0}.fire{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.water{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}@media all and (max-width: 500px){h1{font-size:24px !important}.info{font-size:16px !important}}#fail{background-size:100% 100%;background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ");z-index:999999;position:absolute;top:0;left:0;height:35.7vh;width:35.9vh;border:2px solid #286ba2;min-height:260px;min-width:260px;display:none}\n", ""]);
+exports.push([module.i, "@font-face{font-family:'army';src:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");font-style:normal}@font-face{font-family:'typewriter';src:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");font-style:normal}body{box-sizing:border-box;background-image:url(\"https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg\");background-repeat:no-repeat;background-size:cover}img{border:1px solid white}.container{width:850px;margin:0 auto}.container #status{width:600px;font-family:'army', sans-serif;text-align:center;font-size:36px;margin:10px auto 20px auto;color:lightgrey}.container .my-board,.container .enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.container .my-board{height:35.7vh;width:35.9vh;border:2px solid #286ba2;min-height:260px;min-width:260px;position:relative;background:#acceea}.container .my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #286ba2;border-bottom:0.5px solid #286ba2;min-height:25.5px;min-width:25.5px;position:relative}.container .carrier,.container .battleship,.container .destroyer,.container .submarine,.container .patrolboat{min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.container .carrier:active,.container .battleship:active,.container .destroyer:active,.container .submarine:active,.container .patrolboat:active{background:grey}.container .carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");width:17.5vh;min-width:127.5px}.container .battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");width:14vh;min-width:102px}.container .destroyer,.container .submarine{width:10.5vh;min-width:76.5px}.container .destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ")}.container .submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ")}.container .patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");width:7vh;min-width:51px}.container .vert{z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;transform:translate(10%, 35%) rotate(-90deg);transform-origin:left}.container .enemy-board-wrapper{display:flex;width:100%}.container .enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.container .enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px;background:white;position:relative}.container .enemy-board-wrapper .enemy-board .setup-instruction-container{border:2px solid black;background:#595453;height:54.48vh;width:55vh;position:absolute;left:-2px;top:-2px;z-index:100;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .setup-instruction{width:80%;margin:10px auto;text-align:left}.container .enemy-board-wrapper .enemy-board h1{font-family:'army', sans-serif;text-align:center;font-size:3vh}.container .enemy-board-wrapper .enemy-board .info{margin:8px 0}.container .enemy-board-wrapper .enemy-board .info,.container .enemy-board-wrapper .enemy-board .ship-name{font-family:'typewriter';font-size:2.3vh;font-weight:bold}.container .enemy-board-wrapper .enemy-board .boats{width:300px;margin:0 auto;background:grey;position:relative;border-radius:5px;border:2px solid rgba(89,84,83,0.74)}.container .enemy-board-wrapper .enemy-board .ship-name,.container .enemy-board-wrapper .enemy-board .type{display:inline-block;margin:0;position:relative}.container .enemy-board-wrapper .enemy-board .ship-name{bottom:10px;font-size:20px}.container .enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px;position:relative}.container .enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}.my{height:3.5vh;width:3.5vh;min-height:25.5px;min-width:25.5px}.enemy{height:5.38vh;width:5.38vh;min-height:39.5px;min-width:39.5px}.fire,.water,.smoke{background-size:100% 100%;background-repeat:no-repeat;position:absolute;top:0;left:0}.fire{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.water{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}.smoke{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ")}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}@media all and (max-width: 500px){h1{font-size:24px !important}.info{font-size:16px !important}}#fail{background-size:100% 100%;background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_10___ + ");z-index:999999;position:absolute;top:0;left:0;height:35.7vh;width:35.9vh;border:2px solid #286ba2;min-height:260px;min-width:260px;display:none}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -990,8 +966,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
   const setupInstruction = document.getElementById('setup-instruction');
   const status = document.getElementById('status');
-  let indexOfHitShip;
-  let shipSunk;
   let endGame;
   let coordsForRandom = [];
   for (i = 0; i < 100; i++) {
@@ -1012,12 +986,17 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     humanPlayer.attack(computerBoard, enemySpaceIndex);
     showAttack(computerBoard, 'enemy', enemySpaceIndex, e.currentTarget);
     enemySpaces[enemySpaceIndex].removeEventListener('click', placeAttack);
-
+    console.log('enemySpaceIndex: ', enemySpaceIndex);
     computerBoard.ships.forEach((ship) => {
       for (let i = 0; i < ship.coordinates.length; i++) {
         if (ship.coordinates[i].coordinate === enemySpaceIndex) {
           if (ship.isSunk()) {
             console.log('ship sunk!');
+            ship.coordinates.forEach((coordinate) => {
+              let hitIndex = coordinate.coordinate;
+              enemySpaces[hitIndex].childNodes[0].setAttribute('class', 'enemy smoke');
+            });
+
           }
         }
       }
@@ -1102,6 +1081,14 @@ module.exports = beginGame;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "e4b65858e0e6ce35e89209634eb41765.png");
+
+/***/ }),
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "b6c73f6206ade62eeb5d8be8a9d53290.png");
 
 /***/ })
 /******/ ]);
