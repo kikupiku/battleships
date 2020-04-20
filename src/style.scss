@@ -30,189 +30,207 @@ img {
 .container {
   width: 850px;
   margin: 0 auto;
+}
 
-  #status {
-    width: 600px;
-    font-family: 'army', sans-serif;
-    text-align: center;
-    font-size: 36px;
-    margin: 10px auto 20px auto;
-    color: lightgrey;
+#status {
+  width: 600px;
+  font-family: 'army', sans-serif;
+  text-align: center;
+  font-size: 36px;
+  margin: 10px auto 20px auto;
+  color: lightgrey;
+}
+
+#restart {
+  font-family: 'typewriter', sans-serif;
+  font-size: 28px;
+  width: 150px;
+  margin: 0 auto;
+  border-radius: 5px;
+  height: 40px;
+  background: grey;
+  font-weight: bold;
+}
+
+.top-wrapper {
+  width: 600px;
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.my-board,
+.enemy-board {
+  display: flex;
+  flex-direction: column-reverse;
+  flex-wrap: wrap;
+}
+
+.my-board {
+  height: 35.7vh;
+  width: $left-col-width;
+  border: 2px solid $my-color;
+  min-height: 260px;
+  min-width: 260px;
+  position: relative;
+  background: lighten($my-color, 40%);
+}
+
+.my-space {
+  height: $my-space-dimension;
+  width: $my-space-dimension;
+  border-right: 0.5px solid $my-color;
+  border-bottom: 0.5px solid $my-color;
+  min-height: 25.5px;
+  min-width: 25.5px;
+  position: relative;
+}
+
+.carrier,
+.battleship,
+.destroyer,
+.submarine,
+.patrolboat {
+  // position: absolute !important;
+  min-height: 25.5px;
+  height: $my-space-dimension;
+  z-index: 100 !important;
+  overflow: visible;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+
+  &:active {
+    background: grey;
   }
+}
 
-  .my-board,
-  .enemy-board {
-    display: flex;
-    flex-direction: column-reverse;
-    flex-wrap: wrap;
-  }
+.carrier {
+  background-image: url('./assets/carrier.png');
+  width: ($my-space-dimension * 5);
+  min-width: (25.5px *5);
+}
 
-  .my-board {
-    height: 35.7vh;
+.battleship {
+  background-image: url('./assets/battleship.png');
+  width: ($my-space-dimension * 4);
+  min-width: (25.5px *4);
+}
+
+.destroyer,
+.submarine {
+  width: ($my-space-dimension * 3);
+  min-width: (25.5px *3);
+}
+
+.destroyer {
+  background-image: url('./assets/destroyer.png');
+}
+
+.submarine {
+  background-image: url('./assets/submarine.png');
+}
+
+.patrolboat {
+  background-image: url('./assets/patrolboat.png');
+  width: ($my-space-dimension * 2);
+  min-width: (25.5px *2);
+}
+
+.vert {
+  z-index: 100 !important;
+  overflow: visible;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  transform: translate(10%, 35%) rotate(-90deg);
+  transform-origin: left;
+}
+
+.enemy-board-wrapper {
+  display: flex;
+  width: 100%;
+
+  .shrinker {
     width: $left-col-width;
-    border: 2px solid $my-color;
-    min-height: 260px;
+    flex-shrink: 2;
     min-width: 260px;
+  }
+
+  .enemy-board {
+    height: 54.48vh;
+    width: 55vh;
+    border: 2px solid $enemy-color;
+    min-height: 400px;
+    min-width: 400px;
+    background: white;
     position: relative;
-    background: lighten($my-color, 40%);
-  }
 
-  .my-space {
-    height: $my-space-dimension;
-    width: $my-space-dimension;
-    border-right: 0.5px solid $my-color;
-    border-bottom: 0.5px solid $my-color;
-    min-height: 25.5px;
-    min-width: 25.5px;
-    position: relative;
-  }
-
-  .carrier,
-  .battleship,
-  .destroyer,
-  .submarine,
-  .patrolboat {
-    // position: absolute !important;
-    min-height: 25.5px;
-    height: $my-space-dimension;
-    z-index: 100 !important;
-    overflow: visible;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-
-    &:active {
-      background: grey;
-    }
-  }
-
-  .carrier {
-    background-image: url('./assets/carrier.png');
-    width: ($my-space-dimension * 5);
-    min-width: (25.5px *5);
-  }
-
-  .battleship {
-    background-image: url('./assets/battleship.png');
-    width: ($my-space-dimension * 4);
-    min-width: (25.5px *4);
-  }
-
-  .destroyer,
-  .submarine {
-    width: ($my-space-dimension * 3);
-    min-width: (25.5px *3);
-  }
-
-  .destroyer {
-    background-image: url('./assets/destroyer.png');
-  }
-
-  .submarine {
-    background-image: url('./assets/submarine.png');
-  }
-
-  .patrolboat {
-    background-image: url('./assets/patrolboat.png');
-    width: ($my-space-dimension * 2);
-    min-width: (25.5px *2);
-  }
-
-  .vert {
-    z-index: 100 !important;
-    overflow: visible;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    transform: translate(10%, 35%) rotate(-90deg);
-    transform-origin: left;
-  }
-
-  .enemy-board-wrapper {
-    display: flex;
-    width: 100%;
-
-    .shrinker {
-      width: $left-col-width;
-      flex-shrink: 2;
-      min-width: 260px;
-    }
-
-    .enemy-board {
+    .setup-instruction-container {
+      border: 2px solid black;
+      background: rgb(89,84,83);
       height: 54.48vh;
       width: 55vh;
-      border: 2px solid $enemy-color;
+      position: absolute;
+      left: -2px;
+      top: -2px;
+      z-index: 100;
       min-height: 400px;
       min-width: 400px;
-      background: white;
+    }
+
+    .setup-instruction {
+      width: 80%;
+      margin: 10px auto;
+      text-align: left;
+    }
+
+    h1 {
+      font-family: 'army', sans-serif;
+      text-align: center;
+      font-size: 3vh;
+    }
+
+    .info {
+      margin: 8px 0;
+    }
+
+    .info,
+    .ship-name {
+      font-family: 'typewriter';
+      font-size: 2.3vh;
+      font-weight: bold;
+    }
+
+    .boats {
+      width: 300px;
+      margin: 0 auto;
+      background: grey;
       position: relative;
+      border-radius: 5px;
+      border: 2px solid rgba(89,84,83,.74);
+    }
 
-      .setup-instruction-container {
-        border: 2px solid black;
-        background: rgb(89,84,83);
-        height: 54.48vh;
-        width: 55vh;
-        position: absolute;
-        left: -2px;
-        top: -2px;
-        z-index: 100;
-        min-height: 400px;
-        min-width: 400px;
-      }
+    .ship-name,
+    .type {
+      display: inline-block;
+      margin: 0;
+      position: relative;
+    }
 
-      .setup-instruction {
-        width: 80%;
-        margin: 10px auto;
-        text-align: left;
-      }
+    .ship-name {
+      bottom: 10px;
+      font-size: 20px;
+    }
 
-      h1 {
-        font-family: 'army', sans-serif;
-        text-align: center;
-        font-size: 3vh;
-      }
-
-      .info {
-        margin: 8px 0;
-      }
-
-      .info,
-      .ship-name {
-        font-family: 'typewriter';
-        font-size: 2.3vh;
-        font-weight: bold;
-      }
-
-      .boats {
-        width: 300px;
-        margin: 0 auto;
-        background: grey;
-        position: relative;
-        border-radius: 5px;
-        border: 2px solid rgba(89,84,83,.74);
-      }
-
-      .ship-name,
-      .type {
-        display: inline-block;
-        margin: 0;
-        position: relative;
-      }
-
-      .ship-name {
-        bottom: 10px;
-        font-size: 20px;
-      }
-
-      .enemy-space {
-        height: $enemy-space-dimension;
-        width: $enemy-space-dimension;
-        border-right: 0.5px solid $enemy-color;
-        border-bottom: 0.5px solid $enemy-color;
-        min-height: 39.5px;
-        min-width: 39.5px;
-        position: relative;
-        &:hover {
-          background: rgba($enemy-color, 0.2);
-        }
+    .enemy-space {
+      height: $enemy-space-dimension;
+      width: $enemy-space-dimension;
+      border-right: 0.5px solid $enemy-color;
+      border-bottom: 0.5px solid $enemy-color;
+      min-height: 39.5px;
+      min-width: 39.5px;
+      position: relative;
+      &:hover {
+        background: rgba($enemy-color, 0.2);
       }
     }
   }

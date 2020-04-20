@@ -4,7 +4,12 @@ const beginGame = require('./game.js');
 
 const gameSetup = () => {
   const myBoard = document.getElementById('my-board');
+  const restart = document.getElementById('restart');
+  const status = document.getElementById('status');
+  const win = document.getElementById('win');
+  const setupInstruction = document.getElementById('setup-instruction');
   const mySpaces = Array.from(document.getElementsByClassName('my-space'));
+  const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
   let computer = player();
   let human = player();
   let computerBoard = gameboard();
@@ -14,7 +19,8 @@ const gameSetup = () => {
   let suffix = '';
   let direction = 'horizontal';
   computer.autoPlaceShips(computerBoard);
-  console.log(computerBoard.spaces);
+  restart.style.display = 'none';
+  win.style.display = 'none';
 
   const placeShips = () => {
     for (i = 0; i < mySpaces.length; i++) {
@@ -72,7 +78,13 @@ const gameSetup = () => {
     }
 
     if (shipTypes.length === 0) {
-      beginGame(computer, human, computerBoard, humanBoard);
+      mySpaces.forEach((mySpace) => {
+        mySpace.removeEventListener('click', placeShip);
+      });
+      let round = beginGame(computer, human, computerBoard, humanBoard);
+      if (round.win) {
+        restart.addEventListener('click', reset);
+      }
     }
   };
 
@@ -87,6 +99,27 @@ const gameSetup = () => {
 
     let img = document.getElementsByClassName('ship')[0];
     img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
+  };
+
+  const reset = () => {
+    status.textContent = 'Place your ships!';
+    computer.autoPlaceShips(computerBoard);
+    mySpaces.forEach((mySpace) => {
+      mySpace.innerHTML = '';
+    });
+    enemySpaces.forEach((enemySpace) => {
+      enemySpace.innerHTML = '';
+    });
+    let fail = document.getElementById('fail');
+    fail.style.display = 'none';
+    win.style.display = 'none';
+    setupInstruction.style.display = 'none';
+    shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
+    humanBoard.ships = [];
+    computerBoard.ships = [];
+    console.log('humanships: ', humanBoard.ships);
+    console.log('compships: ', computerBoard.ships);
+    placeShips();
   };
 
   return {

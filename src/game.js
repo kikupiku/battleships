@@ -7,6 +7,9 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
   const setupInstruction = document.getElementById('setup-instruction');
   const status = document.getElementById('status');
+  const enemyBoard = document.getElementById('enemy-board');
+  const restart = document.getElementById('restart');
+
   let endGame;
   let coordsForRandom = [];
   for (i = 0; i < 100; i++) {
@@ -31,7 +34,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
       for (let i = 0; i < ship.coordinates.length; i++) {
         if (ship.coordinates[i].coordinate === enemySpaceIndex) {
           if (ship.isSunk()) {
-            console.log('ship sunk!');
             ship.coordinates.forEach((coordinate) => {
               let hitIndex = coordinate.coordinate;
               enemySpaces[hitIndex].childNodes[0].setAttribute('class', 'enemy smoke');
@@ -79,23 +81,27 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   };
 
   const win = (player) => {
+    restart.style.display = 'block';
     if (player === 'computer wins!') {
       let fail = document.getElementById('fail');
       fail.style.display = 'block';
     } else {
-      const body = document.getElementsByTagName('body')[0];
-      let win = document.createElement('div');
-      win.setAttribute('id', 'win');
-      body.appendChild(win);
+      let win = document.getElementById('win');
+      win.style.display = 'block';
     }
 
     status.textContent = `${player} Play again?`;
     enemySpaces.forEach((enemySpace) => {
       enemySpace.removeEventListener('click', placeAttack);
     });
+
+    return true;
   };
 
   humanPlay();
+  return {
+    win,
+  };
 };
 
 module.exports = beginGame;

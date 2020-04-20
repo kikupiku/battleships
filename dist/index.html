@@ -6,7 +6,11 @@
   </head>
   <body>
   <div class="container">
-    <div id="status">Welcome to Battleships!</div>
+    <div class="top-wrapper">
+      <div id="status">Welcome to Battleships!</div>
+      <button type="button" id="restart">RESTART</button>
+    </div>
+
     <div class="my-board" id="my-board">
       <div id="fail"></div>
       <div class="my-space"></div>
@@ -112,7 +116,7 @@
     </div>
     <div class="enemy-board-wrapper">
       <div class="shrinker"></div>
-      <div class="enemy-board">
+      <div class="enemy-board" id="enemy-board">
         <div class="setup-instruction-container"  id="setup-instruction">
           <div class="setup-instruction">
             <h1>YOUR MISSION</h1>
@@ -121,19 +125,20 @@
             <p class="info">The following vessels are at your disposal:</p>
             <div class="boats">
               <p class="ship-name">CARRIER&nbsp;&nbsp;&nbsp;</p>
-              <div class="type carrier"></div></br>
+              <div class="type carrier"></div><br>
               <p class="ship-name">BATTLESHIP&nbsp;</p>
-              <div class="type battleship"></div></br>
+              <div class="type battleship"></div><br>
               <p class="ship-name">DESTROYER&nbsp;&nbsp;</p>
-              <div class="type destroyer"></div></br>
+              <div class="type destroyer"></div><br>
               <p class="ship-name">SUBMARINE&nbsp;&nbsp;</p>
-              <div class="type submarine"></div></br>
+              <div class="type submarine"></div><br>
               <p class="ship-name">PATROLBOAT&nbsp;</p>
               <div class="type patrolboat"></div>
             </div>
             <p class="info">2. Sink all enemy ships before they sink ours. Do not fail!</p>
           </div>
         </div>
+        <div id="win"></div>
         <div class="enemy-space"></div>
         <div class="enemy-space"></div>
         <div class="enemy-space"></div>
