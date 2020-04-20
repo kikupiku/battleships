@@ -1,11 +1,26 @@
+@font-face {
+  font-family: 'army';
+  src: url('./assets/armalite-rifle.regular.ttf');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'typewriter';
+  src: url('./assets/1942.ttf');
+  font-style: normal;
+}
+
 $enemy-color: rgb(116,60,60);
-$my-color: rgb(49,132,153);
+$my-color: rgb(40,107,162);
 $left-col-width: 35.9vh;
 $my-space-dimension: 3.5vh;
 $enemy-space-dimension: 5.38vh;
 
 body {
   box-sizing: border-box;
+  background-image: url('https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 img {
@@ -18,11 +33,11 @@ img {
 
   #status {
     width: 600px;
-    font-family: sans-serif;
+    font-family: 'army', sans-serif;
     text-align: center;
     font-size: 36px;
-    border: 1px solid red;
     margin: 10px auto 20px auto;
+    color: lightgrey;
   }
 
   .my-board,
@@ -39,75 +54,76 @@ img {
     min-height: 260px;
     min-width: 260px;
     position: relative;
+    background: lighten($my-color, 40%);
+  }
 
-    .my-space {
-      height: $my-space-dimension;
-      width: $my-space-dimension;
-      border-right: 0.5px solid $my-color;
-      border-bottom: 0.5px solid $my-color;
-      min-height: 25.5px;
-      min-width: 25.5px;
-      position: relative;
+  .my-space {
+    height: $my-space-dimension;
+    width: $my-space-dimension;
+    border-right: 0.5px solid $my-color;
+    border-bottom: 0.5px solid $my-color;
+    min-height: 25.5px;
+    min-width: 25.5px;
+    position: relative;
+  }
+
+  .carrier,
+  .battleship,
+  .destroyer,
+  .submarine,
+  .patrolboat {
+    // position: absolute !important;
+    min-height: 25.5px;
+    height: $my-space-dimension;
+    z-index: 100 !important;
+    overflow: visible;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    &:active {
+      background: grey;
     }
+  }
 
-    .carrier,
-    .battleship,
-    .destroyer,
-    .submarine,
-    .patrolboat {
-      // position: absolute !important;
-      min-height: 25.5px;
-      height: $my-space-dimension;
-      z-index: 100 !important;
-      overflow: visible;
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
+  .carrier {
+    background-image: url('./assets/carrier.png');
+    width: ($my-space-dimension * 5);
+    min-width: (25.5px *5);
+  }
 
-      &:active {
-        background: grey;
-      }
-    }
+  .battleship {
+    background-image: url('./assets/battleship.png');
+    width: ($my-space-dimension * 4);
+    min-width: (25.5px *4);
+  }
 
-    .carrier {
-      background-image: url('./assets/carrier.png');
-      width: ($my-space-dimension * 5);
-      min-width: (25.5px *5);
-    }
+  .destroyer,
+  .submarine {
+    width: ($my-space-dimension * 3);
+    min-width: (25.5px *3);
+  }
 
-    .battleship {
-      background-image: url('./assets/battleship.png');
-      width: ($my-space-dimension * 4);
-      min-width: (25.5px *4);
-    }
+  .destroyer {
+    background-image: url('./assets/destroyer.png');
+  }
 
-    .destroyer,
-    .submarine {
-      width: ($my-space-dimension * 3);
-      min-width: (25.5px *3);
-    }
+  .submarine {
+    background-image: url('./assets/submarine.png');
+  }
 
-    .destroyer {
-      background-image: url('./assets/destroyer.png');
-    }
+  .patrolboat {
+    background-image: url('./assets/patrolboat.png');
+    width: ($my-space-dimension * 2);
+    min-width: (25.5px *2);
+  }
 
-    .submarine {
-      background-image: url('./assets/submarine.png');
-    }
-
-    .patrolboat {
-      background-image: url('./assets/patrolboat.png');
-      width: ($my-space-dimension * 2);
-      min-width: (25.5px *2);
-    }
-
-    .vert {
-      z-index: 100 !important;
-      overflow: visible;
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      transform: translate(10%, 35%) rotate(-90deg);
-      transform-origin: left;
-    }
+  .vert {
+    z-index: 100 !important;
+    overflow: visible;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    transform: translate(10%, 35%) rotate(-90deg);
+    transform-origin: left;
   }
 
   .enemy-board-wrapper {
@@ -126,12 +142,17 @@ img {
       border: 2px solid $enemy-color;
       min-height: 400px;
       min-width: 400px;
+      background: white;
+      position: relative;
 
       .setup-instruction-container {
-        background: white;
+        border: 2px solid black;
+        background: rgb(89,84,83);
         height: 54.48vh;
         width: 55vh;
         position: absolute;
+        left: -2px;
+        top: -2px;
         z-index: 100;
         min-height: 400px;
         min-width: 400px;
@@ -139,9 +160,46 @@ img {
 
       .setup-instruction {
         width: 80%;
-        margin: 50px auto;
+        margin: 10px auto;
+        text-align: left;
+      }
+
+      h1 {
+        font-family: 'army', sans-serif;
         text-align: center;
-        font-family: sans-serif;
+        font-size: 3vh;
+      }
+
+      .info {
+        margin: 8px 0;
+      }
+
+      .info,
+      .ship-name {
+        font-family: 'typewriter';
+        font-size: 2.3vh;
+        font-weight: bold;
+      }
+
+      .boats {
+        width: 300px;
+        margin: 0 auto;
+        background: grey;
+        position: relative;
+        border-radius: 5px;
+        border: 2px solid rgba(89,84,83,.74);
+      }
+
+      .ship-name,
+      .type {
+        display: inline-block;
+        margin: 0;
+        position: relative;
+      }
+
+      .ship-name {
+        bottom: 10px;
+        font-size: 20px;
       }
 
       .enemy-space {
@@ -203,5 +261,15 @@ img {
 
   .enemy-board {
     flex-shrink: 0;
+  }
+}
+
+@media all and (max-width: 500px) {
+  h1 {
+    font-size: 24px !important;
+  }
+
+  .info {
+    font-size: 16px !important;
   }
 }

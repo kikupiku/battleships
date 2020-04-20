@@ -15,7 +15,5 @@ let setup = gameSetup();
 setup.placeShips();
 
 // TODO: add visuals for when I sunk enemy's ship and which shipType
-// TODO: add instruction for scrolling etc in the placement phase
-// TODO: fix bug to trigger win properly
 // TODO: add button to reset everything and start new game after win
 // TODO: add triangulation so that computer is not as stupid

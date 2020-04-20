@@ -6,12 +6,13 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
   const setupInstruction = document.getElementById('setup-instruction');
   const status = document.getElementById('status');
+  let endGame;
   let coordsForRandom = [];
   for (i = 0; i < 100; i++) {
     coordsForRandom.push(i);
   }
 
-  status.textContent = 'OK, let\'s start! It\'s your turn to attack';
+  status.textContent = 'OK, you start. Attack!';
   setupInstruction.style.display = 'none';
   console.log('my ships are: ', humanBoard.spaces);
 
@@ -19,20 +20,22 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     enemySpaces.forEach((enemySpace) => {
       enemySpace.addEventListener('click', placeAttack);
     });
-    let endGame = computerBoard.checkIfAllSunk();
-    if (endGame) {
-      win('human', 'Congrats! ');
-    }
   };
 
   const placeAttack = (e) => {
     let enemySpaceIndex = enemySpaces.indexOf(e.currentTarget);
     humanPlayer.attack(computerBoard, enemySpaceIndex);
     showAttack(computerBoard, 'enemy', enemySpaceIndex, e.currentTarget);
-    console.log('you hit ', enemySpaceIndex);
     enemySpaces[enemySpaceIndex].removeEventListener('click', placeAttack);
-    status.textContent = 'computer plays...';
-    computerPlay();
+    status.textContent = 'computer is confused...';
+    endGame = computerBoard.checkIfAllSunk();
+    console.log('all computer sunk, true or not: ', endGame);
+    console.log(computerBoard.ships);
+    if (endGame) {
+      win('human', 'Congrats! ');
+    } else {
+      computerPlay();
+    }
   };
 
   const showAttack = (attackedBoard, attackedClassName, coord, attackedDiv) => {
@@ -55,21 +58,21 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
       coordsForRandom.splice(randomPick, 1, 'done');
       mySpaces[randomPick].removeEventListener('click', placeAttack);
       showAttack(humanBoard, 'my', randomPick, mySpaces[randomPick]);
-      let endGame = humanBoard.checkIfAllSunk();
+      endGame = humanBoard.checkIfAllSunk();
+      console.log('all human sunk, true or not: ', endGame);
       if (endGame) {
         win('computer', '');
+      } else {
+        status.textContent = 'enemy\'s quick, your turn again';
       }
-
-      status.textContent = 'computer played, your turn again';
-      console.log('comp hit ', randomPick);
     }
   };
 
   const win = (player, wish) => {
+    status.textContent = `${player} wins! ${wish}Wanna play again?`;
     enemySpaces.forEach((enemySpace) => {
       enemySpace.removeEventListener('click', placeAttack);
     });
-    status.textContent = `${player} wins! ${wish}Wanna play again?`;
   };
 
   humanPlay();
