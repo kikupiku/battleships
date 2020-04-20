@@ -99,7 +99,6 @@ const gameboard = () => {
 
   let placeShip = (length, startingCoord, direction) => {
     let shipPartChecker = checkPlacementValidity(length, startingCoord, direction);
-    console.log('placementvalidity: ', shipPartChecker, 'shiplength: ', length);
     if (shipPartChecker === length) {
       ships.push(ship(length, startingCoord, direction));
       spaces.forEach((space, i) => {
@@ -152,21 +151,71 @@ const gameboard = () => {
   const triangulate = (coord, board) => {
     let cantTouchThis = [];
     let shipMayBeHere = [];
-    if (coord - 1 >= 0 && !board.spaces[coord - 1].hit) {
-      shipMayBeHere.push((coord - 1));
+    let hitParts = [];
+    let howManyHitsThisShipHas = 0;
+    let direction;
+    board.ships.forEach((ship) => {
+      for (let i = 0; i < ship.coordinates.length; i++) {
+        if (ship.coordinates[i].coordinate === coord) {
+          ship.coordinates.forEach((coordinate) => {
+            if (coordinate.hit) {
+              howManyHitsThisShipHas += 1;
+              hitParts.push(ship.coordinate.coordinate);
+            }
+          });
+        }
+      }
+    });
+    console.log('howManyHitsThisShipHas: ', howManyHitsThisShipHas);
+    console.log('hitParts: ', hitParts);
+    if (howManyHitsThisShipHas === 1) {
+      if (coord - 1 >= 0 && !board.spaces[coord - 1].hit) {
+        if (coord < 10 || coord.toString()[1] !== '0') {
+          shipMayBeHere.push((coord - 1));
+        }
+      }
+
+      if (coord + 1 <= 99 && !board.spaces[coord + 1].hit) {
+        if (coord < 9 || (coord > 9 && coord.toString()[1] !== '9'))
+        shipMayBeHere.push((coord + 1));
+      }
+
+      if (coord - 10 >= 0 && !board.spaces[coord - 10].hit) {
+        shipMayBeHere.push((coord - 10));
+      }
+
+      if (coord + 10 <= 99 && !board.spaces[coord + 10].hit) {
+        shipMayBeHere.push((coord + 10));
+      }
+    } else if (howManyHitsThisShipHas > 1) {
+      console.log('closing in!');
+      if (hitParts[0] === hitParts[1] + 10 || hitParts[0] === hitParts[1] - 10) {
+        hitParts.forEach((hitPart) => {         //direction: horizontal
+          if (hitPart - 10 >= 0 && !board.spaces[hitPart - 10].hit) {
+            shipMayBeHere.push((hitPart - 10));
+          }
+
+          if (hitPart + 10 <= 99 && !board.spaces[hitPart + 10].hit) {
+            shipMayBeHere.push((hitPart + 10));
+          }
+        });
+      } else {
+        hitParts.forEach((hitPart) => {           //direction: vertical
+          if (hitPart - 1 >= 0 && !board.spaces[hitPart - 1].hit) {
+            if (hitPart < 10 || hitPart.toString()[1] !== '0') {
+              shipMayBeHere.push((hitPart - 1));
+            }
+          }
+
+          if (hitPart + 1 <= 99 && !board.spaces[hitPart + 1].hit) {
+            if (hitPart < 9 || (hitPart > 9 && hitPart.toString()[1] !== '9'))
+            shipMayBeHere.push((hitPart + 1));
+          }
+        });
+
+      }
     }
 
-    if (coord + 1 <= 99 && !board.spaces[coord + 1].hit) {
-      shipMayBeHere.push((coord + 1));
-    }
-
-    if (coord - 10 >= 0 && !board.spaces[coord - 10].hit) {
-      shipMayBeHere.push((coord - 10));
-    }
-
-    if (coord + 10 <= 99 && !board.spaces[coord + 10].hit) {
-      shipMayBeHere.push((coord + 10));
-    }
     console.log('ship may be here: ', shipMayBeHere);
 
     return cantTouchThis;
