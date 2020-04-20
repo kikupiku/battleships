@@ -39,6 +39,17 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     }
   };
 
+  const showAttack = (attackedBoard, attackedClassName, coord, attackedDiv) => {
+    let resultOfAttack = document.createElement('div');
+    if (attackedBoard.spaces[coord].hasShipPart) {
+      resultOfAttack.setAttribute('class', `${attackedClassName} fire`);
+    } else {
+      resultOfAttack.setAttribute('class', `${attackedClassName} water`);
+    }
+
+    attackedDiv.appendChild(resultOfAttack);
+  };
+
   const markSunkShip = (index) => {
     computerBoard.ships.forEach((ship) => {
       for (let i = 0; i < ship.coordinates.length; i++) {
@@ -54,23 +65,15 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     });
   };
 
-  const showAttack = (attackedBoard, attackedClassName, coord, attackedDiv) => {
-    let resultOfAttack = document.createElement('div');
-    if (attackedBoard.spaces[coord].hasShipPart) {
-      resultOfAttack.setAttribute('class', `${attackedClassName} fire`);
-    } else {
-      resultOfAttack.setAttribute('class', `${attackedClassName} water`);
-    }
-
-    attackedDiv.appendChild(resultOfAttack);
-  };
-
   const computerPlay = () => {
     randomPick = Math.floor(Math.random() * 100);
     if (coordsForRandom[randomPick] === 'done') {
       computerPlay();
     } else {
       computerPlayer.attack(humanBoard, coordsForRandom[randomPick]);
+      if (humanBoard.spaces[randomPick].hasShipPart) {
+        let cantTouchThis = humanBoard.triangulate(randomPick, humanBoard);
+      }
       coordsForRandom.splice(randomPick, 1, 'done');
       mySpaces[randomPick].removeEventListener('click', placeAttack);
       showAttack(humanBoard, 'my', randomPick, mySpaces[randomPick]);

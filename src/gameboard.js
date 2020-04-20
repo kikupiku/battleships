@@ -59,12 +59,36 @@ const gameboard = () => {
     return shipPartChecker;
   };
 
+  const triangulate = (coord, board) => {
+    let cantTouchThis = [];
+    let shipMayBeHere = [];
+    if (coord - 1 >= 0 && !board.spaces[coord - 1].hit) {
+      shipMayBeHere.push((coord - 1));
+    }
+
+    if (coord + 1 <= 99 && !board.spaces[coord + 1].hit) {
+      shipMayBeHere.push((coord + 1));
+    }
+
+    if (coord - 10 >= 0 && !board.spaces[coord - 10].hit) {
+      shipMayBeHere.push((coord - 10));
+    }
+
+    if (coord + 10 <= 99 && !board.spaces[coord + 10].hit) {
+      shipMayBeHere.push((coord + 10));
+    }
+    console.log('ship may be here: ', shipMayBeHere);
+
+    return cantTouchThis;
+  };
+
   return {
     spaces,
     placeShip,
     ships,
     receiveAttack,
     checkIfAllSunk,
+    triangulate,
   };
 };
 

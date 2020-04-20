@@ -6,7 +6,6 @@ const player = () => {
   let attack = (attackedBoard, coord) => {
     if (attackedBoard.spaces[coord].hit === false) {
       attackedBoard.receiveAttack(coord);
-
     }
   };
 
@@ -19,14 +18,6 @@ const player = () => {
          directions[Math.round(Math.random())]);
       }
     });
-  };
-
-  let triangulate = () => {
-    let shipMayBeHere = false;
-    if (gotcha === true) {
-
-    }
-    return shipMayBeHere;
   };
 
   return {
