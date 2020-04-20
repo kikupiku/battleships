@@ -69,7 +69,12 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   };
 
   const win = (player, wish) => {
-    status.textContent = `${player} wins! ${wish}Wanna play again?`;
+    if (player === 'computer') {
+      let fail = document.getElementById('fail');
+      fail.style.display = 'block';
+    }
+
+    status.textContent = `${player} wins! ${wish}Play again?`;
     enemySpaces.forEach((enemySpace) => {
       enemySpace.removeEventListener('click', placeAttack);
     });

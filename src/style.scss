@@ -273,3 +273,18 @@ img {
     font-size: 16px !important;
   }
 }
+
+#fail {
+  background-size: 100% 100%;
+  background-image: url('./assets/fail.png');
+  z-index: 999999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 35.7vh;
+  width: $left-col-width;
+  border: 2px solid $my-color;
+  min-height: 260px;
+  min-width: 260px;
+  display: none;
+}
