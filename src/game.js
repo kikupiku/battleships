@@ -7,8 +7,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
   const setupInstruction = document.getElementById('setup-instruction');
   const status = document.getElementById('status');
-  let indexOfHitShip;
-  let shipSunk;
   let endGame;
   let coordsForRandom = [];
   for (i = 0; i < 100; i++) {
@@ -29,12 +27,17 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     humanPlayer.attack(computerBoard, enemySpaceIndex);
     showAttack(computerBoard, 'enemy', enemySpaceIndex, e.currentTarget);
     enemySpaces[enemySpaceIndex].removeEventListener('click', placeAttack);
-
+    console.log('enemySpaceIndex: ', enemySpaceIndex);
     computerBoard.ships.forEach((ship) => {
       for (let i = 0; i < ship.coordinates.length; i++) {
         if (ship.coordinates[i].coordinate === enemySpaceIndex) {
           if (ship.isSunk()) {
             console.log('ship sunk!');
+            ship.coordinates.forEach((coordinate) => {
+              let hitIndex = coordinate.coordinate;
+              enemySpaces[hitIndex].childNodes[0].setAttribute('class', 'enemy smoke');
+            });
+
           }
         }
       }
