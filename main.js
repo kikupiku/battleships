@@ -170,12 +170,10 @@ const gameboard = __webpack_require__(0);
 const player = () => {
   let randomCoord;
 
-  // let gotcha = false;
-  let attack = (enemyBoard, coord) => {
-    if (enemyBoard.spaces[coord].hit === false) {
-      enemyBoard.receiveAttack(coord);
+  let attack = (attackedBoard, coord) => {
+    if (attackedBoard.spaces[coord].hit === false) {
+      attackedBoard.receiveAttack(coord);
 
-      // gotcha = true;
     }
   };
 
@@ -190,13 +188,13 @@ const player = () => {
     });
   };
 
-  // let triangulate = () => {
-  //   let shipMayBeHere = false;
-  //   if (gotcha === true) {
-  //
-  //   }
-  //   return shipMayBeHere;
-  // };
+  let triangulate = () => {
+    let shipMayBeHere = false;
+    if (gotcha === true) {
+
+    }
+    return shipMayBeHere;
+  };
 
   return {
     attack,
@@ -487,7 +485,6 @@ __webpack_require__.r(__webpack_exports__);
 let setup = _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default()();
 setup.placeShips();
 
-// TODO: add button to reset everything and start new game after win
 // TODO: add triangulation so that computer is not as stupid
 
 
@@ -1022,9 +1019,19 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     humanPlayer.attack(computerBoard, enemySpaceIndex);
     showAttack(computerBoard, 'enemy', enemySpaceIndex, e.currentTarget);
     enemySpaces[enemySpaceIndex].removeEventListener('click', placeAttack);
+    markSunkShip(enemySpaceIndex);
+    endGame = computerBoard.checkIfAllSunk();
+    if (endGame) {
+      win('You win! Congrats!');
+    } else {
+      computerPlay();
+    }
+  };
+
+  const markSunkShip = (index) => {
     computerBoard.ships.forEach((ship) => {
       for (let i = 0; i < ship.coordinates.length; i++) {
-        if (ship.coordinates[i].coordinate === enemySpaceIndex) {
+        if (ship.coordinates[i].coordinate === index) {
           if (ship.isSunk()) {
             ship.coordinates.forEach((coordinate) => {
               let hitIndex = coordinate.coordinate;
@@ -1034,13 +1041,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
         }
       }
     });
-
-    endGame = computerBoard.checkIfAllSunk();
-    if (endGame) {
-      win('You win! Congrats!');
-    } else {
-      computerPlay();
-    }
   };
 
   const showAttack = (attackedBoard, attackedClassName, coord, attackedDiv) => {
