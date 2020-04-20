@@ -7,6 +7,7 @@ const gameSetup = () => {
   const restart = document.getElementById('restart');
   const status = document.getElementById('status');
   const win = document.getElementById('win');
+  const fail = document.getElementById('fail');
   const setupInstruction = document.getElementById('setup-instruction');
   const mySpaces = Array.from(document.getElementsByClassName('my-space'));
   const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
@@ -103,22 +104,20 @@ const gameSetup = () => {
 
   const reset = () => {
     status.textContent = 'Place your ships!';
-    computer.autoPlaceShips(computerBoard);
     mySpaces.forEach((mySpace) => {
       mySpace.innerHTML = '';
     });
     enemySpaces.forEach((enemySpace) => {
       enemySpace.innerHTML = '';
     });
-    let fail = document.getElementById('fail');
     fail.style.display = 'none';
     win.style.display = 'none';
-    setupInstruction.style.display = 'none';
+    restart.style.display = 'none';
+    setupInstruction.style.display = 'block';
     shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
-    humanBoard.ships = [];
-    computerBoard.ships = [];
-    console.log('humanships: ', humanBoard.ships);
-    console.log('compships: ', computerBoard.ships);
+    humanBoard = gameboard();
+    computerBoard = gameboard();
+    computer.autoPlaceShips(computerBoard);
     placeShips();
   };
 
