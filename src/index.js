@@ -12,10 +12,11 @@ import fire from './assets/fire.png';
 import water from './assets/water.png';
 import fail from './assets/fail.png';
 import smoke from './assets/smoke.png';
+import win from './assets/win.png';
 
 let setup = gameSetup();
 setup.placeShips();
 
-// TODO: add visuals for when I sunk enemy's ship and which shipType
+// TODO: add mission success if I win
 // TODO: add button to reset everything and start new game after win
 // TODO: add triangulation so that computer is not as stupid

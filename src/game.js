@@ -27,7 +27,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     humanPlayer.attack(computerBoard, enemySpaceIndex);
     showAttack(computerBoard, 'enemy', enemySpaceIndex, e.currentTarget);
     enemySpaces[enemySpaceIndex].removeEventListener('click', placeAttack);
-    console.log('enemySpaceIndex: ', enemySpaceIndex);
     computerBoard.ships.forEach((ship) => {
       for (let i = 0; i < ship.coordinates.length; i++) {
         if (ship.coordinates[i].coordinate === enemySpaceIndex) {
@@ -37,32 +36,14 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
               let hitIndex = coordinate.coordinate;
               enemySpaces[hitIndex].childNodes[0].setAttribute('class', 'enemy smoke');
             });
-
           }
         }
       }
-
     });
 
-    // for (let i = 0; i < computerBoard.ships.length; i++) {
-    //   computerBoard.ships[i].coordinates.forEach((ship) => {
-    //
-    //     if (ship.coordinates.coordinate === enemySpaceIndex) {
-    //       if (ship.isSunk) {
-    //         console.log('ship sunk!');
-    //         ship.coordinates.forEach((coordinate) => {
-    //           mySpaces[coordinate.coordinate].childNodes[0].setAttribute('class', 'fail');
-    //         });
-    //
-    //       }
-    //     }
-    //   });
-    // }
-
     endGame = computerBoard.checkIfAllSunk();
-    console.log(computerBoard.ships);
     if (endGame) {
-      win('human', 'Congrats! ');
+      win('You win! Congrats!');
     } else {
       computerPlay();
     }
@@ -90,20 +71,25 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
       showAttack(humanBoard, 'my', randomPick, mySpaces[randomPick]);
       endGame = humanBoard.checkIfAllSunk();
       if (endGame) {
-        win('computer', '');
+        win('computer wins!');
       } else {
         status.textContent = 'enemy\'s quick, your turn again';
       }
     }
   };
 
-  const win = (player, wish) => {
-    if (player === 'computer') {
+  const win = (player) => {
+    if (player === 'computer wins!') {
       let fail = document.getElementById('fail');
       fail.style.display = 'block';
+    } else {
+      const body = document.getElementsByTagName('body')[0];
+      let win = document.createElement('div');
+      win.setAttribute('id', 'win');
+      body.appendChild(win);
     }
 
-    status.textContent = `${player} wins! ${wish}Play again?`;
+    status.textContent = `${player} Play again?`;
     enemySpaces.forEach((enemySpace) => {
       enemySpace.removeEventListener('click', placeAttack);
     });
