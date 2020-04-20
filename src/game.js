@@ -30,9 +30,19 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     humanPlayer.attack(computerBoard, enemySpaceIndex);
     showAttack(computerBoard, 'enemy', enemySpaceIndex, e.currentTarget);
     enemySpaces[enemySpaceIndex].removeEventListener('click', placeAttack);
+    markSunkShip(enemySpaceIndex);
+    endGame = computerBoard.checkIfAllSunk();
+    if (endGame) {
+      win('You win! Congrats!');
+    } else {
+      computerPlay();
+    }
+  };
+
+  const markSunkShip = (index) => {
     computerBoard.ships.forEach((ship) => {
       for (let i = 0; i < ship.coordinates.length; i++) {
-        if (ship.coordinates[i].coordinate === enemySpaceIndex) {
+        if (ship.coordinates[i].coordinate === index) {
           if (ship.isSunk()) {
             ship.coordinates.forEach((coordinate) => {
               let hitIndex = coordinate.coordinate;
@@ -42,13 +52,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
         }
       }
     });
-
-    endGame = computerBoard.checkIfAllSunk();
-    if (endGame) {
-      win('You win! Congrats!');
-    } else {
-      computerPlay();
-    }
   };
 
   const showAttack = (attackedBoard, attackedClassName, coord, attackedDiv) => {

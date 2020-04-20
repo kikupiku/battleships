@@ -17,5 +17,4 @@ import win from './assets/win.png';
 let setup = gameSetup();
 setup.placeShips();
 
-// TODO: add button to reset everything and start new game after win
 // TODO: add triangulation so that computer is not as stupid

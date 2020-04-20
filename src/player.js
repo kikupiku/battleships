@@ -3,12 +3,10 @@ const gameboard = require('./gameboard.js');
 const player = () => {
   let randomCoord;
 
-  // let gotcha = false;
-  let attack = (enemyBoard, coord) => {
-    if (enemyBoard.spaces[coord].hit === false) {
-      enemyBoard.receiveAttack(coord);
+  let attack = (attackedBoard, coord) => {
+    if (attackedBoard.spaces[coord].hit === false) {
+      attackedBoard.receiveAttack(coord);
 
-      // gotcha = true;
     }
   };
 
@@ -23,13 +21,13 @@ const player = () => {
     });
   };
 
-  // let triangulate = () => {
-  //   let shipMayBeHere = false;
-  //   if (gotcha === true) {
-  //
-  //   }
-  //   return shipMayBeHere;
-  // };
+  let triangulate = () => {
+    let shipMayBeHere = false;
+    if (gotcha === true) {
+
+    }
+    return shipMayBeHere;
+  };
 
   return {
     attack,
