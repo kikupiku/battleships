@@ -99,7 +99,7 @@ const gameboard = () => {
 
   let placeShip = (length, startingCoord, direction) => {
     let shipPartChecker = checkPlacementValidity(length, startingCoord, direction);
-    console.log(shipPartChecker, length);
+    console.log('placementvalidity: ', shipPartChecker, 'shiplength: ', length);
     if (shipPartChecker === length) {
       ships.push(ship(length, startingCoord, direction));
       spaces.forEach((space, i) => {
@@ -111,8 +111,6 @@ const gameboard = () => {
       });
     } else {
       console.log('space occupied');
-
-      // add dom manipulation here that shows message
     }
   };
 
@@ -133,16 +131,15 @@ const gameboard = () => {
 
   const checkPlacementValidity = (length, startingCoord, direction) => {
     let shipPartChecker = 0;
-    console.log('length: ', length, startingCoord, direction);
     for (i = 0; i < length; i++) {
-      if (direction === 'horizontal' && (startingCoord + (i * 10)) < 100) {    //check if outside board
-        if (spaces[startingCoord + (i * 10)].hasShipPart == false) {         //checking for occupancy
+      if (direction === 'horizontal' && (startingCoord + (i * 10)) < 100) {
+        if (spaces[startingCoord + (i * 10)].hasShipPart == false) {
           shipPartChecker += 1;
         }
       } else if (direction === 'vertical' && (startingCoord + i) < 100) {
-        if (spaces[startingCoord + (i)].hasShipPart == false &&               //check board occupancy
-            ((startingCoord < 10 && (startingCoord + length - 1) < 10) ||     //check 1st column if outside of board
-            (startingCoord > 9 && startingCoord.toString()[0] ===             //check if other columns outside board
+        if (spaces[startingCoord + (i)].hasShipPart == false &&
+            ((startingCoord < 10 && (startingCoord + length - 1) < 10) ||
+            (startingCoord > 9 && startingCoord.toString()[0] ===
             (startingCoord + length - 1).toString()[0]))) {
           shipPartChecker += 1;
         }
@@ -187,7 +184,8 @@ const player = () => {
     const lengths = [2, 3, 3, 4, 5];
     lengths.forEach((length, i) => {
       while (board.ships.length <= i) {
-        board.placeShip(length, Math.floor(Math.random() * 100), directions[Math.round(Math.random())]);
+        board.placeShip(length, Math.floor(Math.random() * 100),
+         directions[Math.round(Math.random())]);
       }
     });
   };
@@ -319,7 +317,12 @@ const beginGame = __webpack_require__(19);
 
 const gameSetup = () => {
   const myBoard = document.getElementById('my-board');
+  const restart = document.getElementById('restart');
+  const status = document.getElementById('status');
+  const win = document.getElementById('win');
+  const setupInstruction = document.getElementById('setup-instruction');
   const mySpaces = Array.from(document.getElementsByClassName('my-space'));
+  const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
   let computer = player();
   let human = player();
   let computerBoard = gameboard();
@@ -329,7 +332,8 @@ const gameSetup = () => {
   let suffix = '';
   let direction = 'horizontal';
   computer.autoPlaceShips(computerBoard);
-  console.log(computerBoard.spaces);
+  restart.style.display = 'none';
+  win.style.display = 'none';
 
   const placeShips = () => {
     for (i = 0; i < mySpaces.length; i++) {
@@ -387,7 +391,13 @@ const gameSetup = () => {
     }
 
     if (shipTypes.length === 0) {
-      beginGame(computer, human, computerBoard, humanBoard);
+      mySpaces.forEach((mySpace) => {
+        mySpace.removeEventListener('click', placeShip);
+      });
+      let round = beginGame(computer, human, computerBoard, humanBoard);
+      if (round.win) {
+        restart.addEventListener('click', reset);
+      }
     }
   };
 
@@ -402,6 +412,27 @@ const gameSetup = () => {
 
     let img = document.getElementsByClassName('ship')[0];
     img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
+  };
+
+  const reset = () => {
+    status.textContent = 'Place your ships!';
+    computer.autoPlaceShips(computerBoard);
+    mySpaces.forEach((mySpace) => {
+      mySpace.innerHTML = '';
+    });
+    enemySpaces.forEach((enemySpace) => {
+      enemySpace.innerHTML = '';
+    });
+    let fail = document.getElementById('fail');
+    fail.style.display = 'none';
+    win.style.display = 'none';
+    setupInstruction.style.display = 'none';
+    shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
+    humanBoard.ships = [];
+    computerBoard.ships = [];
+    console.log('humanships: ', humanBoard.ships);
+    console.log('compships: ', computerBoard.ships);
+    placeShips();
   };
 
   return {
@@ -457,7 +488,6 @@ __webpack_require__.r(__webpack_exports__);
 let setup = _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default()();
 setup.placeShips();
 
-// TODO: add mission success if I win
 // TODO: add button to reset everything and start new game after win
 // TODO: add triangulation so that computer is not as stupid
 
@@ -796,7 +826,7 @@ var ___CSS_LOADER_URL_REPLACEMENT_9___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_
 var ___CSS_LOADER_URL_REPLACEMENT_10___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_10___);
 var ___CSS_LOADER_URL_REPLACEMENT_11___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_11___);
 // Module
-exports.push([module.i, "@font-face{font-family:'army';src:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");font-style:normal}@font-face{font-family:'typewriter';src:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");font-style:normal}body{box-sizing:border-box;background-image:url(\"https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg\");background-repeat:no-repeat;background-size:cover}img{border:1px solid white}.container{width:850px;margin:0 auto}.container #status{width:600px;font-family:'army', sans-serif;text-align:center;font-size:36px;margin:10px auto 20px auto;color:lightgrey}.container .my-board,.container .enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.container .my-board{height:35.7vh;width:35.9vh;border:2px solid #286ba2;min-height:260px;min-width:260px;position:relative;background:#acceea}.container .my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #286ba2;border-bottom:0.5px solid #286ba2;min-height:25.5px;min-width:25.5px;position:relative}.container .carrier,.container .battleship,.container .destroyer,.container .submarine,.container .patrolboat{min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.container .carrier:active,.container .battleship:active,.container .destroyer:active,.container .submarine:active,.container .patrolboat:active{background:grey}.container .carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");width:17.5vh;min-width:127.5px}.container .battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");width:14vh;min-width:102px}.container .destroyer,.container .submarine{width:10.5vh;min-width:76.5px}.container .destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ")}.container .submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ")}.container .patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");width:7vh;min-width:51px}.container .vert{z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;transform:translate(10%, 35%) rotate(-90deg);transform-origin:left}.container .enemy-board-wrapper{display:flex;width:100%}.container .enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.container .enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px;background:white;position:relative}.container .enemy-board-wrapper .enemy-board .setup-instruction-container{border:2px solid black;background:#595453;height:54.48vh;width:55vh;position:absolute;left:-2px;top:-2px;z-index:100;min-height:400px;min-width:400px}.container .enemy-board-wrapper .enemy-board .setup-instruction{width:80%;margin:10px auto;text-align:left}.container .enemy-board-wrapper .enemy-board h1{font-family:'army', sans-serif;text-align:center;font-size:3vh}.container .enemy-board-wrapper .enemy-board .info{margin:8px 0}.container .enemy-board-wrapper .enemy-board .info,.container .enemy-board-wrapper .enemy-board .ship-name{font-family:'typewriter';font-size:2.3vh;font-weight:bold}.container .enemy-board-wrapper .enemy-board .boats{width:300px;margin:0 auto;background:grey;position:relative;border-radius:5px;border:2px solid rgba(89,84,83,0.74)}.container .enemy-board-wrapper .enemy-board .ship-name,.container .enemy-board-wrapper .enemy-board .type{display:inline-block;margin:0;position:relative}.container .enemy-board-wrapper .enemy-board .ship-name{bottom:10px;font-size:20px}.container .enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px;position:relative}.container .enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}.my{height:3.5vh;width:3.5vh;min-height:25.5px;min-width:25.5px}.enemy{height:5.38vh;width:5.38vh;min-height:39.5px;min-width:39.5px}.fire,.water,.smoke{background-size:100% 100%;background-repeat:no-repeat;position:absolute;top:0;left:0}.fire{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.water{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}.smoke{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ")}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}@media all and (max-width: 500px){h1{font-size:24px !important}.info{font-size:16px !important}}#fail{background-size:100% 100%;background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_10___ + ");z-index:999999;position:absolute;top:0;left:0;height:35.7vh;width:35.9vh;border:2px solid #286ba2;min-height:260px;min-width:260px;display:none}#win{position:absolute;z-index:999999;width:100%;height:100%;top:0;left:0;background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_11___ + ");background-repeat:no-repeat;background-size:100% auto}\n", ""]);
+exports.push([module.i, "@font-face{font-family:'army';src:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");font-style:normal}@font-face{font-family:'typewriter';src:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");font-style:normal}body{box-sizing:border-box;background-image:url(\"https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg\");background-repeat:no-repeat;background-size:cover}img{border:1px solid white}.container{width:850px;margin:0 auto}#status{width:600px;font-family:'army', sans-serif;text-align:center;font-size:36px;margin:10px auto 20px auto;color:lightgrey}#restart{font-family:'typewriter', sans-serif;font-size:28px;width:150px;margin:0 auto;border-radius:5px;height:40px;background:grey;font-weight:bold}.top-wrapper{width:600px;display:flex;margin:0 auto;flex-direction:column}.my-board,.enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.my-board{height:35.7vh;width:35.9vh;border:2px solid #286ba2;min-height:260px;min-width:260px;position:relative;background:#acceea}.my-space{height:3.5vh;width:3.5vh;border-right:0.5px solid #286ba2;border-bottom:0.5px solid #286ba2;min-height:25.5px;min-width:25.5px;position:relative}.carrier,.battleship,.destroyer,.submarine,.patrolboat{min-height:25.5px;height:3.5vh;z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%}.carrier:active,.battleship:active,.destroyer:active,.submarine:active,.patrolboat:active{background:grey}.carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");width:17.5vh;min-width:127.5px}.battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");width:14vh;min-width:102px}.destroyer,.submarine{width:10.5vh;min-width:76.5px}.destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ")}.submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ")}.patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");width:7vh;min-width:51px}.vert{z-index:100 !important;overflow:visible;background-repeat:no-repeat;background-size:100% 100%;transform:translate(10%, 35%) rotate(-90deg);transform-origin:left}.enemy-board-wrapper{display:flex;width:100%}.enemy-board-wrapper .shrinker{width:35.9vh;flex-shrink:2;min-width:260px}.enemy-board-wrapper .enemy-board{height:54.48vh;width:55vh;border:2px solid #743c3c;min-height:400px;min-width:400px;background:white;position:relative}.enemy-board-wrapper .enemy-board .setup-instruction-container{border:2px solid black;background:#595453;height:54.48vh;width:55vh;position:absolute;left:-2px;top:-2px;z-index:100;min-height:400px;min-width:400px}.enemy-board-wrapper .enemy-board .setup-instruction{width:80%;margin:10px auto;text-align:left}.enemy-board-wrapper .enemy-board h1{font-family:'army', sans-serif;text-align:center;font-size:3vh}.enemy-board-wrapper .enemy-board .info{margin:8px 0}.enemy-board-wrapper .enemy-board .info,.enemy-board-wrapper .enemy-board .ship-name{font-family:'typewriter';font-size:2.3vh;font-weight:bold}.enemy-board-wrapper .enemy-board .boats{width:300px;margin:0 auto;background:grey;position:relative;border-radius:5px;border:2px solid rgba(89,84,83,0.74)}.enemy-board-wrapper .enemy-board .ship-name,.enemy-board-wrapper .enemy-board .type{display:inline-block;margin:0;position:relative}.enemy-board-wrapper .enemy-board .ship-name{bottom:10px;font-size:20px}.enemy-board-wrapper .enemy-board .enemy-space{height:5.38vh;width:5.38vh;border-right:0.5px solid #743c3c;border-bottom:0.5px solid #743c3c;min-height:39.5px;min-width:39.5px;position:relative}.enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}.my{height:3.5vh;width:3.5vh;min-height:25.5px;min-width:25.5px}.enemy{height:5.38vh;width:5.38vh;min-height:39.5px;min-width:39.5px}.fire,.water,.smoke{background-size:100% 100%;background-repeat:no-repeat;position:absolute;top:0;left:0}.fire{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.water{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}.smoke{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ")}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}@media all and (max-width: 500px){h1{font-size:24px !important}.info{font-size:16px !important}}#fail{background-size:100% 100%;background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_10___ + ");z-index:999999;position:absolute;top:0;left:0;height:35.7vh;width:35.9vh;border:2px solid #286ba2;min-height:260px;min-width:260px;display:none}#win{position:absolute;z-index:999999;width:100%;height:100%;top:0;left:0;background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_11___ + ");background-repeat:no-repeat;background-size:100% auto}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -970,6 +1000,9 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
   const setupInstruction = document.getElementById('setup-instruction');
   const status = document.getElementById('status');
+  const enemyBoard = document.getElementById('enemy-board');
+  const restart = document.getElementById('restart');
+
   let endGame;
   let coordsForRandom = [];
   for (i = 0; i < 100; i++) {
@@ -994,7 +1027,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
       for (let i = 0; i < ship.coordinates.length; i++) {
         if (ship.coordinates[i].coordinate === enemySpaceIndex) {
           if (ship.isSunk()) {
-            console.log('ship sunk!');
             ship.coordinates.forEach((coordinate) => {
               let hitIndex = coordinate.coordinate;
               enemySpaces[hitIndex].childNodes[0].setAttribute('class', 'enemy smoke');
@@ -1042,23 +1074,27 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   };
 
   const win = (player) => {
+    restart.style.display = 'block';
     if (player === 'computer wins!') {
       let fail = document.getElementById('fail');
       fail.style.display = 'block';
     } else {
-      const body = document.getElementsByTagName('body')[0];
-      let win = document.createElement('div');
-      win.setAttribute('id', 'win');
-      body.appendChild(win);
+      let win = document.getElementById('win');
+      win.style.display = 'block';
     }
 
     status.textContent = `${player} Play again?`;
     enemySpaces.forEach((enemySpace) => {
       enemySpace.removeEventListener('click', placeAttack);
     });
+
+    return true;
   };
 
   humanPlay();
+  return {
+    win,
+  };
 };
 
 module.exports = beginGame;
