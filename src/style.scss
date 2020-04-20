@@ -151,6 +151,7 @@ img {
         border-bottom: 0.5px solid $enemy-color;
         min-height: 39.5px;
         min-width: 39.5px;
+        position: relative;
         &:hover {
           background: rgba($enemy-color, 0.2);
         }
@@ -177,6 +178,9 @@ img {
 .water {
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .fire {

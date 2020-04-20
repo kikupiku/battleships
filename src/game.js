@@ -6,9 +6,14 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
   const setupInstruction = document.getElementById('setup-instruction');
   const status = document.getElementById('status');
+  let coordsForRandom = [];
+  for (i = 0; i < 100; i++) {
+    coordsForRandom.push(i);
+  }
 
   status.textContent = 'OK, let\'s start! It\'s your turn to attack';
   setupInstruction.style.display = 'none';
+  console.log('my ships are: ', humanBoard.spaces);
 
   const humanPlay = () => {
     enemySpaces.forEach((enemySpace) => {
@@ -42,19 +47,25 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   };
 
   const computerPlay = () => {
-    randomCoord = Math.floor(Math.random() * 100);
-    computerPlayer.attack(humanBoard, randomCoord);
-    showAttack(humanBoard, 'my', randomCoord, mySpaces[randomCoord]);
-    let endGame = humanBoard.checkIfAllSunk();
-    if (endGame) {
-      win('computer', '');
-    }
+    randomPick = Math.floor(Math.random() * 100);
+    if (coordsForRandom[randomPick] === 'done') {
+      computerPlay();
+    } else {
+      computerPlayer.attack(humanBoard, coordsForRandom[randomPick]);
+      coordsForRandom.splice(randomPick, 1, 'done');
+      mySpaces[randomPick].removeEventListener('click', placeAttack);
+      showAttack(humanBoard, 'my', randomPick, mySpaces[randomPick]);
+      let endGame = humanBoard.checkIfAllSunk();
+      if (endGame) {
+        win('computer', '');
+      }
 
-    status.textContent = 'computer played, your turn again';
-    console.log('comp hit ', randomCoord);
+      status.textContent = 'computer played, your turn again';
+      console.log('comp hit ', randomPick);
+    }
   };
 
-  const win = player => {
+  const win = (player, wish) => {
     enemySpaces.forEach((enemySpace) => {
       enemySpace.removeEventListener('click', placeAttack);
     });
