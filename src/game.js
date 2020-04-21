@@ -111,9 +111,10 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const activePursuitPlay = () => {
     smartAttack();
     if (shipWasHit()) {
-      if (checkIfSunk()) {
+      if (checkIfSunk(currentAttackIndex)) {
         activePursuit = false;
         shipMayBeHere = coordsForRandom;
+        checkIfAdjacentShipHitDuringTriangulation();
       } else {
         shipMayBeHere = humanBoard.triangulate(currentAttackIndex, humanBoard);
       }
@@ -133,22 +134,37 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
 
   const shipWasHit = () => humanBoard.spaces[currentAttackIndex].hasShipPart;
 
-  const checkIfSunk = () => {
-    let hitShip = findHitShip();
+  const checkIfSunk = (index) => {
+    let hitShip = findHitShip(index);
     return hitShip.isSunk();
   };
 
-  const findHitShip = () => {
+  const findHitShip = (index) => {
     let hitShip = humanBoard.ships.find(ship => {
       let hasMatchingCoordinate = false;
       ship.coordinates.forEach((coord) => {
-        if (coord.coordinate === currentAttackIndex) {
+        if (coord.coordinate === index) {
           hasMatchingCoordinate = true;
         }
       });
       return hasMatchingCoordinate;
     });
     return hitShip;
+  };
+
+  const checkIfAdjacentShipHitDuringTriangulation = () => {
+    let adjacentShipIndices = [];
+    humanBoard.spaces.forEach((space) => {
+      if (space.hit && space.hasShipPart) {
+        adjacentShipIndices.push(space.coordinate);
+      }
+    });
+    let adjacentShipIndex = adjacentShipIndices.find(index => !checkIfSunk(index));
+    console.log('index of the stray ship: ', adjacentShipIndex);
+    if (adjacentShipIndex !== undefined) {
+      activePursuit = true;
+      shipMayBeHere = humanBoard.triangulate(adjacentShipIndex, humanBoard);
+    }
   };
 
   const win = (player) => {
