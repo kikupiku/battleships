@@ -108,8 +108,6 @@ const gameboard = () => {
           }
         }
       });
-    } else {
-      console.log('space occupied');
     }
   };
 
@@ -165,8 +163,6 @@ const gameboard = () => {
         }
       }
     });
-    console.log('howManyHitsThisShipHas: ', howManyHitsThisShipHas);
-    console.log('hitParts: ', hitParts);
     if (howManyHitsThisShipHas === 1) {
       if (coord - 1 >= 0 && !board.spaces[coord - 1].hit) {
         if (coord < 10 || coord.toString()[1] !== '0') {
@@ -187,7 +183,6 @@ const gameboard = () => {
         shipMayBeHere.push((coord + 10));
       }
     } else if (howManyHitsThisShipHas > 1) {
-      console.log('closing in!');
       if (hitParts[0] === hitParts[1] + 10 || hitParts[0] === hitParts[1] - 10) {
         hitParts.forEach((hitPart) => {         //direction: horizontal
           if (hitPart - 10 >= 0 && !board.spaces[hitPart - 10].hit) {
@@ -214,8 +209,6 @@ const gameboard = () => {
 
       }
     }
-
-    console.log('ship may be here: ', shipMayBeHere);
 
     return shipMayBeHere;
   };
@@ -909,7 +902,7 @@ var ___CSS_LOADER_URL_REPLACEMENT_9___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_
 var ___CSS_LOADER_URL_REPLACEMENT_10___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_10___);
 var ___CSS_LOADER_URL_REPLACEMENT_11___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_11___);
 // Module
-exports.push([module.i, "@font-face{font-family:'army';font-style:normal;src:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ")}@font-face{font-family:'typewriter';font-style:normal;src:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ")}body{background-image:url(\"https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg\");background-repeat:no-repeat;background-size:cover;box-sizing:border-box}img{border:1px solid white}.container{margin:0 auto;width:850px}#status{color:lightgrey;font-family:'army', sans-serif;font-size:36px;margin:10px auto 20px auto;text-align:center;width:600px}#restart{background:grey;border-radius:5px;font-family:'typewriter', sans-serif;font-size:28px;font-weight:bold;height:40px;margin:0 auto;width:150px}.top-wrapper{display:flex;flex-direction:column;margin:0 auto;width:600px}.my-board,.enemy-board{display:flex;flex-direction:column-reverse;flex-wrap:wrap}.my-board{background:#acceea;border:2px solid #286ba2;height:35.7vh;min-height:260px;min-width:260px;position:relative;width:35.9vh}.my-space{border-bottom:0.5px solid #286ba2;border-right:0.5px solid #286ba2;height:3.5vh;min-height:25.5px;min-width:25.5px;position:relative;width:3.5vh}.carrier,.battleship,.destroyer,.submarine,.patrolboat{background-repeat:no-repeat;background-size:100% 100%;height:3.5vh;min-height:25.5px;overflow:visible;z-index:100 !important}.carrier:active,.battleship:active,.destroyer:active,.submarine:active,.patrolboat:active{background:grey}.carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");min-width:127.5px;width:17.5vh}.battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");min-width:102px;width:14vh}.destroyer,.submarine{min-width:76.5px;width:10.5vh}.destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ")}.submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ")}.patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");min-width:51px;width:7vh}.vert{background-repeat:no-repeat;background-size:100% 100%;overflow:visible;transform:translate(10%, 35%) rotate(-90deg);transform-origin:left;z-index:100 !important}.enemy-board-wrapper{display:flex;width:100%}.enemy-board-wrapper .shrinker{flex-shrink:2;min-width:260px;width:35.9vh}.enemy-board-wrapper .enemy-board{background:white;border:2px solid #743c3c;height:54.48vh;min-height:400px;min-width:400px;position:relative;width:55vh}.enemy-board-wrapper .enemy-board .setup-instruction-container{background:#595453;border:2px solid black;height:54.48vh;left:-2px;min-height:400px;min-width:400px;position:absolute;top:-2px;width:55vh;z-index:100}.enemy-board-wrapper .enemy-board .setup-instruction{margin:10px auto;text-align:left;width:80%}.enemy-board-wrapper .enemy-board h1{font-family:'army', sans-serif;font-size:3vh;text-align:center}.enemy-board-wrapper .enemy-board .info{margin:8px 0}.enemy-board-wrapper .enemy-board .info,.enemy-board-wrapper .enemy-board .ship-name{font-family:'typewriter';font-size:2.3vh;font-weight:bold}.enemy-board-wrapper .enemy-board .boats{background:grey;border:2px solid rgba(89,84,83,0.74);border-radius:5px;margin:0 auto;position:relative;width:300px}.enemy-board-wrapper .enemy-board .ship-name,.enemy-board-wrapper .enemy-board .type{display:inline-block;margin:0;position:relative}.enemy-board-wrapper .enemy-board .ship-name{bottom:10px;font-size:20px}.enemy-board-wrapper .enemy-board .enemy-space{border-bottom:0.5px solid #743c3c;border-right:0.5px solid #743c3c;height:5.38vh;min-height:39.5px;min-width:39.5px;position:relative;width:5.38vh}.enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}.my{height:3.5vh;min-height:25.5px;min-width:25.5px;width:3.5vh}.enemy{height:5.38vh;min-height:39.5px;min-width:39.5px;width:5.38vh}.fire,.water,.smoke{background-repeat:no-repeat;background-size:100% 100%;left:0;position:absolute;top:0}.fire{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.water{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}.smoke{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ")}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{flex-shrink:4;min-width:0 !important}.enemy-board{flex-shrink:0}}@media all and (max-width: 500px){h1{font-size:24px !important}.info{font-size:16px !important}}#fail{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_10___ + ");background-size:100% 100%;border:2px solid #286ba2;display:none;height:35.7vh;left:0;min-height:260px;min-width:260px;position:absolute;top:0;width:35.9vh;z-index:999999}#win{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_11___ + ");background-repeat:no-repeat;background-size:100% auto;height:100%;left:0;position:absolute;top:0;width:100%;z-index:999999}\n", ""]);
+exports.push([module.i, "@font-face{font-family:'army';font-style:normal;src:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ")}@font-face{font-family:'typewriter';font-style:normal;src:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ")}body{background-image:url(\"https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg\");background-repeat:no-repeat;background-size:cover;-webkit-box-sizing:border-box;box-sizing:border-box}img{border:1px solid white}.container{margin:0 auto;width:850px}#status{color:lightgrey;font-family:'army', sans-serif;font-size:36px;margin:10px auto 20px auto;text-align:center;width:600px}#restart{background:grey;border-radius:5px;font-family:'typewriter', sans-serif;font-size:28px;font-weight:bold;height:40px;margin:0 auto;width:150px}.top-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;margin:0 auto;width:600px}.my-board,.enemy-board{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse;-ms-flex-wrap:wrap;flex-wrap:wrap}.my-board{background:#acceea;border:2px solid #286ba2;height:35.7vh;min-height:260px;min-width:260px;position:relative;width:35.9vh}.my-space{border-bottom:0.5px solid #286ba2;border-right:0.5px solid #286ba2;height:3.5vh;min-height:25.5px;min-width:25.5px;position:relative;width:3.5vh}.carrier,.battleship,.destroyer,.submarine,.patrolboat{background-repeat:no-repeat;background-size:100% 100%;height:3.5vh;min-height:25.5px;overflow:visible;z-index:100 !important}.carrier:active,.battleship:active,.destroyer:active,.submarine:active,.patrolboat:active{background:grey}.carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");min-width:127.5px;width:17.5vh}.battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");min-width:102px;width:14vh}.destroyer,.submarine{min-width:76.5px;width:10.5vh}.destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ")}.submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ")}.patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");min-width:51px;width:7vh}.vert{background-repeat:no-repeat;background-size:100% 100%;overflow:visible;-webkit-transform:translate(10%, 35%) rotate(-90deg);-ms-transform:translate(10%, 35%) rotate(-90deg);transform:translate(10%, 35%) rotate(-90deg);-webkit-transform-origin:left;-ms-transform-origin:left;transform-origin:left;z-index:100 !important}.enemy-board-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%}.enemy-board-wrapper .shrinker{-ms-flex-negative:2;flex-shrink:2;min-width:260px;width:35.9vh}.enemy-board-wrapper .enemy-board{background:white;border:2px solid #743c3c;height:54.48vh;min-height:400px;min-width:400px;position:relative;width:55vh}.enemy-board-wrapper .enemy-board .setup-instruction-container{background:#595453;border:2px solid black;height:54.48vh;left:-2px;min-height:400px;min-width:400px;position:absolute;top:-2px;width:55vh;z-index:100}.enemy-board-wrapper .enemy-board .setup-instruction{margin:10px auto;text-align:left;width:80%}.enemy-board-wrapper .enemy-board h1{font-family:'army', sans-serif;font-size:3vh;text-align:center}.enemy-board-wrapper .enemy-board .info{margin:8px 0}.enemy-board-wrapper .enemy-board .info,.enemy-board-wrapper .enemy-board .ship-name{font-family:'typewriter';font-size:2.3vh;font-weight:bold}.enemy-board-wrapper .enemy-board .boats{background:grey;border:2px solid rgba(89,84,83,0.74);border-radius:5px;margin:0 auto;position:relative;width:300px}.enemy-board-wrapper .enemy-board .ship-name,.enemy-board-wrapper .enemy-board .type{display:inline-block;margin:0;position:relative}.enemy-board-wrapper .enemy-board .ship-name{bottom:10px;font-size:20px}.enemy-board-wrapper .enemy-board .enemy-space{border-bottom:0.5px solid #743c3c;border-right:0.5px solid #743c3c;height:5.38vh;min-height:39.5px;min-width:39.5px;position:relative;width:5.38vh}.enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}.my{height:3.5vh;min-height:25.5px;min-width:25.5px;width:3.5vh}.enemy{height:5.38vh;min-height:39.5px;min-width:39.5px;width:5.38vh}.fire,.water,.smoke{background-repeat:no-repeat;background-size:100% 100%;left:0;position:absolute;top:0}.fire{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.water{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}.smoke{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ")}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{-ms-flex-negative:4;flex-shrink:4;min-width:0 !important}.enemy-board{-ms-flex-negative:0;flex-shrink:0}}@media all and (max-width: 500px){h1{font-size:24px !important}.info{font-size:16px !important}}#fail{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_10___ + ");background-size:100% 100%;border:2px solid #286ba2;display:none;height:35.7vh;left:0;min-height:260px;min-width:260px;position:absolute;top:0;width:35.9vh;z-index:999999}#win{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_11___ + ");background-repeat:no-repeat;background-size:100% auto;height:100%;left:0;position:absolute;top:0;width:100%;z-index:999999}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -1148,14 +1141,12 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   };
 
   const computerPlay = () => {
-    if (!activePursuit) {    //no active hit
+    if (!activePursuit) {
       randomCompPlay();
-    } else {             //if SMBH is taken from triangulate, i.e. activepursuit
+    } else {
       activePursuitPlay();
     }
 
-    console.log('active pursuit is active: ', activePursuit +
-    ', and these are possible places where the ship is: ', shipMayBeHere);
     endGame = humanBoard.checkIfAllSunk();
     if (endGame) {
       win('computer wins!');
@@ -1171,12 +1162,12 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     } else {
       computerPlayer.attack(humanBoard, shipMayBeHere[randomPick]);
       coordsForRandom.splice(randomPick, 1, 'done');
-      if (humanBoard.spaces[randomPick].hasShipPart) { //virgin hit!
+      if (humanBoard.spaces[randomPick].hasShipPart) {
         shipMayBeHere = humanBoard.triangulate(randomPick, humanBoard);
         oldAttackIndex = randomPick;
-        activePursuit = true;  //don't have to check if sunk, it's the 1st hit
+        activePursuit = true;
       } else {
-        shipMayBeHere = coordsForRandom;   //continue state of inactivepursuit
+        shipMayBeHere = coordsForRandom;
       }
 
       mySpaces[randomPick].removeEventListener('click', placeAttack);
@@ -1236,7 +1227,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
       }
     });
     let adjacentShipIndex = adjacentShipIndices.find(index => !checkIfSunk(index));
-    console.log('index of the stray ship: ', adjacentShipIndex);
     if (adjacentShipIndex !== undefined) {
       activePursuit = true;
       shipMayBeHere = humanBoard.triangulate(adjacentShipIndex, humanBoard);

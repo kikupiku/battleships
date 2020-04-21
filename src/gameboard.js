@@ -18,8 +18,6 @@ const gameboard = () => {
           }
         }
       });
-    } else {
-      console.log('space occupied');
     }
   };
 
@@ -75,8 +73,6 @@ const gameboard = () => {
         }
       }
     });
-    console.log('howManyHitsThisShipHas: ', howManyHitsThisShipHas);
-    console.log('hitParts: ', hitParts);
     if (howManyHitsThisShipHas === 1) {
       if (coord - 1 >= 0 && !board.spaces[coord - 1].hit) {
         if (coord < 10 || coord.toString()[1] !== '0') {
@@ -97,7 +93,6 @@ const gameboard = () => {
         shipMayBeHere.push((coord + 10));
       }
     } else if (howManyHitsThisShipHas > 1) {
-      console.log('closing in!');
       if (hitParts[0] === hitParts[1] + 10 || hitParts[0] === hitParts[1] - 10) {
         hitParts.forEach((hitPart) => {         //direction: horizontal
           if (hitPart - 10 >= 0 && !board.spaces[hitPart - 10].hit) {
@@ -124,8 +119,6 @@ const gameboard = () => {
 
       }
     }
-
-    console.log('ship may be here: ', shipMayBeHere);
 
     return shipMayBeHere;
   };

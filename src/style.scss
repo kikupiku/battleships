@@ -20,7 +20,8 @@ body {
   background-image: url('https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 img {
@@ -53,17 +54,28 @@ img {
 }
 
 .top-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   margin: 0 auto;
   width: 600px;
 }
 
 .my-board,
 .enemy-board {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column-reverse;
-  flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .my-board {
@@ -139,17 +151,24 @@ img {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   overflow: visible;
-  transform: translate(10%, 35%) rotate(-90deg);
-  transform-origin: left;
+  -webkit-transform: translate(10%, 35%) rotate(-90deg);
+      -ms-transform: translate(10%, 35%) rotate(-90deg);
+          transform: translate(10%, 35%) rotate(-90deg);
+  -webkit-transform-origin: left;
+      -ms-transform-origin: left;
+          transform-origin: left;
   z-index: 100 !important;
 }
 
 .enemy-board-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
 
   .shrinker {
-    flex-shrink: 2;
+    -ms-flex-negative: 2;
+        flex-shrink: 2;
     min-width: 260px;
     width: $left-col-width;
   }
@@ -278,12 +297,14 @@ img {
   }
 
   .shrinker {
-    flex-shrink: 4;
+    -ms-flex-negative: 4;
+        flex-shrink: 4;
     min-width: 0 !important;
   }
 
   .enemy-board {
-    flex-shrink: 0;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
   }
 }
 

@@ -72,14 +72,12 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   };
 
   const computerPlay = () => {
-    if (!activePursuit) {    //no active hit
+    if (!activePursuit) {
       randomCompPlay();
-    } else {             //if SMBH is taken from triangulate, i.e. activepursuit
+    } else {
       activePursuitPlay();
     }
 
-    console.log('active pursuit is active: ', activePursuit +
-    ', and these are possible places where the ship is: ', shipMayBeHere);
     endGame = humanBoard.checkIfAllSunk();
     if (endGame) {
       win('computer wins!');
@@ -95,12 +93,12 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     } else {
       computerPlayer.attack(humanBoard, shipMayBeHere[randomPick]);
       coordsForRandom.splice(randomPick, 1, 'done');
-      if (humanBoard.spaces[randomPick].hasShipPart) { //virgin hit!
+      if (humanBoard.spaces[randomPick].hasShipPart) {
         shipMayBeHere = humanBoard.triangulate(randomPick, humanBoard);
         oldAttackIndex = randomPick;
-        activePursuit = true;  //don't have to check if sunk, it's the 1st hit
+        activePursuit = true;
       } else {
-        shipMayBeHere = coordsForRandom;   //continue state of inactivepursuit
+        shipMayBeHere = coordsForRandom;
       }
 
       mySpaces[randomPick].removeEventListener('click', placeAttack);
@@ -160,7 +158,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
       }
     });
     let adjacentShipIndex = adjacentShipIndices.find(index => !checkIfSunk(index));
-    console.log('index of the stray ship: ', adjacentShipIndex);
     if (adjacentShipIndex !== undefined) {
       activePursuit = true;
       shipMayBeHere = humanBoard.triangulate(adjacentShipIndex, humanBoard);
