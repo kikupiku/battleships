@@ -81,14 +81,14 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const ship = __webpack_require__(9);
+const ship = __webpack_require__(1);
 
 const gameboard = () => {
   let spaces = [];
@@ -149,18 +149,17 @@ const gameboard = () => {
   };
 
   const triangulate = (coord, board) => {
-    let cantTouchThis = [];
     let shipMayBeHere = [];
     let hitParts = [];
     let howManyHitsThisShipHas = 0;
-    let direction;
+
     board.ships.forEach((ship) => {
       for (let i = 0; i < ship.coordinates.length; i++) {
         if (ship.coordinates[i].coordinate === coord) {
           ship.coordinates.forEach((coordinate) => {
             if (coordinate.hit) {
               howManyHitsThisShipHas += 1;
-              hitParts.push(ship.coordinate.coordinate);
+              hitParts.push(coordinate.coordinate);
             }
           });
         }
@@ -218,7 +217,7 @@ const gameboard = () => {
 
     console.log('ship may be here: ', shipMayBeHere);
 
-    return cantTouchThis;
+    return shipMayBeHere;
   };
 
   return {
@@ -236,97 +235,6 @@ module.exports = gameboard;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const gameboard = __webpack_require__(0);
-
-const player = () => {
-  let randomCoord;
-
-  let attack = (attackedBoard, coord) => {
-    if (attackedBoard.spaces[coord].hit === false) {
-      attackedBoard.receiveAttack(coord);
-    }
-  };
-
-  let autoPlaceShips = (board) => {
-    const directions = ['horizontal', 'vertical'];
-    const lengths = [2, 3, 3, 4, 5];
-    lengths.forEach((length, i) => {
-      while (board.ships.length <= i) {
-        board.placeShip(length, Math.floor(Math.random() * 100),
-         directions[Math.round(Math.random())]);
-      }
-    });
-  };
-
-  return {
-    attack,
-    autoPlaceShips,
-  };
-};
-
-module.exports = player;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "c227e3d130248bceffdc67ece1725486.png");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "27587854664d182b8567713e6b834251.png");
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "2f3dfa564d6fda214d3c6212cfb98264.png");
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "b01796ec6649891880f119c105beb1f2.png");
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "f565c4b5f2c3ded13332ae4b8f7aa018.png");
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "1be19b25ea4bc9bd255e6b5c64745ba7.png");
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "2df37ba6f40446f4c94568d2ef78cd82.png");
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports) {
 
 const ship = (length, startingCoord, direction) => {
@@ -370,12 +278,127 @@ module.exports = ship;
 
 
 /***/ }),
-/* 10 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const player = __webpack_require__(1);
 const gameboard = __webpack_require__(0);
-const beginGame = __webpack_require__(19);
+
+const player = () => {
+  let randomCoord;
+
+  let attack = (attackedBoard, coord) => {
+    if (attackedBoard.spaces[coord].hit === false) {
+      attackedBoard.receiveAttack(coord);
+    }
+  };
+
+  let autoPlaceShips = (board) => {
+    const directions = ['horizontal', 'vertical'];
+    const lengths = [2, 3, 3, 4, 5];
+    lengths.forEach((length, i) => {
+      while (board.ships.length <= i) {
+        board.placeShip(length, Math.floor(Math.random() * 100),
+         directions[Math.round(Math.random())]);
+      }
+    });
+  };
+
+  return {
+    attack,
+    autoPlaceShips,
+  };
+};
+
+module.exports = player;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "c227e3d130248bceffdc67ece1725486.png");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "27587854664d182b8567713e6b834251.png");
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "2f3dfa564d6fda214d3c6212cfb98264.png");
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "b01796ec6649891880f119c105beb1f2.png");
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "f565c4b5f2c3ded13332ae4b8f7aa018.png");
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "1be19b25ea4bc9bd255e6b5c64745ba7.png");
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "2df37ba6f40446f4c94568d2ef78cd82.png");
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "b6c73f6206ade62eeb5d8be8a9d53290.png");
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "e4b65858e0e6ce35e89209634eb41765.png");
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "99d725889e6c4314ce9271bbb7a6f846.png");
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const player = __webpack_require__(2);
+const gameboard = __webpack_require__(0);
+const beginGame = __webpack_require__(22);
 
 const gameSetup = () => {
   const myBoard = document.getElementById('my-board');
@@ -505,31 +528,31 @@ module.exports = gameSetup;
 
 
 /***/ }),
-/* 11 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
 /* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_gameboard_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
+/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
 /* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ship_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
+/* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
 /* harmony import */ var _player_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_player_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(10);
+/* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
 /* harmony import */ var _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_game_setup_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _assets_carrier_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2);
-/* harmony import */ var _assets_battleship_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3);
-/* harmony import */ var _assets_destroyer_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4);
-/* harmony import */ var _assets_submarine_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5);
-/* harmony import */ var _assets_patrolboat_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6);
-/* harmony import */ var _assets_fire_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7);
-/* harmony import */ var _assets_water_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(8);
-/* harmony import */ var _assets_fail_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(20);
-/* harmony import */ var _assets_smoke_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(21);
-/* harmony import */ var _assets_win_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(22);
+/* harmony import */ var _assets_carrier_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3);
+/* harmony import */ var _assets_battleship_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4);
+/* harmony import */ var _assets_destroyer_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5);
+/* harmony import */ var _assets_submarine_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6);
+/* harmony import */ var _assets_patrolboat_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7);
+/* harmony import */ var _assets_fire_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(8);
+/* harmony import */ var _assets_water_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(9);
+/* harmony import */ var _assets_fail_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(11);
+/* harmony import */ var _assets_smoke_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(10);
+/* harmony import */ var _assets_win_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(12);
 
 
 
@@ -553,11 +576,11 @@ setup.placeShips();
 
 
 /***/ }),
-/* 12 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var api = __webpack_require__(13);
-            var content = __webpack_require__(14);
+var api = __webpack_require__(16);
+            var content = __webpack_require__(17);
 
             content = content.__esModule ? content.default : content;
 
@@ -579,7 +602,7 @@ var exported = content.locals ? content.locals : {};
 module.exports = exported;
 
 /***/ }),
-/* 13 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -854,24 +877,24 @@ module.exports = function (list, options) {
 };
 
 /***/ }),
-/* 14 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(15);
-var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__(16);
-var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(17);
-var ___CSS_LOADER_URL_IMPORT_1___ = __webpack_require__(18);
-var ___CSS_LOADER_URL_IMPORT_2___ = __webpack_require__(2);
-var ___CSS_LOADER_URL_IMPORT_3___ = __webpack_require__(3);
-var ___CSS_LOADER_URL_IMPORT_4___ = __webpack_require__(4);
-var ___CSS_LOADER_URL_IMPORT_5___ = __webpack_require__(5);
-var ___CSS_LOADER_URL_IMPORT_6___ = __webpack_require__(6);
-var ___CSS_LOADER_URL_IMPORT_7___ = __webpack_require__(7);
-var ___CSS_LOADER_URL_IMPORT_8___ = __webpack_require__(8);
-var ___CSS_LOADER_URL_IMPORT_9___ = __webpack_require__(21);
-var ___CSS_LOADER_URL_IMPORT_10___ = __webpack_require__(20);
-var ___CSS_LOADER_URL_IMPORT_11___ = __webpack_require__(22);
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(18);
+var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__(19);
+var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(20);
+var ___CSS_LOADER_URL_IMPORT_1___ = __webpack_require__(21);
+var ___CSS_LOADER_URL_IMPORT_2___ = __webpack_require__(3);
+var ___CSS_LOADER_URL_IMPORT_3___ = __webpack_require__(4);
+var ___CSS_LOADER_URL_IMPORT_4___ = __webpack_require__(5);
+var ___CSS_LOADER_URL_IMPORT_5___ = __webpack_require__(6);
+var ___CSS_LOADER_URL_IMPORT_6___ = __webpack_require__(7);
+var ___CSS_LOADER_URL_IMPORT_7___ = __webpack_require__(8);
+var ___CSS_LOADER_URL_IMPORT_8___ = __webpack_require__(9);
+var ___CSS_LOADER_URL_IMPORT_9___ = __webpack_require__(10);
+var ___CSS_LOADER_URL_IMPORT_10___ = __webpack_require__(11);
+var ___CSS_LOADER_URL_IMPORT_11___ = __webpack_require__(12);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_1___);
@@ -892,7 +915,7 @@ module.exports = exports;
 
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -992,7 +1015,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1032,7 +1055,7 @@ module.exports = function (url, options) {
 };
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1040,7 +1063,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "05782b20052d5dccbad3bbda77571aa8.ttf");
 
 /***/ }),
-/* 18 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1048,12 +1071,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "1f8a446f5a562edf4ae817b9af0b7c03.ttf");
 
 /***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const player = __webpack_require__(1);
+const player = __webpack_require__(2);
 const gameboard = __webpack_require__(0);
-const ship = __webpack_require__(9);
+const ship = __webpack_require__(1);
 
 const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const mySpaces = Array.from(document.getElementsByClassName('my-space'));
@@ -1068,6 +1091,9 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   for (i = 0; i < 100; i++) {
     coordsForRandom.push(i);
   }
+
+  let shipMayBeHere = coordsForRandom;
+  let activePursuit = false;
 
   status.textContent = 'OK, you start. Attack!';
   setupInstruction.style.display = 'none';
@@ -1119,23 +1145,57 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   };
 
   const computerPlay = () => {
-    randomPick = Math.floor(Math.random() * 100);
-    if (coordsForRandom[randomPick] === 'done') {
-      computerPlay();
-    } else {
-      computerPlayer.attack(humanBoard, coordsForRandom[randomPick]);
-      if (humanBoard.spaces[randomPick].hasShipPart) {
-        let cantTouchThis = humanBoard.triangulate(randomPick, humanBoard);
-      }
-      coordsForRandom.splice(randomPick, 1, 'done');
-      mySpaces[randomPick].removeEventListener('click', placeAttack);
-      showAttack(humanBoard, 'my', randomPick, mySpaces[randomPick]);
-      endGame = humanBoard.checkIfAllSunk();
-      if (endGame) {
-        win('computer wins!');
+    if (!activePursuit) {    //no active hit
+      randomPick = Math.floor(Math.random() * 100);
+      if (coordsForRandom[randomPick] === 'done') {
+        computerPlay();
       } else {
-        status.textContent = 'enemy\'s quick, your turn again';
+        computerPlayer.attack(humanBoard, shipMayBeHere[randomPick]);
+        coordsForRandom.splice(randomPick, 1, 'done');
+        if (humanBoard.spaces[randomPick].hasShipPart) { //virgin hit!
+          shipMayBeHere = humanBoard.triangulate(randomPick, humanBoard);
+          activePursuit = true;  //don't have to check if sunk, it's the 1st hit
+          console.log('inside computerPlay SMBH: ', shipMayBeHere);
+        } else {
+          shipMayBeHere = coordsForRandom;   //continue state of inactivepursuit
+        }
+
+        mySpaces[randomPick].removeEventListener('click', placeAttack);
+        showAttack(humanBoard, 'my', randomPick, mySpaces[randomPick]);
       }
+    } else {                //if SMBH is taken from triangulate, i.e. active hit
+      console.log('about to hit one of these in active state: ', shipMayBeHere);
+      randomPick = Math.floor(Math.random() * shipMayBeHere.length);
+      console.log('pick hopefully from a smaller array: ', shipMayBeHere[randomPick]);
+      computerPlayer.attack(humanBoard, shipMayBeHere[randomPick]);
+      coordsForRandom.splice(randomPick, 1, 'done');
+      humanBoard.ships.forEach((ship) => {        //check if ship sunk:
+        for (let i = 0; i < ship.coordinates.length; i++) {
+          if (ship.coordinates[i].coordinate === randomPick) {
+            if (ship.isSunk) {
+              activePursuit = false;
+              shipMayBeHere = coordsForRandom;
+              console.log('ship is sunk, release.');
+            } else {
+              shipMayBeHere = humanBoard.triangulate(randomPick, humanBoard);
+              console.log('ship was hit and here are its surroundings: ', shipMayBeHere);
+            }
+          }
+        }
+      });
+      let index = shipMayBeHere[randomPick];
+      console.log('actually hit space: ', index);
+      mySpaces[index].removeEventListener('click', placeAttack);
+      showAttack(humanBoard, 'my', index, mySpaces[index]);
+    }
+
+    console.log('active pursuit is active: ', activePursuit +
+    ', and these are possible places where the ship is: ', shipMayBeHere);
+    endGame = humanBoard.checkIfAllSunk();
+    if (endGame) {
+      win('computer wins!');
+    } else {
+      status.textContent = 'enemy\'s quick, your turn again';
     }
   };
 
@@ -1165,30 +1225,6 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
 
 module.exports = beginGame;
 
-
-/***/ }),
-/* 20 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "e4b65858e0e6ce35e89209634eb41765.png");
-
-/***/ }),
-/* 21 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "b6c73f6206ade62eeb5d8be8a9d53290.png");
-
-/***/ }),
-/* 22 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "99d725889e6c4314ce9271bbb7a6f846.png");
 
 /***/ })
 /******/ ]);
