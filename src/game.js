@@ -16,6 +16,9 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     coordsForRandom.push(i);
   }
 
+  let shipMayBeHere = coordsForRandom;
+  let activePursuit = false;
+
   status.textContent = 'OK, you start. Attack!';
   setupInstruction.style.display = 'none';
 
@@ -66,23 +69,57 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   };
 
   const computerPlay = () => {
-    randomPick = Math.floor(Math.random() * 100);
-    if (coordsForRandom[randomPick] === 'done') {
-      computerPlay();
-    } else {
-      computerPlayer.attack(humanBoard, coordsForRandom[randomPick]);
-      if (humanBoard.spaces[randomPick].hasShipPart) {
-        let cantTouchThis = humanBoard.triangulate(randomPick, humanBoard);
-      }
-      coordsForRandom.splice(randomPick, 1, 'done');
-      mySpaces[randomPick].removeEventListener('click', placeAttack);
-      showAttack(humanBoard, 'my', randomPick, mySpaces[randomPick]);
-      endGame = humanBoard.checkIfAllSunk();
-      if (endGame) {
-        win('computer wins!');
+    if (!activePursuit) {    //no active hit
+      randomPick = Math.floor(Math.random() * 100);
+      if (coordsForRandom[randomPick] === 'done') {
+        computerPlay();
       } else {
-        status.textContent = 'enemy\'s quick, your turn again';
+        computerPlayer.attack(humanBoard, shipMayBeHere[randomPick]);
+        coordsForRandom.splice(randomPick, 1, 'done');
+        if (humanBoard.spaces[randomPick].hasShipPart) { //virgin hit!
+          shipMayBeHere = humanBoard.triangulate(randomPick, humanBoard);
+          activePursuit = true;  //don't have to check if sunk, it's the 1st hit
+          console.log('inside computerPlay SMBH: ', shipMayBeHere);
+        } else {
+          shipMayBeHere = coordsForRandom;   //continue state of inactivepursuit
+        }
+
+        mySpaces[randomPick].removeEventListener('click', placeAttack);
+        showAttack(humanBoard, 'my', randomPick, mySpaces[randomPick]);
       }
+    } else {                //if SMBH is taken from triangulate, i.e. active hit
+      console.log('about to hit one of these in active state: ', shipMayBeHere);
+      randomPick = Math.floor(Math.random() * shipMayBeHere.length);
+      console.log('pick hopefully from a smaller array: ', shipMayBeHere[randomPick]);
+      computerPlayer.attack(humanBoard, shipMayBeHere[randomPick]);
+      coordsForRandom.splice(randomPick, 1, 'done');
+      humanBoard.ships.forEach((ship) => {        //check if ship sunk:
+        for (let i = 0; i < ship.coordinates.length; i++) {
+          if (ship.coordinates[i].coordinate === randomPick) {
+            if (ship.isSunk) {
+              activePursuit = false;
+              shipMayBeHere = coordsForRandom;
+              console.log('ship is sunk, release.');
+            } else {
+              shipMayBeHere = humanBoard.triangulate(randomPick, humanBoard);
+              console.log('ship was hit and here are its surroundings: ', shipMayBeHere);
+            }
+          }
+        }
+      });
+      let index = shipMayBeHere[randomPick];
+      console.log('actually hit space: ', index);
+      mySpaces[index].removeEventListener('click', placeAttack);
+      showAttack(humanBoard, 'my', index, mySpaces[index]);
+    }
+
+    console.log('active pursuit is active: ', activePursuit +
+    ', and these are possible places where the ship is: ', shipMayBeHere);
+    endGame = humanBoard.checkIfAllSunk();
+    if (endGame) {
+      win('computer wins!');
+    } else {
+      status.textContent = 'enemy\'s quick, your turn again';
     }
   };
 

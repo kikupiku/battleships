@@ -59,18 +59,17 @@ const gameboard = () => {
   };
 
   const triangulate = (coord, board) => {
-    let cantTouchThis = [];
     let shipMayBeHere = [];
     let hitParts = [];
     let howManyHitsThisShipHas = 0;
-    let direction;
+
     board.ships.forEach((ship) => {
       for (let i = 0; i < ship.coordinates.length; i++) {
         if (ship.coordinates[i].coordinate === coord) {
           ship.coordinates.forEach((coordinate) => {
             if (coordinate.hit) {
               howManyHitsThisShipHas += 1;
-              hitParts.push(ship.coordinate.coordinate);
+              hitParts.push(coordinate.coordinate);
             }
           });
         }
@@ -128,7 +127,7 @@ const gameboard = () => {
 
     console.log('ship may be here: ', shipMayBeHere);
 
-    return cantTouchThis;
+    return shipMayBeHere;
   };
 
   return {
