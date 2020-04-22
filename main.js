@@ -88,20 +88,26 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const ship = __webpack_require__(1);
+var ship = __webpack_require__(1);
 
-const gameboard = () => {
-  let spaces = [];
-  let ships = [];
+var gameboard = function gameboard() {
+  var spaces = [];
+  var ships = [];
+
   for (i = 0; i < 100; i++) {
-    spaces.push({ coordinate: i, hasShipPart: false, hit: false });
+    spaces.push({
+      coordinate: i,
+      hasShipPart: false,
+      hit: false
+    });
   }
 
-  let placeShip = (length, startingCoord, direction) => {
-    let shipPartChecker = checkPlacementValidity(length, startingCoord, direction);
+  var placeShip = function placeShip(length, startingCoord, direction) {
+    var shipPartChecker = checkPlacementValidity(length, startingCoord, direction);
+
     if (shipPartChecker === length) {
       ships.push(ship(length, startingCoord, direction));
-      spaces.forEach((space, i) => {
+      spaces.forEach(function (space, i) {
         for (j = 0; j < length; j++) {
           if (spaces[i].coordinate === ships[ships.length - 1].coordinates[j].coordinate) {
             spaces[i].hasShipPart = true;
@@ -111,12 +117,13 @@ const gameboard = () => {
     }
   };
 
-  let receiveAttack = coord => {
-    spaces.forEach(space => {
+  var receiveAttack = function receiveAttack(coord) {
+    spaces.forEach(function (space) {
       if (space.coordinate === coord) {
         space.hit = true;
+
         if (space.hasShipPart) {
-          ships.forEach(ship => {
+          ships.forEach(function (ship) {
             ship.hit(coord);
           });
         }
@@ -124,20 +131,22 @@ const gameboard = () => {
     });
   };
 
-  const checkIfAllSunk = () => ships.every(ship => ship.isSunk());
+  var checkIfAllSunk = function checkIfAllSunk() {
+    return ships.every(function (ship) {
+      return ship.isSunk();
+    });
+  };
 
-  const checkPlacementValidity = (length, startingCoord, direction) => {
-    let shipPartChecker = 0;
+  var checkPlacementValidity = function checkPlacementValidity(length, startingCoord, direction) {
+    var shipPartChecker = 0;
+
     for (i = 0; i < length; i++) {
-      if (direction === 'horizontal' && (startingCoord + (i * 10)) < 100) {
-        if (spaces[startingCoord + (i * 10)].hasShipPart == false) {
+      if (direction === 'horizontal' && startingCoord + i * 10 < 100) {
+        if (spaces[startingCoord + i * 10].hasShipPart == false) {
           shipPartChecker += 1;
         }
-      } else if (direction === 'vertical' && (startingCoord + i) < 100) {
-        if (spaces[startingCoord + (i)].hasShipPart == false &&
-            ((startingCoord < 10 && (startingCoord + length - 1) < 10) ||
-            (startingCoord > 9 && startingCoord.toString()[0] ===
-            (startingCoord + length - 1).toString()[0]))) {
+      } else if (direction === 'vertical' && startingCoord + i < 100) {
+        if (spaces[startingCoord + i].hasShipPart == false && (startingCoord < 10 && startingCoord + length - 1 < 10 || startingCoord > 9 && startingCoord.toString()[0] === (startingCoord + length - 1).toString()[0])) {
           shipPartChecker += 1;
         }
       }
@@ -146,15 +155,14 @@ const gameboard = () => {
     return shipPartChecker;
   };
 
-  const triangulate = (coord, board) => {
-    let shipMayBeHere = [];
-    let hitParts = [];
-    let howManyHitsThisShipHas = 0;
-
-    board.ships.forEach((ship) => {
-      for (let i = 0; i < ship.coordinates.length; i++) {
-        if (ship.coordinates[i].coordinate === coord) {
-          ship.coordinates.forEach((coordinate) => {
+  var triangulate = function triangulate(coord, board) {
+    var shipMayBeHere = [];
+    var hitParts = [];
+    var howManyHitsThisShipHas = 0;
+    board.ships.forEach(function (ship) {
+      for (var _i = 0; _i < ship.coordinates.length; _i++) {
+        if (ship.coordinates[_i].coordinate === coord) {
+          ship.coordinates.forEach(function (coordinate) {
             if (coordinate.hit) {
               howManyHitsThisShipHas += 1;
               hitParts.push(coordinate.coordinate);
@@ -163,50 +171,50 @@ const gameboard = () => {
         }
       }
     });
+
     if (howManyHitsThisShipHas === 1) {
       if (coord - 1 >= 0 && !board.spaces[coord - 1].hit) {
         if (coord < 10 || coord.toString()[1] !== '0') {
-          shipMayBeHere.push((coord - 1));
+          shipMayBeHere.push(coord - 1);
         }
       }
 
       if (coord + 1 <= 99 && !board.spaces[coord + 1].hit) {
-        if (coord < 9 || (coord > 9 && coord.toString()[1] !== '9'))
-        shipMayBeHere.push((coord + 1));
+        if (coord < 9 || coord > 9 && coord.toString()[1] !== '9') shipMayBeHere.push(coord + 1);
       }
 
       if (coord - 10 >= 0 && !board.spaces[coord - 10].hit) {
-        shipMayBeHere.push((coord - 10));
+        shipMayBeHere.push(coord - 10);
       }
 
       if (coord + 10 <= 99 && !board.spaces[coord + 10].hit) {
-        shipMayBeHere.push((coord + 10));
+        shipMayBeHere.push(coord + 10);
       }
     } else if (howManyHitsThisShipHas > 1) {
       if (hitParts[0] === hitParts[1] + 10 || hitParts[0] === hitParts[1] - 10) {
-        hitParts.forEach((hitPart) => {         //direction: horizontal
+        hitParts.forEach(function (hitPart) {
+          //direction: horizontal
           if (hitPart - 10 >= 0 && !board.spaces[hitPart - 10].hit) {
-            shipMayBeHere.push((hitPart - 10));
+            shipMayBeHere.push(hitPart - 10);
           }
 
           if (hitPart + 10 <= 99 && !board.spaces[hitPart + 10].hit) {
-            shipMayBeHere.push((hitPart + 10));
+            shipMayBeHere.push(hitPart + 10);
           }
         });
       } else {
-        hitParts.forEach((hitPart) => {           //direction: vertical
+        hitParts.forEach(function (hitPart) {
+          //direction: vertical
           if (hitPart - 1 >= 0 && !board.spaces[hitPart - 1].hit) {
             if (hitPart < 10 || hitPart.toString()[1] !== '0') {
-              shipMayBeHere.push((hitPart - 1));
+              shipMayBeHere.push(hitPart - 1);
             }
           }
 
           if (hitPart + 1 <= 99 && !board.spaces[hitPart + 1].hit) {
-            if (hitPart < 9 || (hitPart > 9 && hitPart.toString()[1] !== '9'))
-            shipMayBeHere.push((hitPart + 1));
+            if (hitPart < 9 || hitPart > 9 && hitPart.toString()[1] !== '9') shipMayBeHere.push(hitPart + 1);
           }
         });
-
       }
     }
 
@@ -214,43 +222,50 @@ const gameboard = () => {
   };
 
   return {
-    spaces,
-    placeShip,
-    ships,
-    receiveAttack,
-    checkIfAllSunk,
-    triangulate,
+    spaces: spaces,
+    placeShip: placeShip,
+    ships: ships,
+    receiveAttack: receiveAttack,
+    checkIfAllSunk: checkIfAllSunk,
+    triangulate: triangulate
   };
 };
 
 module.exports = gameboard;
 
-
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
-const ship = (length, startingCoord, direction) => {
-  let coordinates = [{ coordinate: startingCoord, hit: false }];
-  for (let i = 1; i < length; i++) {
+var ship = function ship(length, startingCoord, direction) {
+  var coordinates = [{
+    coordinate: startingCoord,
+    hit: false
+  }];
+
+  for (var i = 1; i < length; i++) {
     if (direction === 'horizontal') {
       coordinates.push({
         coordinate: coordinates[coordinates.length - 1].coordinate + 10,
-        hit: false,
+        hit: false
       });
     } else {
       coordinates.push({
         coordinate: coordinates[coordinates.length - 1].coordinate + 1,
-        hit: false,
+        hit: false
       });
     }
   }
 
-  const isSunk = () => coordinates.every(coordinate => coordinate.hit);
+  var isSunk = function isSunk() {
+    return coordinates.every(function (coordinate) {
+      return coordinate.hit;
+    });
+  };
 
-  const hit = (coord) => {
-    let shipWasHit = false;
-    coordinates.forEach((coordinate, i) => {
+  var hit = function hit(coord) {
+    var shipWasHit = false;
+    coordinates.forEach(function (coordinate, i) {
       if (coord === coordinate.coordinate) {
         shipWasHit = true;
         coordinates[i].hit = true;
@@ -261,49 +276,46 @@ const ship = (length, startingCoord, direction) => {
 
   return {
     shipLength: length,
-    isSunk,
-    coordinates,
-    hit,
+    isSunk: isSunk,
+    coordinates: coordinates,
+    hit: hit
   };
 };
 
 module.exports = ship;
 
-
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const gameboard = __webpack_require__(0);
+var gameboard = __webpack_require__(0);
 
-const player = () => {
-  let randomCoord;
+var player = function player() {
+  var randomCoord;
 
-  let attack = (attackedBoard, coord) => {
+  var attack = function attack(attackedBoard, coord) {
     if (attackedBoard.spaces[coord].hit === false) {
       attackedBoard.receiveAttack(coord);
     }
   };
 
-  let autoPlaceShips = (board) => {
-    const directions = ['horizontal', 'vertical'];
-    const lengths = [2, 3, 3, 4, 5];
-    lengths.forEach((length, i) => {
+  var autoPlaceShips = function autoPlaceShips(board) {
+    var directions = ['horizontal', 'vertical'];
+    var lengths = [2, 3, 3, 4, 5];
+    lengths.forEach(function (length, i) {
       while (board.ships.length <= i) {
-        board.placeShip(length, Math.floor(Math.random() * 100),
-         directions[Math.round(Math.random())]);
+        board.placeShip(length, Math.floor(Math.random() * 100), directions[Math.round(Math.random())]);
       }
     });
   };
 
   return {
-    attack,
-    autoPlaceShips,
+    attack: attack,
+    autoPlaceShips: autoPlaceShips
   };
 };
 
 module.exports = player;
-
 
 /***/ }),
 /* 3 */
@@ -389,32 +401,33 @@ __webpack_require__.r(__webpack_exports__);
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const player = __webpack_require__(2);
-const gameboard = __webpack_require__(0);
-const beginGame = __webpack_require__(22);
+var player = __webpack_require__(2);
 
-const gameSetup = () => {
-  const myBoard = document.getElementById('my-board');
-  const restart = document.getElementById('restart');
-  const status = document.getElementById('status');
-  const win = document.getElementById('win');
-  const fail = document.getElementById('fail');
-  const setupInstruction = document.getElementById('setup-instruction');
-  const mySpaces = Array.from(document.getElementsByClassName('my-space'));
-  const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
-  let computer = player();
-  let human = player();
-  let computerBoard = gameboard();
-  let humanBoard = gameboard();
-  let shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
+var gameboard = __webpack_require__(0);
 
-  let suffix = '';
-  let direction = 'horizontal';
+var beginGame = __webpack_require__(22);
+
+var gameSetup = function gameSetup() {
+  var myBoard = document.getElementById('my-board');
+  var restart = document.getElementById('restart');
+  var status = document.getElementById('status');
+  var win = document.getElementById('win');
+  var fail = document.getElementById('fail');
+  var setupInstruction = document.getElementById('setup-instruction');
+  var mySpaces = Array.from(document.getElementsByClassName('my-space'));
+  var enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
+  var computer = player();
+  var human = player();
+  var computerBoard = gameboard();
+  var humanBoard = gameboard();
+  var shipTypes = ['carrier', 'battleship', 'destroyer', 'submarine', 'patrolboat'];
+  var suffix = '';
+  var direction = 'horizontal';
   computer.autoPlaceShips(computerBoard);
   restart.style.display = 'none';
   win.style.display = 'none';
 
-  const placeShips = () => {
+  var placeShips = function placeShips() {
     for (i = 0; i < mySpaces.length; i++) {
       mySpaces[i].addEventListener('mouseover', hover);
       mySpaces[i].addEventListener('click', placeShip);
@@ -423,8 +436,9 @@ const gameSetup = () => {
     myBoard.addEventListener('wheel', changeDirection);
   };
 
-  const hover = (e) => {
-    let oldImg = document.getElementsByClassName('ship')[0];
+  var hover = function hover(e) {
+    var oldImg = document.getElementsByClassName('ship')[0];
+
     if (oldImg) {
       if (oldImg.parentElement !== e.currentTarget) {
         removeOldShip(oldImg);
@@ -435,20 +449,20 @@ const gameSetup = () => {
     }
   };
 
-  const removeOldShip = (oldImg) => {
+  var removeOldShip = function removeOldShip(oldImg) {
     oldImg.parentElement.removeChild(oldImg);
   };
 
-  const addNewShip = (event) => {
-    let img = document.createElement('div');
-    img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
+  var addNewShip = function addNewShip(event) {
+    var img = document.createElement('div');
+    img.setAttribute('class', "ship ".concat(shipTypes[0], " ").concat(suffix));
     event.currentTarget.appendChild(img);
   };
 
-  const placeShip = (e) => {
-    let spaceIndex = mySpaces.indexOf(e.currentTarget);
-    let shipType = shipTypes[0];
-    let placedShipsNum = humanBoard.ships.length;
+  var placeShip = function placeShip(e) {
+    var spaceIndex = mySpaces.indexOf(e.currentTarget);
+    var shipType = shipTypes[0];
+    var placedShipsNum = humanBoard.ships.length;
 
     if (shipType === 'carrier') {
       humanBoard.placeShip(5, spaceIndex, direction);
@@ -463,24 +477,25 @@ const gameSetup = () => {
     }
 
     if (humanBoard.ships.length > placedShipsNum) {
-      let shipImage = document.createElement('div');
-      shipImage.setAttribute('class', `${shipType} ${suffix}`);
+      var shipImage = document.createElement('div');
+      shipImage.setAttribute('class', "".concat(shipType, " ").concat(suffix));
       e.currentTarget.appendChild(shipImage);
       shipTypes.splice(0, 1);
     }
 
     if (shipTypes.length === 0) {
-      mySpaces.forEach((mySpace) => {
+      mySpaces.forEach(function (mySpace) {
         mySpace.removeEventListener('click', placeShip);
       });
-      let round = beginGame(computer, human, computerBoard, humanBoard);
+      var round = beginGame(computer, human, computerBoard, humanBoard);
+
       if (round.win) {
         restart.addEventListener('click', reset);
       }
     }
   };
 
-  const changeDirection = (event) => {
+  var changeDirection = function changeDirection(event) {
     if (event.wheelDelta < 0) {
       suffix = '';
       direction = 'horizontal';
@@ -489,16 +504,16 @@ const gameSetup = () => {
       direction = 'vertical';
     }
 
-    let img = document.getElementsByClassName('ship')[0];
-    img.setAttribute('class', `ship ${shipTypes[0]} ${suffix}`);
+    var img = document.getElementsByClassName('ship')[0];
+    img.setAttribute('class', "ship ".concat(shipTypes[0], " ").concat(suffix));
   };
 
-  const reset = () => {
+  var reset = function reset() {
     status.textContent = 'Place your ships!';
-    mySpaces.forEach((mySpace) => {
+    mySpaces.forEach(function (mySpace) {
       mySpace.innerHTML = '';
     });
-    enemySpaces.forEach((enemySpace) => {
+    enemySpaces.forEach(function (enemySpace) {
       enemySpace.innerHTML = '';
     });
     fail.style.display = 'none';
@@ -513,12 +528,11 @@ const gameSetup = () => {
   };
 
   return {
-    placeShips,
+    placeShips: placeShips
   };
 };
 
 module.exports = gameSetup;
-
 
 /***/ }),
 /* 14 */
@@ -561,12 +575,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-let setup = _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default()();
-setup.placeShips();
-
-// TODO: add triangulation so that computer is not as stupid
-
+var setup = _game_setup_js__WEBPACK_IMPORTED_MODULE_4___default()();
+setup.placeShips(); // TODO: add triangulation so that computer is not as stupid
 
 /***/ }),
 /* 15 */
@@ -902,7 +912,7 @@ var ___CSS_LOADER_URL_REPLACEMENT_9___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_
 var ___CSS_LOADER_URL_REPLACEMENT_10___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_10___);
 var ___CSS_LOADER_URL_REPLACEMENT_11___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_11___);
 // Module
-exports.push([module.i, "@font-face{font-family:'army';font-style:normal;src:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ")}@font-face{font-family:'typewriter';font-style:normal;src:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ")}body{background-image:url(\"https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg\");background-repeat:no-repeat;background-size:cover;-webkit-box-sizing:border-box;box-sizing:border-box}img{border:1px solid white}.container{margin:0 auto;width:850px}#status{color:lightgrey;font-family:'army', sans-serif;font-size:36px;margin:10px auto 20px auto;text-align:center;width:600px}#restart{background:grey;border-radius:5px;font-family:'typewriter', sans-serif;font-size:28px;font-weight:bold;height:40px;margin:0 auto;width:150px}.top-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;margin:0 auto;width:600px}.my-board,.enemy-board{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse;-ms-flex-wrap:wrap;flex-wrap:wrap}.my-board{background:#acceea;border:2px solid #286ba2;height:35.7vh;min-height:260px;min-width:260px;position:relative;width:35.9vh}.my-space{border-bottom:0.5px solid #286ba2;border-right:0.5px solid #286ba2;height:3.5vh;min-height:25.5px;min-width:25.5px;position:relative;width:3.5vh}.carrier,.battleship,.destroyer,.submarine,.patrolboat{background-repeat:no-repeat;background-size:100% 100%;height:3.5vh;min-height:25.5px;overflow:visible;z-index:100 !important}.carrier:active,.battleship:active,.destroyer:active,.submarine:active,.patrolboat:active{background:grey}.carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");min-width:127.5px;width:17.5vh}.battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");min-width:102px;width:14vh}.destroyer,.submarine{min-width:76.5px;width:10.5vh}.destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ")}.submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ")}.patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");min-width:51px;width:7vh}.vert{background-repeat:no-repeat;background-size:100% 100%;overflow:visible;-webkit-transform:translate(10%, 35%) rotate(-90deg);-ms-transform:translate(10%, 35%) rotate(-90deg);transform:translate(10%, 35%) rotate(-90deg);-webkit-transform-origin:left;-ms-transform-origin:left;transform-origin:left;z-index:100 !important}.enemy-board-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%}.enemy-board-wrapper .shrinker{-ms-flex-negative:2;flex-shrink:2;min-width:260px;width:35.9vh}.enemy-board-wrapper .enemy-board{background:white;border:2px solid #743c3c;height:54.48vh;min-height:400px;min-width:400px;position:relative;width:55vh}.enemy-board-wrapper .enemy-board .setup-instruction-container{background:#595453;border:2px solid black;height:54.48vh;left:-2px;min-height:400px;min-width:400px;position:absolute;top:-2px;width:55vh;z-index:100}.enemy-board-wrapper .enemy-board .setup-instruction{margin:10px auto;text-align:left;width:80%}.enemy-board-wrapper .enemy-board h1{font-family:'army', sans-serif;font-size:3vh;text-align:center}.enemy-board-wrapper .enemy-board .info{margin:8px 0}.enemy-board-wrapper .enemy-board .info,.enemy-board-wrapper .enemy-board .ship-name{font-family:'typewriter';font-size:2.3vh;font-weight:bold}.enemy-board-wrapper .enemy-board .boats{background:grey;border:2px solid rgba(89,84,83,0.74);border-radius:5px;margin:0 auto;position:relative;width:300px}.enemy-board-wrapper .enemy-board .ship-name,.enemy-board-wrapper .enemy-board .type{display:inline-block;margin:0;position:relative}.enemy-board-wrapper .enemy-board .ship-name{bottom:10px;font-size:20px}.enemy-board-wrapper .enemy-board .enemy-space{border-bottom:0.5px solid #743c3c;border-right:0.5px solid #743c3c;height:5.38vh;min-height:39.5px;min-width:39.5px;position:relative;width:5.38vh}.enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}.my{height:3.5vh;min-height:25.5px;min-width:25.5px;width:3.5vh}.enemy{height:5.38vh;min-height:39.5px;min-width:39.5px;width:5.38vh}.fire,.water,.smoke{background-repeat:no-repeat;background-size:100% 100%;left:0;position:absolute;top:0}.fire{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.water{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}.smoke{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ")}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{-ms-flex-negative:4;flex-shrink:4;min-width:0 !important}.enemy-board{-ms-flex-negative:0;flex-shrink:0}}@media all and (max-width: 500px){h1{font-size:24px !important}.info{font-size:16px !important}}#fail{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_10___ + ");background-size:100% 100%;border:2px solid #286ba2;display:none;height:35.7vh;left:0;min-height:260px;min-width:260px;position:absolute;top:0;width:35.9vh;z-index:999999}#win{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_11___ + ");background-repeat:no-repeat;background-size:100% auto;height:100%;left:0;position:absolute;top:0;width:100%;z-index:999999}\n", ""]);
+exports.push([module.i, "@font-face{font-family:'army';font-style:normal;src:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ")}@font-face{font-family:'typewriter';font-style:normal;src:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ")}body{background-image:url(\"https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg\");background-repeat:no-repeat;background-size:cover;-webkit-box-sizing:border-box;box-sizing:border-box}img{border:1px solid white}.container{margin:0 auto;width:850px}#status{color:lightgrey;font-family:'army', sans-serif;font-size:36px;margin:10px auto 20px auto;text-align:center;width:600px}#restart{background:grey;border-radius:5px;font-family:'typewriter', sans-serif;font-size:28px;font-weight:bold;height:40px;margin:0 auto;width:150px}.top-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;margin:0 auto;width:600px}.my-board,.enemy-board{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse;-ms-flex-wrap:wrap;flex-wrap:wrap}.my-board{background:#acceea;border:2px solid #286ba2;height:35.5vh;min-height:265px;min-width:260px;position:relative;width:36vh}.my-space{border-bottom:0.5px solid #286ba2;border-right:0.5px solid #286ba2;height:3.4vh;min-height:25.5px;min-width:25.5px;position:relative;width:3.4vh}.carrier,.battleship,.destroyer,.submarine,.patrolboat{background-repeat:no-repeat;background-size:100% 100%;height:3.4vh;min-height:25.5px;overflow:visible;z-index:100 !important}.carrier:active,.battleship:active,.destroyer:active,.submarine:active,.patrolboat:active{background:grey}.carrier{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");min-width:127.5px;width:17vh}.battleship{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");min-width:102px;width:13.6vh}.destroyer,.submarine{min-width:76.5px;width:10.2vh}.destroyer{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ")}.submarine{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ")}.patrolboat{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");min-width:51px;width:6.8vh}.vert{background-repeat:no-repeat;background-size:100% 100%;overflow:visible;-webkit-transform:translate(10%, 35%) rotate(-90deg);-ms-transform:translate(10%, 35%) rotate(-90deg);transform:translate(10%, 35%) rotate(-90deg);-webkit-transform-origin:left;-ms-transform-origin:left;transform-origin:left;z-index:100 !important}.enemy-board-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%}.enemy-board-wrapper .shrinker{-ms-flex-negative:2;flex-shrink:2;min-width:260px;width:36vh}.enemy-board-wrapper .enemy-board{background:white;border:2px solid #743c3c;height:55.5vh;min-height:405px;min-width:400px;position:relative;width:55vh}.enemy-board-wrapper .enemy-board .setup-instruction-container{background:#595453;border:2px solid black;height:55.5vh;left:-2px;min-height:405px;min-width:400px;position:absolute;top:-2px;width:55vh;z-index:100}.enemy-board-wrapper .enemy-board .setup-instruction{margin:10px auto;text-align:left;width:98%}.enemy-board-wrapper .enemy-board h1{font-family:'army', sans-serif;font-size:3vh;text-align:center}.enemy-board-wrapper .enemy-board .info{margin:8px 0}.enemy-board-wrapper .enemy-board .info,.enemy-board-wrapper .enemy-board .ship-name{font-family:'typewriter';font-size:2.1vh;font-weight:bold}.enemy-board-wrapper .enemy-board .boats{background:grey;border:2px solid rgba(89,84,83,0.74);border-radius:5px;margin:0 auto;position:relative;width:300px}.enemy-board-wrapper .enemy-board .ship-name,.enemy-board-wrapper .enemy-board .type{display:inline-block;margin:0;position:relative}.enemy-board-wrapper .enemy-board .ship-name{bottom:10px;font-size:20px}.enemy-board-wrapper .enemy-board .enemy-space{border-bottom:0.5px solid #743c3c;border-right:0.5px solid #743c3c;height:5.3vh;min-height:39.5px;min-width:39.5px;position:relative;width:5.3vh}.enemy-board-wrapper .enemy-board .enemy-space:hover{background:rgba(116,60,60,0.2)}.my{height:3.4vh;min-height:25.5px;min-width:25.5px;width:3.4vh}.enemy{height:5.3vh;min-height:39.5px;min-width:39.5px;width:5.3vh}.fire,.water,.smoke{background-repeat:no-repeat;background-size:100% 100%;left:0;position:absolute;top:0}.fire{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_7___ + ")}.water{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_8___ + ")}.smoke{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_9___ + ")}@media all and (max-width: 1024px){.container{width:80vw}.shrinker{-ms-flex-negative:4;flex-shrink:4;min-width:0 !important}.enemy-board{-ms-flex-negative:0;flex-shrink:0}}@media all and (max-width: 500px){h1{font-size:24px !important}.info{font-size:14px !important}}#fail{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_10___ + ");background-size:100% 100%;border:2px solid #286ba2;display:none;height:35.7vh;left:0;min-height:260px;min-width:260px;position:absolute;top:0;width:36vh;z-index:999999}#win{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_11___ + ");background-repeat:no-repeat;background-size:100% auto;height:100%;left:0;position:absolute;top:0;width:100%;z-index:999999}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -1067,46 +1077,48 @@ __webpack_require__.r(__webpack_exports__);
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const player = __webpack_require__(2);
-const gameboard = __webpack_require__(0);
-const ship = __webpack_require__(1);
+var player = __webpack_require__(2);
 
-const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
-  const mySpaces = Array.from(document.getElementsByClassName('my-space'));
-  const enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
-  const setupInstruction = document.getElementById('setup-instruction');
-  const status = document.getElementById('status');
-  const enemyBoard = document.getElementById('enemy-board');
-  const restart = document.getElementById('restart');
+var gameboard = __webpack_require__(0);
 
-  let endGame;
-  let oldAttackIndex;
-  let currentAttackIndex;
-  let randomPick;
-  let coordsForRandom = [];
+var ship = __webpack_require__(1);
+
+var beginGame = function beginGame(computerPlayer, humanPlayer, computerBoard, humanBoard) {
+  var mySpaces = Array.from(document.getElementsByClassName('my-space'));
+  var enemySpaces = Array.from(document.getElementsByClassName('enemy-space'));
+  var setupInstruction = document.getElementById('setup-instruction');
+  var status = document.getElementById('status');
+  var enemyBoard = document.getElementById('enemy-board');
+  var restart = document.getElementById('restart');
+  var endGame;
+  var oldAttackIndex;
+  var currentAttackIndex;
+  var randomPick;
+  var coordsForRandom = [];
+
   for (i = 0; i < 100; i++) {
     coordsForRandom.push(i);
   }
 
-  let shipMayBeHere = coordsForRandom;
-  let activePursuit = false;
-
+  var shipMayBeHere = coordsForRandom;
+  var activePursuit = false;
   status.textContent = 'OK, you start. Attack!';
   setupInstruction.style.display = 'none';
 
-  const humanPlay = () => {
-    enemySpaces.forEach((enemySpace) => {
+  var humanPlay = function humanPlay() {
+    enemySpaces.forEach(function (enemySpace) {
       enemySpace.addEventListener('click', placeAttack);
     });
   };
 
-  const placeAttack = (e) => {
-    let enemySpaceIndex = enemySpaces.indexOf(e.currentTarget);
+  var placeAttack = function placeAttack(e) {
+    var enemySpaceIndex = enemySpaces.indexOf(e.currentTarget);
     humanPlayer.attack(computerBoard, enemySpaceIndex);
     showAttack(computerBoard, 'enemy', enemySpaceIndex, e.currentTarget);
     enemySpaces[enemySpaceIndex].removeEventListener('click', placeAttack);
     markSunkShip(enemySpaceIndex);
     endGame = computerBoard.checkIfAllSunk();
+
     if (endGame) {
       win('You win! Congrats!');
     } else {
@@ -1114,24 +1126,25 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     }
   };
 
-  const showAttack = (attackedBoard, attackedClassName, coord, attackedDiv) => {
-    let resultOfAttack = document.createElement('div');
+  var showAttack = function showAttack(attackedBoard, attackedClassName, coord, attackedDiv) {
+    var resultOfAttack = document.createElement('div');
+
     if (attackedBoard.spaces[coord].hasShipPart) {
-      resultOfAttack.setAttribute('class', `${attackedClassName} fire`);
+      resultOfAttack.setAttribute('class', "".concat(attackedClassName, " fire"));
     } else {
-      resultOfAttack.setAttribute('class', `${attackedClassName} water`);
+      resultOfAttack.setAttribute('class', "".concat(attackedClassName, " water"));
     }
 
     attackedDiv.appendChild(resultOfAttack);
   };
 
-  const markSunkShip = (index) => {
-    computerBoard.ships.forEach((ship) => {
-      for (let i = 0; i < ship.coordinates.length; i++) {
-        if (ship.coordinates[i].coordinate === index) {
+  var markSunkShip = function markSunkShip(index) {
+    computerBoard.ships.forEach(function (ship) {
+      for (var _i = 0; _i < ship.coordinates.length; _i++) {
+        if (ship.coordinates[_i].coordinate === index) {
           if (ship.isSunk()) {
-            ship.coordinates.forEach((coordinate) => {
-              let hitIndex = coordinate.coordinate;
+            ship.coordinates.forEach(function (coordinate) {
+              var hitIndex = coordinate.coordinate;
               enemySpaces[hitIndex].childNodes[0].setAttribute('class', 'enemy smoke');
             });
           }
@@ -1140,7 +1153,7 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     });
   };
 
-  const computerPlay = () => {
+  var computerPlay = function computerPlay() {
     if (!activePursuit) {
       randomCompPlay();
     } else {
@@ -1148,6 +1161,7 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     }
 
     endGame = humanBoard.checkIfAllSunk();
+
     if (endGame) {
       win('computer wins!');
     } else {
@@ -1155,13 +1169,15 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     }
   };
 
-  const randomCompPlay = () => {
+  var randomCompPlay = function randomCompPlay() {
     randomPick = Math.floor(Math.random() * 100);
+
     if (coordsForRandom[randomPick] === 'done') {
       computerPlay();
     } else {
       computerPlayer.attack(humanBoard, shipMayBeHere[randomPick]);
       coordsForRandom.splice(randomPick, 1, 'done');
+
       if (humanBoard.spaces[randomPick].hasShipPart) {
         shipMayBeHere = humanBoard.triangulate(randomPick, humanBoard);
         oldAttackIndex = randomPick;
@@ -1175,8 +1191,9 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     }
   };
 
-  const activePursuitPlay = () => {
+  var activePursuitPlay = function activePursuitPlay() {
     smartAttack();
+
     if (shipWasHit()) {
       if (checkIfSunk(currentAttackIndex)) {
         activePursuit = false;
@@ -1192,24 +1209,31 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     showAttack(humanBoard, 'my', currentAttackIndex, mySpaces[currentAttackIndex]);
   };
 
-  const smartAttack = () => {
+  var smartAttack = function smartAttack() {
     randomPick = Math.floor(Math.random() * shipMayBeHere.length);
     currentAttackIndex = shipMayBeHere[randomPick];
+
+    if (!humanBoard.spaces[currentAttackIndex]) {
+      smartAttack();
+    }
+
     computerPlayer.attack(humanBoard, currentAttackIndex);
     coordsForRandom.splice(shipMayBeHere[randomPick], 1, 'done');
   };
 
-  const shipWasHit = () => humanBoard.spaces[currentAttackIndex].hasShipPart;
+  var shipWasHit = function shipWasHit() {
+    return humanBoard.spaces[currentAttackIndex].hasShipPart;
+  };
 
-  const checkIfSunk = (index) => {
-    let hitShip = findHitShip(index);
+  var checkIfSunk = function checkIfSunk(index) {
+    var hitShip = findHitShip(index);
     return hitShip.isSunk();
   };
 
-  const findHitShip = (index) => {
-    let hitShip = humanBoard.ships.find(ship => {
-      let hasMatchingCoordinate = false;
-      ship.coordinates.forEach((coord) => {
+  var findHitShip = function findHitShip(index) {
+    var hitShip = humanBoard.ships.find(function (ship) {
+      var hasMatchingCoordinate = false;
+      ship.coordinates.forEach(function (coord) {
         if (coord.coordinate === index) {
           hasMatchingCoordinate = true;
         }
@@ -1219,46 +1243,49 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
     return hitShip;
   };
 
-  const checkIfAdjacentShipHitDuringTriangulation = () => {
-    let adjacentShipIndices = [];
-    humanBoard.spaces.forEach((space) => {
+  var checkIfAdjacentShipHitDuringTriangulation = function checkIfAdjacentShipHitDuringTriangulation() {
+    var adjacentShipIndices = [];
+    humanBoard.spaces.forEach(function (space) {
       if (space.hit && space.hasShipPart) {
         adjacentShipIndices.push(space.coordinate);
       }
     });
-    let adjacentShipIndex = adjacentShipIndices.find(index => !checkIfSunk(index));
+    var adjacentShipIndex = adjacentShipIndices.find(function (index) {
+      return !checkIfSunk(index);
+    });
+
     if (adjacentShipIndex !== undefined) {
       activePursuit = true;
       shipMayBeHere = humanBoard.triangulate(adjacentShipIndex, humanBoard);
     }
   };
 
-  const win = (player) => {
+  var win = function win(player) {
     restart.style.display = 'block';
+
     if (player === 'computer wins!') {
-      let fail = document.getElementById('fail');
+      var fail = document.getElementById('fail');
       fail.style.display = 'block';
     } else {
-      let win = document.getElementById('win');
-      win.style.display = 'block';
+      var _win = document.getElementById('win');
+
+      _win.style.display = 'block';
     }
 
-    status.textContent = `${player} Play again?`;
-    enemySpaces.forEach((enemySpace) => {
+    status.textContent = "".concat(player, " Play again?");
+    enemySpaces.forEach(function (enemySpace) {
       enemySpace.removeEventListener('click', placeAttack);
     });
-
     return true;
   };
 
   humanPlay();
   return {
-    win,
+    win: win
   };
 };
 
 module.exports = beginGame;
-
 
 /***/ })
 /******/ ]);
