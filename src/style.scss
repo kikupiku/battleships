@@ -12,9 +12,9 @@
 
 $enemy-color: rgb(116,60,60);
 $my-color: rgb(40,107,162);
-$left-col-width: 35.9vh;
-$my-space-dimension: 3.5vh;
-$enemy-space-dimension: 5.38vh;
+$left-col-width: 36vh;
+$my-space-dimension: 3.4vh;
+$enemy-space-dimension: 5.3vh;
 
 body {
   background-image: url('https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg');
@@ -81,8 +81,8 @@ img {
 .my-board {
   background: lighten($my-color, 40%);
   border: 2px solid $my-color;
-  height: 35.7vh;
-  min-height: 260px;
+  height: 35.5vh;
+  min-height: 265px;
   min-width: 260px;
   position: relative;
   width: $left-col-width;
@@ -176,8 +176,8 @@ img {
   .enemy-board {
     background: white;
     border: 2px solid $enemy-color;
-    height: 54.48vh;
-    min-height: 400px;
+    height: 55.5vh;
+    min-height: 405px;
     min-width: 400px;
     position: relative;
     width: 55vh;
@@ -185,9 +185,9 @@ img {
     .setup-instruction-container {
       background: rgb(89,84,83);
       border: 2px solid black;
-      height: 54.48vh;
+      height: 55.5vh;
       left: -2px;
-      min-height: 400px;
+      min-height: 405px;
       min-width: 400px;
       position: absolute;
       top: -2px;
@@ -198,7 +198,7 @@ img {
     .setup-instruction {
       margin: 10px auto;
       text-align: left;
-      width: 80%;
+      width: 98%;
     }
 
     h1 {
@@ -214,7 +214,7 @@ img {
     .info,
     .ship-name {
       font-family: 'typewriter';
-      font-size: 2.3vh;
+      font-size: 2.1vh;
       font-weight: bold;
     }
 
@@ -314,7 +314,7 @@ img {
   }
 
   .info {
-    font-size: 16px !important;
+    font-size: 14px !important;
   }
 }
 
