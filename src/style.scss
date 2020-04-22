@@ -81,9 +81,9 @@ img {
 .my-board {
   background: lighten($my-color, 40%);
   border: 2px solid $my-color;
-  height: 35.5vh;
-  min-height: 265px;
-  min-width: 260px;
+  height: 36vh;
+  min-height: 270px;
+  min-width: 270px;
   position: relative;
   width: $left-col-width;
 }
@@ -243,8 +243,8 @@ img {
       border-bottom: 0.5px solid $enemy-color;
       border-right: 0.5px solid $enemy-color;
       height: $enemy-space-dimension;
-      min-height: 39.5px;
-      min-width: 39.5px;
+      min-height: 39px;
+      min-width: 39px;
       position: relative;
       width: $enemy-space-dimension;
       &:hover {
