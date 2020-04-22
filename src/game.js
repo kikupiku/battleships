@@ -126,6 +126,10 @@ const beginGame = (computerPlayer, humanPlayer, computerBoard, humanBoard) => {
   const smartAttack = () => {
     randomPick = Math.floor(Math.random() * shipMayBeHere.length);
     currentAttackIndex = shipMayBeHere[randomPick];
+    if (!humanBoard.spaces[currentAttackIndex]) {
+      smartAttack();
+    }
+
     computerPlayer.attack(humanBoard, currentAttackIndex);
     coordsForRandom.splice(shipMayBeHere[randomPick], 1, 'done');
   };
