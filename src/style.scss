@@ -1,3 +1,52 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 @font-face {
   font-family: 'army';
   font-style: normal;
@@ -81,11 +130,11 @@ img {
 .my-board {
   background: lighten($my-color, 40%);
   border: 2px solid $my-color;
-  height: 36vh;
+  height: 35.05vh;
   min-height: 270px;
   min-width: 270px;
   position: relative;
-  width: $left-col-width;
+  width: 35.1vh;
 }
 
 .my-space {
@@ -176,22 +225,22 @@ img {
   .enemy-board {
     background: white;
     border: 2px solid $enemy-color;
-    height: 55.5vh;
+    height: 54.03vh;
     min-height: 405px;
     min-width: 400px;
     position: relative;
-    width: 55vh;
+    width: 54.3vh;
 
     .setup-instruction-container {
       background: rgb(89,84,83);
       border: 2px solid black;
-      height: 55.5vh;
+      height: 54.03vh;
       left: -2px;
       min-height: 405px;
       min-width: 400px;
       position: absolute;
       top: -2px;
-      width: 55vh;
+      width: 54.3vh;
       z-index: 100;
     }
 
