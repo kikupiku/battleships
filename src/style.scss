@@ -66,8 +66,7 @@ $my-space-dimension: 3.4vh;
 $enemy-space-dimension: 5.3vh;
 
 body {
-  background-image: url('https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg');
-  background-repeat: no-repeat;
+  background: url('https://i.pinimg.com/originals/51/30/1a/51301a71b27ae8176b58df9f296c50ac.jpg') no-repeat center center fixed;
   background-size: cover;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -130,7 +129,7 @@ img {
 .my-board {
   background: lighten($my-color, 40%);
   border: 2px solid $my-color;
-  height: 35.05vh;
+  height: 35.1vh;
   min-height: 270px;
   min-width: 270px;
   position: relative;
@@ -225,7 +224,7 @@ img {
   .enemy-board {
     background: white;
     border: 2px solid $enemy-color;
-    height: 54.03vh;
+    height: 54.1vh;
     min-height: 405px;
     min-width: 400px;
     position: relative;
@@ -234,7 +233,7 @@ img {
     .setup-instruction-container {
       background: rgb(89,84,83);
       border: 2px solid black;
-      height: 54.03vh;
+      height: 54.1vh;
       left: -2px;
       min-height: 405px;
       min-width: 400px;
